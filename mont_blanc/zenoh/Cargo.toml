@@ -1,0 +1,32 @@
+[workspace]
+members = [
+    "arequipa",
+    "barcelona",
+    "cordoba",
+    "delhi",
+    "freeport",
+    "geneva",
+    "georgetown",
+    "hamburg",
+    "hebron",
+    "kingston",
+    "lyon",
+    "mandalay",
+    "medellin",
+    "monaco",
+    "osaka",
+    "ponce",
+    "portsmouth",
+    "rotterdam",
+    "taipei",
+    "tripoli",
+    "datatypes",
+]
+
+[profile.dev]
+debug = true
+opt-level = 0
+
+[profile.release]
+debug = false
+opt-level = 3
