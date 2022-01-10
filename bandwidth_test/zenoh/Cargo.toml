@@ -1,0 +1,10 @@
+[workspace]
+members = ["publisher", "subscriber", "bigdata"]
+
+[profile.dev]
+debug = true
+opt-level = 0
+
+[profile.release]
+debug = false
+opt-level = 3

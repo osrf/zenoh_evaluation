@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package bigdata.big_data;
+
+message Timestamp {
+  uint64 sec = 1;
+  uint32 nanosec = 2;
+}
+
+message Header {
+  int32 sec = 1;
+  uint32 nanosec = 2;
+  string frame_id = 3;
+}
+
+message Image {
+  Header header = 1;
+  uint32 height = 2;
+  uint32 width = 3;
+  string encoding = 4;
+  bool is_bigendian = 5;
+  uint32 step = 6;
+  bytes data = 7;
+}
+
+message PointCloud2 {
+  message PointField {
+    enum DataType {
+      INT8 = 0;
+      UINT8 = 1;
+      INT16 = 2;
+      UINT16 = 3;
+      INT32 = 4;
+      UINT32 = 5;
+      FLOAT32 = 6;
+      FLOAT64 = 7;
+    }
+    string name = 1;
+    uint32 offset = 2;
+    DataType datatype = 3;
+    uint32 count = 4;
+  }
+
+  Header header = 1;
+  uint32 height = 2;
+  uint32 width = 3;
+  repeated PointField fields = 4;
+  bool is_bigendian = 5;
+  uint32 point_step = 6;
+  uint32 row_step = 7;
+  bytes data = 8;
+  bool is_dense = 9;
+}
+
+message BasicTypes {
+  bool bool_value = 1;
+  int32 int32_value = 2;
+  uint32 uint32_value = 3;
+  int64 int64_value = 4;
+  uint64 uint64_value = 5;
+  float float_value = 6;
+  double double_value = 7;
+  string string_value = 8;
+}
+
+message BigData {
+  Timestamp timestamp = 1;
+  bool bool_value = 2;
+  int32 int32_value = 3;
+  uint32 uint32_value = 4;
+  int64 int64_value = 5;
+  uint64 uint64_value = 6;
+  float float_value = 7;
+  double double_value = 8;
+  string string_value = 9;
+  repeated BasicTypes basic_types_values = 10;
+  Image image_value = 11;
+  PointCloud2 point_cloud_value = 12;
+}
