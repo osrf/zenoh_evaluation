@@ -43,10 +43,11 @@ def zenoh_bandwidth_test(net, scenario_module):
     time.sleep(5)
     print('\tStarting publisher')
     source_process = source.popen('/home/mininet/zenoh_evaluation/bandwidth_test/zenoh/target/debug/publisher')
-    for host, line in pmonitor({sink: sink_process}, timeoutms=2000):
+    for host, line in pmonitor({source: source_process, sink: sink_process}, timeoutms=2000):
         if host:
-            print('\tData received ({}):'.format(len(data_lines)), line)
-            data_lines.append(line)
+            print('\t{}:'.format(len(data_lines)), line)
+            if host == sink and (line.startswith('16') or line.startswith('Received')):
+                data_lines.append(line)
         if len(data_lines) >= 11:
             break
     source_process.send_signal(SIGINT)

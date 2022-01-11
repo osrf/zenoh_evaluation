@@ -4,7 +4,7 @@ from mininet.topo import Topo
 from signal import SIGINT
 
 
-source_name = 'r2'
+source_name = 'r1'
 sink_name = 'h1'
 
 
