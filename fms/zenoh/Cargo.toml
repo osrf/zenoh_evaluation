@@ -1,8 +1,28 @@
 [workspace]
 members = [
     "datatypes",
-    "robot",
+    "status_reporter",
     "fms",
+    "arequipa",
+    "barcelona",
+    "cordoba",
+    "delhi",
+    "freeport",
+    "geneva",
+    "georgetown",
+    "hamburg",
+    "hebron",
+    "kingston",
+    "lyon",
+    "mandalay",
+    "medellin",
+    "monaco",
+    "osaka",
+    "ponce",
+    "portsmouth",
+    "rotterdam",
+    "taipei",
+    "tripoli",
 ]
 
 [profile.dev]

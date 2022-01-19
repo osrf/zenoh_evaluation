@@ -286,6 +286,122 @@ pub fn deserialize_wrench_stamped(
     data_types::WrenchStamped::decode(&mut Cursor::new(buf))
 }
 
+impl Distribution<data_types::Image> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> data_types::Image {
+        data_types::Image {
+            header: rng.gen(),
+            height: rng.gen(),
+            width: rng.gen(),
+            encoding: random_string(32),
+            is_bigendian: rng.gen(),
+            step: rng.gen(),
+            data: random_bytes(1920 * 1080 * 3),
+        }
+    }
+}
+
+pub fn serialize_image(img: &data_types::Image) -> Vec<u8> {
+    let mut buf = Vec::new();
+    buf.reserve(img.encoded_len());
+    img.encode(&mut buf).unwrap();
+    buf
+}
+
+pub fn deserialize_image(buf: &[u8]) -> Result<data_types::Image, prost::DecodeError> {
+    data_types::Image::decode(&mut Cursor::new(buf))
+}
+
+impl Distribution<data_types::point_cloud2::point_field::DataType> for Standard {
+    fn sample<R: Rng + ?Sized>(
+        &self,
+        rng: &mut R,
+    ) -> data_types::point_cloud2::point_field::DataType {
+        match rng.gen_range(0..=7) {
+            0 => data_types::point_cloud2::point_field::DataType::Int8,
+            1 => data_types::point_cloud2::point_field::DataType::Uint8,
+            2 => data_types::point_cloud2::point_field::DataType::Int16,
+            3 => data_types::point_cloud2::point_field::DataType::Uint16,
+            4 => data_types::point_cloud2::point_field::DataType::Int32,
+            5 => data_types::point_cloud2::point_field::DataType::Uint32,
+            6 => data_types::point_cloud2::point_field::DataType::Float32,
+            7 => data_types::point_cloud2::point_field::DataType::Float64,
+            _ => data_types::point_cloud2::point_field::DataType::Int8,
+        }
+    }
+}
+
+impl Distribution<data_types::point_cloud2::PointField> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> data_types::point_cloud2::PointField {
+        data_types::point_cloud2::PointField {
+            name: random_string(32),
+            offset: rng.gen(),
+            datatype: rng.gen(),
+            count: rng.gen(),
+        }
+    }
+}
+
+fn random_point_fields(length: usize) -> Vec<data_types::point_cloud2::PointField> {
+    (0..length)
+        .map(|_| rand::random::<data_types::point_cloud2::PointField>())
+        .collect()
+}
+
+impl Distribution<data_types::PointCloud2> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> data_types::PointCloud2 {
+        data_types::PointCloud2 {
+            header: rng.gen(),
+            height: rng.gen(),
+            width: rng.gen(),
+            fields: random_point_fields(3),
+            is_bigendian: rng.gen(),
+            point_step: rng.gen(),
+            row_step: rng.gen(),
+            data: random_bytes(4 * 4 * 4 * 1280 * 960),
+            is_dense: rng.gen(),
+        }
+    }
+}
+
+pub fn serialize_pointcloud2(pc: &data_types::PointCloud2) -> Vec<u8> {
+    let mut buf = Vec::new();
+    buf.reserve(pc.encoded_len());
+    pc.encode(&mut buf).unwrap();
+    buf
+}
+
+pub fn deserialize_pointcloud2(buf: &[u8]) -> Result<data_types::PointCloud2, prost::DecodeError> {
+    data_types::PointCloud2::decode(&mut Cursor::new(buf))
+}
+
+impl Distribution<data_types::LaserScan> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> data_types::LaserScan {
+        data_types::LaserScan {
+            header: rng.gen(),
+            angle_min: rng.gen(),
+            angle_max: rng.gen(),
+            angle_increment: rng.gen(),
+            time_increment: rng.gen(),
+            scan_time: rng.gen(),
+            range_min: rng.gen(),
+            range_max: rng.gen(),
+            ranges: random_floats(1024),
+            intensities: random_floats(1024),
+        }
+    }
+}
+
+pub fn serialize_laserscan(ls: &data_types::LaserScan) -> Vec<u8> {
+    let mut buf = Vec::new();
+    buf.reserve(ls.encoded_len());
+    ls.encode(&mut buf).unwrap();
+    buf
+}
+
+pub fn deserialize_laserscan(buf: &[u8]) -> Result<data_types::LaserScan, prost::DecodeError> {
+    data_types::LaserScan::decode(&mut Cursor::new(buf))
+}
+
 impl Distribution<data_types::RobotStatus> for Standard {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> data_types::RobotStatus {
         data_types::RobotStatus {

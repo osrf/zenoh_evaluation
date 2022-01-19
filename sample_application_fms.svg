@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="169.24025mm"
+   height="63.713566mm"
+   viewBox="0 0 169.24025 63.713565"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20, custom)"
+   sodipodi:docname="sample_application_fms.svg"
+   inkscape:export-filename="/home/geoff/src/ros/zenoh_evaluation/sample_application_fms.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="2.0526909"
+     inkscape:cx="317.87542"
+     inkscape:cy="111.56088"
+     inkscape:window-width="1920"
+     inkscape:window-height="2128"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath41">
+      <path
+         d="M 36,1358 H 781.492 V 36 H 36 Z"
+         id="path39" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-80.495754,53.144948)">
+    <g
+       id="g33"
+       transform="matrix(0.35277777,0,0,-0.35277777,-32.300811,417.10891)" />
+    <g
+       id="g26451"
+       transform="translate(6.5147235)">
+      <g
+         id="g11394-3"
+         transform="translate(144.13106,-0.15573156)">
+        <path
+           d="M -8.6134118,-27.707769 H 13.611586 v 12.7 H -8.6134118 Z"
+           style="fill:#bebada;fill-opacity:1;fill-rule:nonzero;stroke:#bebada;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path55-6" />
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-0"
+           x="-3.6894245"
+           y="-19.722973"><tspan
+             x="-3.6894245"
+             y="-19.722973"
+             sodipodi:role="line"
+             id="tspan57-62"
+             style="stroke-width:0.352778">/status</tspan></text>
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-3-61"
+           x="15.998603"
+           y="-20.151169"><tspan
+             sodipodi:role="line"
+             id="tspan57-6-8"
+             style="stroke-width:0.352778"
+             x="15.998603"
+             y="-20.151169">RobotStatus</tspan></text>
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#a60000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-3-6-7"
+           x="5.3358669"
+           y="-33.31871"><tspan
+             sodipodi:role="line"
+             id="tspan57-6-1-9"
+             style="fill:#a60000;fill-opacity:1;stroke-width:0.352778"
+             x="5.3358669"
+             y="-33.31871">Every 1s</tspan></text>
+        <path
+           d="m 2.4990879,-40.300171 c 0,2.720269 0,5.991577 0,9.024761"
+           style="fill:none;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path61-2" />
+        <path
+           d="M 3.7338084,-31.272588 2.4990879,-27.74481 1.2643657,-31.272588 Z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path63-0" />
+        <path
+           d="m 2.4990879,-14.900172 c 0,2.72027 0,5.9915778 0,9.024761"
+           style="fill:none;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path71-2" />
+        <path
+           d="M 3.7338084,-5.8725887 2.4990879,-2.344811 1.2643657,-5.8725887 Z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path73-3" />
+        <text
+           xml:space="preserve"
+           style="font-size:50.8px;line-height:125%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';letter-spacing:0px;word-spacing:0px;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="2.9536326"
+           y="1.9136564"
+           id="text13789"><tspan
+             sodipodi:role="line"
+             id="tspan13787"
+             style="stroke-width:0.264583px"
+             x="2.9536326"
+             y="1.9136564"></tspan></text>
+      </g>
+      <g
+         id="g1451"
+         transform="translate(144.35131,0.25530849)">
+        <path
+           d="m 16.254597,-46.757768 c 0,3.506963 -6.158438,6.349999 -13.7555091,6.349999 -7.5970692,0 -13.7555109,-2.843036 -13.7555109,-6.349999 0,-3.506964 6.1584417,-6.35 13.7555109,-6.35 7.5970711,0 13.7555091,2.843036 13.7555091,6.35"
+           style="fill:#8dd3c7;fill-opacity:1;fill-rule:nonzero;stroke:#8dd3c7;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path49" />
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text53"
+           x="-2.6892939"
+           y="-45.09581"><tspan
+             sodipodi:role="line"
+             id="tspan51"
+             style="stroke-width:0.352778"
+             x="-2.6892939"
+             y="-45.09581">robot</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g26471"
+       transform="translate(2.1340905e-5)">
+      <g
+         id="g11394-3-7"
+         transform="translate(210.04025,0.44988491)">
+        <path
+           d="M 1.6060518,-15.049998 C 1.1458698,-6.148166 -35.503491,-8.5882082 -41.100495,-1.28432"
+           style="fill:none;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path71-2-0-6"
+           sodipodi:nodetypes="cc" />
+        <path
+           d="M -8.6134118,-27.707769 H 13.611586 v 12.7 H -8.6134118 Z"
+           style="fill:#bebada;fill-opacity:1;fill-rule:nonzero;stroke:#bebada;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path55-6-5" />
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-0-9"
+           x="-3.6894245"
+           y="-19.722973"><tspan
+             x="-3.6894245"
+             y="-19.722973"
+             sodipodi:role="line"
+             id="tspan57-62-2"
+             style="stroke-width:0.352778">/status</tspan></text>
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-3-61-2"
+           x="15.998603"
+           y="-20.151169"><tspan
+             sodipodi:role="line"
+             id="tspan57-6-8-8"
+             style="stroke-width:0.352778"
+             x="15.998603"
+             y="-20.151169">RobotStatus</tspan></text>
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#a60000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-3-6-7-9"
+           x="5.3358669"
+           y="-33.31871"><tspan
+             sodipodi:role="line"
+             id="tspan57-6-1-9-7"
+             style="fill:#a60000;fill-opacity:1;stroke-width:0.352778"
+             x="5.3358669"
+             y="-33.31871">Every 1s</tspan></text>
+        <path
+           d="m 2.4990879,-40.300171 c 0,2.720269 0,5.991577 0,9.024761"
+           style="fill:none;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path61-2-3" />
+        <path
+           d="M 3.7338084,-31.272588 2.4990879,-27.74481 1.2643657,-31.272588 Z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path63-0-6" />
+        <path
+           d="m -40.179058,-0.42939179 -3.367595,1.62143669 1.621436,-3.3675958 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path73-3-2" />
+        <text
+           xml:space="preserve"
+           style="font-size:50.8px;line-height:125%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';letter-spacing:0px;word-spacing:0px;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="2.9536326"
+           y="1.9136564"
+           id="text13789-9"><tspan
+             sodipodi:role="line"
+             id="tspan13787-3"
+             style="stroke-width:0.264583px"
+             x="2.9536326"
+             y="1.9136564" /></text>
+      </g>
+      <g
+         id="g1451-6"
+         transform="translate(209.8035,0.38109392)">
+        <path
+           d="m 16.254597,-46.757768 c 0,3.506963 -6.158438,6.349999 -13.7555091,6.349999 -7.5970692,0 -13.7555109,-2.843036 -13.7555109,-6.349999 0,-3.506964 6.1584417,-6.35 13.7555109,-6.35 7.5970711,0 13.7555091,2.843036 13.7555091,6.35"
+           style="fill:#8dd3c7;fill-opacity:1;fill-rule:nonzero;stroke:#8dd3c7;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path49-2" />
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text53-9"
+           x="-2.6892939"
+           y="-45.09581"><tspan
+             sodipodi:role="line"
+             id="tspan51-1"
+             style="stroke-width:0.352778"
+             x="-2.6892939"
+             y="-45.09581">robot</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g26431"
+       transform="translate(-19.696654)">
+      <g
+         id="g11394-3-1"
+         transform="translate(111.51738,0.20799992)">
+        <path
+           d="M -8.6134118,-27.707769 H 13.611586 v 12.7 H -8.6134118 Z"
+           style="fill:#bebada;fill-opacity:1;fill-rule:nonzero;stroke:#bebada;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path55-6-9" />
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-0-4"
+           x="-3.6894245"
+           y="-19.722973"><tspan
+             x="-3.6894245"
+             y="-19.722973"
+             sodipodi:role="line"
+             id="tspan57-62-7"
+             style="stroke-width:0.352778">/status</tspan></text>
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-3-61-8"
+           x="15.998603"
+           y="-20.151169"><tspan
+             sodipodi:role="line"
+             id="tspan57-6-8-4"
+             style="stroke-width:0.352778"
+             x="15.998603"
+             y="-20.151169">RobotStatus</tspan></text>
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#a60000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text59-3-6-7-5"
+           x="5.3358669"
+           y="-33.31871"><tspan
+             sodipodi:role="line"
+             id="tspan57-6-1-9-0"
+             style="fill:#a60000;fill-opacity:1;stroke-width:0.352778"
+             x="5.3358669"
+             y="-33.31871">Every 1s</tspan></text>
+        <path
+           d="m 2.4990879,-40.300171 c 0,2.720269 0,5.991577 0,9.024761"
+           style="fill:none;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path61-2-36" />
+        <path
+           d="M 3.7338084,-31.272588 2.4990879,-27.74481 1.2643657,-31.272588 Z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path63-0-1" />
+        <path
+           d="M 2.4990879,-14.900172 C 2.9592702,-5.9983394 39.608631,-8.4383823 45.205635,-1.1344942"
+           style="fill:none;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path71-2-0"
+           sodipodi:nodetypes="cc" />
+        <path
+           d="m 46.090964,-1.9336652 1.621437,3.3675944 -3.367597,-1.62143451 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path73-3-6" />
+        <text
+           xml:space="preserve"
+           style="font-size:50.8px;line-height:125%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';letter-spacing:0px;word-spacing:0px;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="2.9536326"
+           y="1.9136564"
+           id="text13789-3"><tspan
+             sodipodi:role="line"
+             id="tspan13787-2"
+             style="stroke-width:0.264583px"
+             x="2.9536326"
+             y="1.9136564" /></text>
+      </g>
+      <g
+         id="g1451-2"
+         transform="translate(111.62522,0.13920893)">
+        <path
+           d="m 16.254597,-46.757768 c 0,3.506963 -6.158438,6.349999 -13.7555091,6.349999 -7.5970692,0 -13.7555109,-2.843036 -13.7555109,-6.349999 0,-3.506964 6.1584417,-6.35 13.7555109,-6.35 7.5970711,0 13.7555091,2.843036 13.7555091,6.35"
+           style="fill:#8dd3c7;fill-opacity:1;fill-rule:nonzero;stroke:#8dd3c7;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path49-7" />
+        <text
+           style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           id="text53-0"
+           x="-2.6892939"
+           y="-45.09581"><tspan
+             sodipodi:role="line"
+             id="tspan51-9"
+             style="stroke-width:0.352778"
+             x="-2.6892939"
+             y="-45.09581">robot</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g1451-3"
+       transform="translate(150.40915,50.799999)">
+      <path
+         d="m 16.254597,-46.757768 c 0,3.506963 -6.158438,6.349999 -13.7555091,6.349999 -7.5970692,0 -13.7555109,-2.843036 -13.7555109,-6.349999 0,-3.506964 6.1584417,-6.35 13.7555109,-6.35 7.5970711,0 13.7555091,2.843036 13.7555091,6.35"
+         style="fill:#8dd3c7;fill-opacity:1;fill-rule:nonzero;stroke:#8dd3c7;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path49-6" />
+      <text
+         style="font-variant:normal;font-size:4.93896px;font-family:'Nimbus Roman';-inkscape-font-specification:NimbusRomNo9L-Regu;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         id="text53-7"
+         x="-2.3114595"
+         y="-45.122974"><tspan
+           sodipodi:role="line"
+           id="tspan51-5"
+           style="stroke-width:0.352778"
+           x="-2.3114595"
+           y="-45.122974">FMS</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1, 3;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 174.35074,-46.646668 h 19.02374"
+       id="path10478" />
+  </g>
+</svg>
