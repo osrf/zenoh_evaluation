@@ -64,6 +64,13 @@ class ScenarioTopo(Topo):
             self.addLink(access_point, c, bw=433.3, delay='2ms', loss=0.14)
 
 
+def configure_network(net):
+    source, sink = net.get(source_name, sink_name)
+
+    source.cmd('sudo iptables -I OUTPUT -o {} -p udp -j DROP'.format(source.intfList()[0]))
+    sink.cmd('sudo iptables -I OUTPUT -o {} -p udp -j DROP'.format(sink.intfList()[0]))
+
+
 def start_network_load(net):
     return []
 

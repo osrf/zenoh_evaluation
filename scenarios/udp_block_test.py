@@ -21,13 +21,21 @@ def ping_test(net, scenario_module):
 
 
 def raw_bandwidth_test(net, scenario_module):
-    print('Doing raw bandwidth test')
     source, sink = get_source_and_sink(net, scenario_module)
 
+    print('Doing raw bandwidth test (TCP)')
     sink_process = sink.popen('iperf -s -p 5001')
-    waitListening(source, sink, 5001, timeout=10)
+    waitListening(source, sink, 5001, timeout=5)
     sink_process.stdout.readline()
-    result = source.cmd('iperf -t 10 -b 1G -p 5001 -c {}'.format(sink.IP()))
+    result = source.cmd('iperf -t 10 -p 5001 -c {}'.format(sink.IP()))
+    print(result)
+    sink_process.send_signal(SIGINT)
+
+    print('Doing raw bandwidth test (UDP)')
+    sink_process = sink.popen('iperf -s -p 5001 -u')
+    time.sleep(2)
+    sink_process.stdout.readline()
+    result = source.cmd('iperf -t 10 -b 10G -p 5001 -u -c {}'.format(sink.IP()))
     print(result)
     sink_process.send_signal(SIGINT)
 

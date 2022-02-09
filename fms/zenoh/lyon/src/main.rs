@@ -12,7 +12,9 @@ async fn main() {
 
     env_logger::init();
 
-    let zenoh = Zenoh::new(Properties::default().into()).await.unwrap();
+    let mut config = Properties::default();
+    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7511"));
+    let zenoh = Zenoh::new(config.into()).await.unwrap();
     let workspace = zenoh.workspace(None).await.unwrap();
 
     let amazon_resource_path = format!("/{}/amazon", robot_number);

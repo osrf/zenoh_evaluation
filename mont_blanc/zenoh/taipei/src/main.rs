@@ -1,49 +1,50 @@
 use datatypes::*;
 use futures::prelude::*;
 use futures::select;
-use std::convert::TryInto;
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
     env_logger::init();
 
-    let zenoh = Zenoh::new(Properties::default().into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut config = Config::default();
+    config.listeners.push("tcp/0.0.0.0:7519".parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
-    let mut change_stream = workspace
-        .subscribe(&String::from("/columbia").try_into().unwrap())
+    let columbia_resource = "/columbia";
+    let mut columbia_subscriber = session.subscribe(columbia_resource).await.unwrap();
+
+    let colorado_resource: &str = "/colorado";
+    let colorado_expression_id = session.declare_expr(colorado_resource).await.unwrap();
+    session
+        .declare_publication(colorado_expression_id)
         .await
         .unwrap();
-    let output_resource: &str = "/colorado";
 
     println!("Taipei: Starting loop");
     loop {
         select!(
-            change = change_stream.next().fuse() => {
+            change = columbia_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let image_size = buf.len();
                         let image = deserialize_image(buf.contiguous().as_slice()).unwrap();
-                        println!("Taipei: Received image of {} bytes from /columbia, putting it to {}", image_size, output_resource);
+                        println!(
+                            "Taipei: Received image of {} bytes from {}, putting it to {}",
+                            image_size,
+                            columbia_resource,
+                            colorado_resource);
                         let buf = serialize_image(&image);
-                        let value = Value::Custom {
-                            encoding_descr: String::from("protobuf"),
-                            data: ZBuf::from(buf),
-                        };
-                        workspace
-                            .put(&output_resource.try_into().unwrap(), value)
+                        session
+                            .put(colorado_expression_id, buf)
                             .await
                             .unwrap();
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

@@ -1,20 +1,21 @@
 use async_std::task;
 use datatypes::*;
 use rand::random;
-use std::convert::TryInto;
 use std::time::Duration;
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh::config::Config;
 
 #[async_std::main]
 async fn main() {
     env_logger::init();
 
-    let zenoh = Zenoh::new(Properties::default().into()).await.unwrap();
-
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut config = Config::default();
+    config.listeners.push("tcp/0.0.0.0:7504".parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     let resource: &str = "/columbia";
+    let expression_id = session.declare_expr(resource).await.unwrap();
+    session.declare_publication(expression_id).await.unwrap();
+
     println!("Delhi: Data generation started");
     let data: data_types::Image = random();
     println!("Delhi: Data generation done");
@@ -26,14 +27,7 @@ async fn main() {
             buf.len(),
             resource
         );
-        let value = Value::Custom {
-            encoding_descr: String::from("protobuf"),
-            data: ZBuf::from(buf),
-        };
-        workspace
-            .put(&resource.try_into().unwrap(), value)
-            .await
-            .unwrap();
+        session.put(expression_id, buf).await.unwrap();
         task::sleep(Duration::from_secs(1)).await;
     }
 }

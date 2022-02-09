@@ -20,6 +20,10 @@ fn random_bytes(length: usize) -> Vec<u8> {
     (0..length).map(|_| rand::random::<u8>()).collect()
 }
 
+fn empty() -> Vec<u8> {
+    Vec::new()
+}
+
 impl Distribution<big_data::Header> for Standard {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> big_data::Header {
         big_data::Header {
@@ -60,7 +64,8 @@ impl Distribution<big_data::Image> for Standard {
             encoding: random_string(32),
             is_bigendian: rng.gen(),
             step: rng.gen(),
-            data: random_bytes(1920 * 1080 * 3),
+            //data: random_bytes(1920 * 1080 * 3),
+            data: empty(),
         }
     }
 }
@@ -111,7 +116,8 @@ impl Distribution<big_data::PointCloud2> for Standard {
             is_bigendian: rng.gen(),
             point_step: rng.gen(),
             row_step: rng.gen(),
-            data: random_bytes(4 * 4 * 4 * 1280 * 960),
+            //data: random_bytes(4 * 4 * 4 * 1280 * 960),
+            data: empty(),
             is_dense: rng.gen(),
         }
     }

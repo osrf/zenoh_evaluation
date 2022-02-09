@@ -2,112 +2,105 @@ use datatypes::*;
 use futures::prelude::*;
 use futures::select;
 use rand::random;
-use std::convert::TryInto;
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
     env_logger::init();
 
-    let zenoh = Zenoh::new(Properties::default().into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut config = Config::default();
+    config.listeners.push("tcp/0.0.0.0:7515".parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     // Input resources
-    let mut parana_change_stream = workspace
-        .subscribe(&String::from("/parana").try_into().unwrap())
-        .await
-        .unwrap();
-    let mut colorado_change_stream = workspace
-        .subscribe(&String::from("/colorado").try_into().unwrap())
-        .await
-        .unwrap();
-    let mut delhi_change_stream = workspace
-        .subscribe(&String::from("/delhi").try_into().unwrap())
-        .await
-        .unwrap();
+    let parana_resource = "/parana";
+    let mut parana_subscriber = session.subscribe(parana_resource).await.unwrap();
+    let colorado_resource = "/colorado";
+    let mut colorado_subscriber = session.subscribe(colorado_resource).await.unwrap();
+    let delhi_resource = "/delhi";
+    let mut delhi_subscriber = session.subscribe(delhi_resource).await.unwrap();
 
     // Output resources
     let salween_resource: &str = "/salween";
+    let salween_expression_id = session.declare_expr(salween_resource).await.unwrap();
+    session
+        .declare_publication(salween_expression_id)
+        .await
+        .unwrap();
     let godavari_resource: &str = "/godavari";
+    let godavari_expression_id = session.declare_expr(godavari_resource).await.unwrap();
+    session
+        .declare_publication(godavari_expression_id)
+        .await
+        .unwrap();
 
     println!("Osaka: Data generation started");
     let pointcloud2_data: data_types::PointCloud2 = random();
     let laserscan_data: data_types::LaserScan = random();
     println!("Osaka: Data generation done");
+
     println!("Osaka: Starting loop");
     loop {
         select!(
-            change = parana_change_stream.next().fuse() => {
+            change = parana_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let _data = change.value.unwrap();
-                        println!("Osaka: Received value from /parana");
+                    SampleKind::Put | SampleKind::Patch => {
+                        let _data = change.value;
+                        println!("Osaka: Received value from {}", parana_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = delhi_change_stream.next().fuse() => {
+            change = delhi_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let image_size = buf.len();
                         let _image = deserialize_image(buf.contiguous().as_slice()).unwrap();
-                        println!("Osaka: Received image of {} bytes from /delhi", image_size);
+                        println!("Osaka: Received image of {} bytes from {}", image_size, delhi_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = colorado_change_stream.next().fuse() => {
+            change = colorado_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let image_size = buf.len();
                         let _image = deserialize_image(buf.contiguous().as_slice()).unwrap();
 
                         let pointcloud2_buf = serialize_pointcloud2(&pointcloud2_data);
                         let pointcloud2_buf_len = pointcloud2_buf.len();
-                        let pointcloud2_value = Value::Custom {
-                            encoding_descr: String::from("protobuf"),
-                            data: ZBuf::from(pointcloud2_buf),
-                        };
 
                         let laserscan_buf = serialize_laserscan(&laserscan_data);
                         let laserscan_buf_len = laserscan_buf.len();
-                        let laserscan_value = Value::Custom {
-                            encoding_descr: String::from("protobuf"),
-                            data: ZBuf::from(laserscan_buf),
-                        };
+
                         println!(
-                            "Osaka: Received image of {} bytes from /columbia, putting PointCloud2 of {} bytes to {} and LaserScan of {} bytes to {}",
+                            "Osaka: Received image of {} bytes from {}, putting PointCloud2 of {} bytes to {} and LaserScan of {} bytes to {}",
                             image_size,
+                            colorado_resource,
                             pointcloud2_buf_len,
                             salween_resource,
                             laserscan_buf_len,
                             godavari_resource);
-                        workspace
-                            .put(&salween_resource.try_into().unwrap(), pointcloud2_value)
+                        session
+                            .put(salween_expression_id, pointcloud2_buf)
                             .await
                             .unwrap();
-                        workspace
-                            .put(&godavari_resource.try_into().unwrap(), laserscan_value)
+                        session
+                            .put(godavari_expression_id, laserscan_buf)
                             .await
                             .unwrap();
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

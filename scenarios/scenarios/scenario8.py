@@ -52,6 +52,10 @@ class ScenarioTopo(Topo):
             self.addLink(access_point, robot, bw=400, delay='2ms', loss=0.14)
 
 
+def configure_network(net):
+    pass
+
+
 def start_network_load(net):
     robots = []
     for ii in range(0, 10):

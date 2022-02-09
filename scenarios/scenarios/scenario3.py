@@ -59,6 +59,13 @@ class ScenarioTopo(Topo):
         self.addLink(access_point, other_robot_2, bw=60, delay='2ms', loss=0.14)
 
 
+def configure_network(net):
+    source, sink = net.get(source_name, sink_name)
+
+    source.cmd('sudo iptables -I OUTPUT -o {} -p udp -j DROP'.format(source.intfList()[0]))
+    sink.cmd('sudo iptables -I OUTPUT -o {} -p udp -j DROP'.format(sink.intfList()[0]))
+
+
 def start_network_load(net):
     workstation_2, workstation_3, robot_2, robot_3 = net.get('h2', 'h3', 'w2', 'w3')
 

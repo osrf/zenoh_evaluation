@@ -6,8 +6,11 @@ from mininet.link import TCLink
 from mininet.util import dumpNodeConnections, waitListening, decode, pmonitor
 from signal import SIGINT
 import importlib
+import os
+import subprocess
 import sys
 import time
+import utils
 
 
 def application_test(net):
@@ -83,7 +86,7 @@ def application_test(net):
                 start_time = time.time()
             if started:
                 print(line)
-        if started and (time.time() - start_time) > 60:
+        if started and (time.time() - start_time) > 10:
             break
     print('Run time exceeded; terminating')
     robot_process.send_signal(SIGINT)
@@ -111,9 +114,21 @@ def main():
     load = scenario_module.start_network_load(net)
     print('Connections:')
     dumpNodeConnections(net.hosts)
+
+    tshark_robot = utils.start_tshark_on_source(net, scenario_module, '/tmp/robot_capture.pcap')
+    tshark_ws = utils.start_tshark_on_sink(net, scenario_module, '/tmp/ws_capture.pcap')
+    time.sleep(2)
     application_test(net)
+    time.sleep(2)
+    utils.stop_tshark(tshark_robot)
+    utils.stop_tshark(tshark_ws)
+
     scenario_module.stop_network_load(load)
     net.stop()
+
+    utils.process_zenoh_packet_capture('/tmp/robot_capture.pcap')
+    utils.process_zenoh_packet_capture('/tmp/ws_capture.pcap')
+
     return 0
 
 

@@ -59,6 +59,10 @@ class ScenarioTopo(Topo):
         self.addLink(access_point, other_wifi_devices, bw=8667, delay='2ms', loss=0.14)
 
 
+def configure_network(net):
+    pass
+
+
 def start_network_load(net):
     other_lan_devices, other_wifi_devices = net.get('l1', 'w1')
 

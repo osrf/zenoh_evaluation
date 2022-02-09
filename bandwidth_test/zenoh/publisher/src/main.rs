@@ -1,17 +1,18 @@
 use async_std::task;
 use bigdata::*;
-use std::convert::TryInto;
 use std::time::{Duration, Instant};
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh;
+use zenoh::config::Config;
 
 #[async_std::main]
 async fn main() {
     env_logger::init();
 
-    let zenoh = Zenoh::new(Properties::default().into()).await.unwrap();
-
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut config = Config::default();
+    config.listeners.push("tcp/0.0.0.0:7501".parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
+    let expression_id = session.declare_expr("/amazon").await.unwrap();
+    session.declare_publication(expression_id).await.unwrap();
 
     let mut data = create_big_data();
     println!("Data is ready to transmit");
@@ -20,18 +21,9 @@ async fn main() {
         set_big_data_timestamp_to_now(&mut data);
         let mut start_instant = Instant::now();
         let buf = serialize_big_data(&data);
+        let data_size = buf.len();
         println!(
             "Serialisation took {}",
-            start_instant.elapsed().as_secs_f64()
-        );
-        start_instant = Instant::now();
-        let data_size = buf.len();
-        let value = Value::Custom {
-            encoding_descr: String::from("protobuf"),
-            data: ZBuf::from(buf),
-        };
-        println!(
-            "Buffer preparation took {}",
             start_instant.elapsed().as_secs_f64()
         );
         println!(
@@ -41,10 +33,7 @@ async fn main() {
             resource
         );
         start_instant = Instant::now();
-        workspace
-            .put(&resource.try_into().unwrap(), value)
-            .await
-            .unwrap();
+        session.put(expression_id, buf).await.unwrap();
         println!(
             "Transmission took {}",
             start_instant.elapsed().as_secs_f64()

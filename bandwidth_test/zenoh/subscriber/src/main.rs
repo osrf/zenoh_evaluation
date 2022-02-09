@@ -1,43 +1,38 @@
 use bigdata::*;
 use futures::prelude::*;
 use futures::select;
-use std::convert::TryInto;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
     env_logger::init();
 
-    let zenoh = Zenoh::new(Properties::default().into()).await.unwrap();
+    let mut config = Config::default();
+    config.listeners.push("tcp/0.0.0.0:7502".parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
-    let workspace = zenoh.workspace(None).await.unwrap();
-
-    let mut change_stream = workspace
-        .subscribe(&String::from("/amazon").try_into().unwrap())
-        .await
-        .unwrap();
+    let mut subscriber = session.subscribe("/amazon").await.unwrap();
 
     println!("Received at,Transmission time (s),Transmitted (Bytes),Rate (B/s),Bandwidth (bps),Bandwidth (Mbps)");
+    let mut start_time = Instant::now();
     loop {
         select!(
-            change = change_stream.next().fuse() => {
-                let change = change.unwrap();
-                let kind = change.kind;
+            sample = subscriber.next() => {
+                let sample = sample .unwrap();
+                let kind = sample.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
+                    SampleKind::Put | SampleKind::Patch => {
                         let mut start_instant = Instant::now();
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                        let buf = sample.value.payload.contiguous();
                         println!(
                             "Buffer retrieval took {}",
                             start_instant.elapsed().as_secs_f64()
                         );
                         let transmission_size = buf.len();
                         start_instant = Instant::now();
-                        let big_d = deserialize_big_data(buf.contiguous().as_slice()).unwrap();
+                        let big_d = deserialize_big_data(buf.as_slice()).unwrap();
                         println!(
                             "Deserialisation took {}",
                             start_instant.elapsed().as_secs_f64()
@@ -62,11 +57,29 @@ async fn main() {
                             transmission_bandwidth,
                             transmission_bandwidth / 1024.0 / 1024.0);
                      },
-                    ChangeKind::Delete => {
-                        println!("Received {:?} for {} with timestamp {}",
-                            kind, change.path, change.timestamp);
+                    SampleKind::Delete => {
+                        println!("Received {:?} for {} with timestamp {:?}",
+                            kind, sample.key_expr, sample.timestamp);
                     },
                 };
+            },
+            default => {
+                if start_time.elapsed().as_millis() > 60000 {
+                    start_time = Instant::now();
+                    let timeout_st = SystemTime::now();
+                    let timeout = timeout_st
+                        .duration_since(UNIX_EPOCH)
+                        .expect("System time went backwards");
+                    println!(
+                        "{}.{:09},{:?},{},{},{},{}",
+                        timeout.as_secs(),
+                        timeout.subsec_nanos(),
+                        "60s",
+                        0,
+                        0.0,
+                        0.0,
+                        0.0);
+                }
             }
         )
     }

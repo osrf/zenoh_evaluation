@@ -59,6 +59,10 @@ class ScenarioTopo(Topo):
         self.addLink(access_point, tv, bw=866.7, delay='2ms')
 
 
+def configure_network(net):
+    pass
+
+
 def start_network_load(net):
     tablet, tv, internet = net.get('w2', 'w3', 'h2')
 
