@@ -20,6 +20,10 @@ pub fn random_bytes(length: usize) -> Vec<u8> {
     (0..length).map(|_| rand::random::<u8>()).collect()
 }
 
+pub fn empty() -> Vec<u8> {
+    Vec::new()
+}
+
 pub fn random_floats(length: usize) -> Vec<f32> {
     (0..length).map(|_| rand::random::<f32>()).collect()
 }
@@ -267,7 +271,8 @@ impl Distribution<data_types::Image> for Standard {
             encoding: random_string(32),
             is_bigendian: rng.gen(),
             step: rng.gen(),
-            data: random_bytes(1920 * 1080 * 3),
+            //data: random_bytes(1920 * 1080 * 3),
+            data: empty(),
         }
     }
 }

@@ -14,12 +14,20 @@ import time
 import utils
 
 
-def start_processes(host, executables):
+def start_processes(host, executables, robot_number):
     processes = {}
     for executable in executables:
         process = host.popen(
-            ['../mont_blanc/zenoh/target/debug/' + executable,
-             '1'])
+            ['../fms/zenoh/target/debug/' + executable,
+             str(robot_number)])
+        processes['{}_{}'.format(executable, robot_number)] = process
+    return processes
+
+
+def start_processes_no_number(host, executables):
+    processes = {}
+    for executable in executables:
+        process = host.popen('../fms/zenoh/target/debug/' + executable)
         processes[executable] = process
     return processes
 
@@ -56,10 +64,11 @@ def process_line(node_names, line):
     return ignore_line, line_is_expected, started
 
 
-def application_test(net, scenario_module):
+def application_test(net, scenario_module, robot_count):
     robot, workstation = utils.get_source_and_sink(net, scenario_module)
 
-    robot_executables = ['cordoba',
+    robot_executables = [
+        'cordoba',
         'lyon',
         'freeport',
         'medellin',
@@ -72,21 +81,31 @@ def application_test(net, scenario_module):
         'kingston',
         'tripoli',
         'mandalay',
-        'ponce']
-    workstation_executables = ['geneva',
+        'ponce',
+        'geneva',
         'monaco',
         'rotterdam',
         'barcelona',
         'arequipa',
-        'georgetown']
+        'georgetown',
+        'status_reporter']
+    workstation_executables = ['fms']
 
-    robot_processes = start_processes(robot, robot_executables)
-    workstation_processes = start_processes(
+    robot_processes = {}
+    all_robot_executables = []
+    for robot_number in range(1, robot_count + 1):
+        robot_processes.update(start_processes(
+            robot,
+            robot_executables,
+            str(robot_number)))
+        all_robot_executables += \
+            ['{}_{}'.format(exe, robot_number) for exe in robot_executables]
+    workstation_processes = start_processes_no_number(
         workstation,
         workstation_executables)
     all_processes = {**robot_processes, **workstation_processes}
 
-    not_started_processes = robot_executables + workstation_executables
+    not_started_processes = list(all_processes.keys())
     started_processes = []
     received_data_processes = []
     robot_expected_lines = {}
@@ -147,10 +166,11 @@ def application_test(net, scenario_module):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print('Please supply a scenario name')
+    if len(sys.argv) != 3:
+        print('Please supply a scenario name and a robot count')
         return 1
     scenario_name = sys.argv[1]
+    robot_count = int(sys.argv[2])
     scenario_module = importlib.import_module('.' + scenario_name, 'scenarios')
     topo = scenario_module.ScenarioTopo()
     net = Mininet(topo, host=CPULimitedHost, link=TCLink)
@@ -163,7 +183,7 @@ def main():
     tshark_robot = utils.start_tshark_on_source(net, scenario_module, '/tmp/robot_capture.pcap')
     tshark_ws = utils.start_tshark_on_sink(net, scenario_module, '/tmp/ws_capture.pcap')
     time.sleep(2)
-    application_test(net, scenario_module)
+    application_test(net, scenario_module, robot_count)
     time.sleep(2)
     utils.stop_tshark(tshark_robot)
     utils.stop_tshark(tshark_ws)
@@ -171,8 +191,8 @@ def main():
     scenario_module.stop_network_load(load)
     net.stop()
 
-    utils.process_zenoh_packet_capture('/tmp/robot_capture.pcap', 1)
-    utils.process_zenoh_packet_capture('/tmp/ws_capture.pcap', 1)
+    utils.process_zenoh_packet_capture('/tmp/robot_capture.pcap', robot_count)
+    utils.process_zenoh_packet_capture('/tmp/ws_capture.pcap', robot_count)
 
     return 0
 

@@ -12,6 +12,9 @@ from scenarios import scenario1
 
 def ping_test(net):
     print('Doing ping test')
+    source, sink = utils.get_source_and_sink(net, scenario_module)
+    net.ping((sink, sink))
+    print('Doing ping test')
     workstation = net.get('h1')
     net.ping((workstation, workstation))
 

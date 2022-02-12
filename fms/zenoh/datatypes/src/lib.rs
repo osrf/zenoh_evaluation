@@ -28,8 +28,24 @@ pub fn random_floats(length: usize) -> Vec<f32> {
     (0..length).map(|_| rand::random::<f32>()).collect()
 }
 
+pub fn empty_floats() -> Vec<f32> {
+    Vec::new()
+}
+
+pub fn zero_floats(length: usize) -> Vec<f32> {
+    vec![0.0; length]
+}
+
 pub fn random_doubles(length: usize) -> Vec<f64> {
     (0..length).map(|_| rand::random::<f64>()).collect()
+}
+
+pub fn empty_doubles() -> Vec<f64> {
+    Vec::new()
+}
+
+pub fn zero_doubles(length: usize) -> Vec<f64> {
+    vec![0.0; length]
 }
 
 impl Distribution<data_types::Header> for Standard {
@@ -156,7 +172,8 @@ impl Distribution<data_types::PoseWithCovariance> for Standard {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> data_types::PoseWithCovariance {
         data_types::PoseWithCovariance {
             pose: rng.gen(),
-            covariance: random_doubles(64),
+            //covariance: random_doubles(64),
+            covariance: zero_doubles(64),
         }
     }
 }
@@ -204,7 +221,8 @@ impl Distribution<data_types::TwistWithCovariance> for Standard {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> data_types::TwistWithCovariance {
         data_types::TwistWithCovariance {
             twist: rng.gen(),
-            covariance: random_doubles(36),
+            //covariance: random_doubles(36),
+            covariance: zero_doubles(36),
         }
     }
 }
@@ -391,8 +409,10 @@ impl Distribution<data_types::LaserScan> for Standard {
             scan_time: rng.gen(),
             range_min: rng.gen(),
             range_max: rng.gen(),
-            ranges: random_floats(1024),
-            intensities: random_floats(1024),
+            //ranges: random_floats(1024),
+            ranges: zero_floats(1024),
+            //intensities: random_floats(1024),
+            intensities: zero_floats(1024),
         }
     }
 }

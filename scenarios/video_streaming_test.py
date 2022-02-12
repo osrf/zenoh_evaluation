@@ -17,9 +17,7 @@ import utils
 def start_processes(host, executables):
     processes = {}
     for executable in executables:
-        process = host.popen(
-            ['../mont_blanc/zenoh/target/debug/' + executable,
-             '1'])
+        process = host.popen('../video_streaming/zenoh/target/debug/' + executable)
         processes[executable] = process
     return processes
 
@@ -59,26 +57,8 @@ def process_line(node_names, line):
 def application_test(net, scenario_module):
     robot, workstation = utils.get_source_and_sink(net, scenario_module)
 
-    robot_executables = ['cordoba',
-        'lyon',
-        'freeport',
-        'medellin',
-        'portsmouth',
-        'delhi',
-        'hamburg',
-        'taipei',
-        'osaka',
-        'hebron',
-        'kingston',
-        'tripoli',
-        'mandalay',
-        'ponce']
-    workstation_executables = ['geneva',
-        'monaco',
-        'rotterdam',
-        'barcelona',
-        'arequipa',
-        'georgetown']
+    robot_executables = ['camera', 'processor']
+    workstation_executables = ['display']
 
     robot_processes = start_processes(robot, robot_executables)
     workstation_processes = start_processes(

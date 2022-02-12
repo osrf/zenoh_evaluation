@@ -2,123 +2,115 @@ use datatypes::*;
 use futures::prelude::*;
 use futures::select;
 use rand::random;
-use std::convert::TryInto;
 use std::env;
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7515"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
+
+    let port_number = 7515 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     // Input resources
-    let parana_resource_path = format!("/{}/parana", robot_number);
-    let mut parana_change_stream = workspace
-        .subscribe(&parana_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
-    let colorado_resource_path = format!("/{}/colorado", robot_number);
-    let mut colorado_change_stream = workspace
-        .subscribe(&colorado_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
-    let delhi_resource_path = format!("/{}/delhi", robot_number);
-    let mut delhi_change_stream = workspace
-        .subscribe(&delhi_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
+    let parana_resource = format!("/{}/parana", robot_number);
+    let mut parana_subscriber = session.subscribe(&parana_resource).await.unwrap();
+    let colorado_resource = format!("/{}/colorado", robot_number);
+    let mut colorado_subscriber = session.subscribe(&colorado_resource).await.unwrap();
+    let delhi_resource = format!("/{}/delhi", robot_number);
+    let mut delhi_subscriber = session.subscribe(&delhi_resource).await.unwrap();
 
     // Output resources
-    let salween_resource_path = format!("/{}/salween", robot_number);
-    let godavari_resource_path = format!("/{}/godavari", robot_number);
+    let salween_resource = format!("/{}/salween", robot_number);
+    let salween_expression_id = session.declare_expr(&salween_resource).await.unwrap();
+    session
+        .declare_publication(salween_expression_id)
+        .await
+        .unwrap();
+    let godavari_resource = format!("/{}/godavari", robot_number);
+    let godavari_expression_id = session.declare_expr(&godavari_resource).await.unwrap();
+    session
+        .declare_publication(godavari_expression_id)
+        .await
+        .unwrap();
 
-    println!("Osaka: Data generation started");
+    let node_name = format!("Osaka_{}", robot_number);
+    println!("{}: Data generation started", node_name);
     let pointcloud2_data: data_types::PointCloud2 = random();
     let laserscan_data: data_types::LaserScan = random();
-    println!("Osaka: Data generation done");
-    println!("Osaka: Starting loop");
+    println!("{}: Data generation done", node_name);
+
+    println!("{}: Starting loop", node_name);
     loop {
         select!(
-            change = parana_change_stream.next().fuse() => {
+            change = parana_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let _data = change.value.unwrap();
-                        println!("Osaka: Received value from {}", parana_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        let _data = change.value;
+                        println!("{}: Received value from {}", node_name, parana_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = delhi_change_stream.next().fuse() => {
+            change = delhi_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let image_size = buf.len();
                         let _image = deserialize_image(buf.contiguous().as_slice()).unwrap();
-                        println!("Osaka: Received image of {} bytes from {}", image_size, delhi_resource_path);
+                        println!("{}: Received image of {} bytes from {}", node_name, image_size, delhi_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = colorado_change_stream.next().fuse() => {
+            change = colorado_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let image_size = buf.len();
                         let _image = deserialize_image(buf.contiguous().as_slice()).unwrap();
 
                         let pointcloud2_buf = serialize_pointcloud2(&pointcloud2_data);
                         let pointcloud2_buf_len = pointcloud2_buf.len();
-                        let pointcloud2_value = Value::Custom {
-                            encoding_descr: String::from("protobuf"),
-                            data: ZBuf::from(pointcloud2_buf),
-                        };
 
                         let laserscan_buf = serialize_laserscan(&laserscan_data);
                         let laserscan_buf_len = laserscan_buf.len();
-                        let laserscan_value = Value::Custom {
-                            encoding_descr: String::from("protobuf"),
-                            data: ZBuf::from(laserscan_buf),
-                        };
+
                         println!(
-                            "Osaka: Received image of {} bytes from {}, putting PointCloud2 of {} bytes to {} and LaserScan of {} bytes to {}",
+                            "{}: Received image of {} bytes from {}, putting PointCloud2 of {} bytes to {} and LaserScan of {} bytes to {}",
+                            node_name,
                             image_size,
-                            colorado_resource_path,
+                            colorado_resource,
                             pointcloud2_buf_len,
-                            salween_resource_path,
+                            salween_resource,
                             laserscan_buf_len,
-                            godavari_resource_path);
-                        workspace
-                            .put(&salween_resource_path.clone().try_into().unwrap(), pointcloud2_value)
+                            godavari_resource);
+                        session
+                            .put(salween_expression_id, pointcloud2_buf)
                             .await
                             .unwrap();
-                        workspace
-                            .put(&godavari_resource_path.clone().try_into().unwrap(), laserscan_value)
+                        session
+                            .put(godavari_expression_id, laserscan_buf)
                             .await
                             .unwrap();
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

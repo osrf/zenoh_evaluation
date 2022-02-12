@@ -2,66 +2,68 @@ use datatypes::*;
 use futures::prelude::*;
 use futures::select;
 use rand::random;
-use std::convert::TryInto;
 use std::env;
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7518"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
+
+    let port_number = 7518 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     // Inputs
-    let mekong_resource_path = format!("/{}/mekong", robot_number);
-    let mut mekong_change_stream = workspace
-        .subscribe(&mekong_resource_path.clone().try_into().unwrap())
+    let mekong_resource = format!("/{}/mekong", robot_number);
+    let mut mekong_subscriber = session.subscribe(&mekong_resource).await.unwrap();
+
+    // Outpus
+    let murray_resource = format!("/{}/murray", robot_number);
+    let murray_expression_id = session.declare_expr(&murray_resource).await.unwrap();
+    session
+        .declare_publication(murray_expression_id)
         .await
         .unwrap();
 
-    // Outpus
-    let murray_resource_path = format!("/{}/murray", robot_number);
-
-    println!("Rotterdam: Data generation started");
+    let node_name = format!("Rotterdam_{}", robot_number);
+    println!("{}: Data generation started", node_name);
     let header_data: data_types::Header = random();
-    println!("Rotterdam: Data generation done");
-    println!("Rotterdam: Starting loop");
+    println!("{}: Data generation done", node_name);
+
+    println!("{}: Starting loop", node_name);
     loop {
         select!(
-            change = mekong_change_stream.next().fuse() => {
+            change = mekong_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let twist_with_cov = deserialize_twist_with_covariance_stamped(buf.contiguous().as_slice()).unwrap();
                         let vec3s = data_types::Vector3Stamped {
                             header: Some(header_data.clone()),
                             vector: twist_with_cov.twist.unwrap().twist.unwrap().linear,
                         };
-                        println!("Rotterdam: Received TwistWithCovariance from {}, putting Vector3Stamped to {}", mekong_resource_path, murray_resource_path);
+                        println!(
+                            "{}: Received TwistWithCovariance from {}, putting Vector3Stamped to {}",
+                            node_name,
+                            mekong_resource,
+                            murray_resource);
                         let vec3s_buf = serialize_vector3_stamped(&vec3s);
-                        let vec3s_value = Value::Custom {
-                            encoding_descr: String::from("protobuf"),
-                            data: ZBuf::from(vec3s_buf),
-                        };
-                        workspace
-                            .put(&murray_resource_path.clone().try_into().unwrap(), vec3s_value)
+                        session
+                            .put(murray_expression_id, vec3s_buf)
                             .await
                             .unwrap();
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

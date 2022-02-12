@@ -1,39 +1,34 @@
 use datatypes::*;
 use futures::prelude::*;
 use futures::select;
-use std::convert::TryInto;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7522"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut config = Config::default();
+    config.listeners.push("tcp/0.0.0.0:7500".parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
-    let mut change_stream = workspace
-        .subscribe(&String::from("/status").try_into().unwrap())
-        .await
-        .unwrap();
+    let status_resource = "/status";
+    let mut status_subscriber = session.subscribe(status_resource).await.unwrap();
 
+    println!("FMS: Starting loop");
     loop {
         select!(
-            change = change_stream.next().fuse() => {
+            change = status_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let status_size = buf.len();
                         let _status = deserialize_robot_status(buf.contiguous().as_slice()).unwrap();
-                        println!("Display: Received status of {} bytes from /status", status_size);
+                        println!("FMS: Received status of {} bytes from /status", status_size);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

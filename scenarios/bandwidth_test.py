@@ -20,7 +20,7 @@ def ping_test(net, scenario_module):
 def raw_bandwidth_test(net, scenario_module):
     source, sink = utils.get_source_and_sink(net, scenario_module)
 
-    print('Doing raw bandwidth test (TCP)')
+    print('Raw bandwidth test (TCP)')
     sink_process = sink.popen('iperf -s -p 5001')
     waitListening(source, sink, 5001, timeout=5)
     sink_process.stdout.readline()
@@ -28,7 +28,7 @@ def raw_bandwidth_test(net, scenario_module):
     print(result)
     sink_process.send_signal(SIGINT)
 
-    print('Doing raw bandwidth test (UDP)')
+    print('Raw bandwidth test (UDP)')
     sink_process = sink.popen('iperf -s -p 5001 -u')
     time.sleep(2)
     sink_process.stdout.readline()
@@ -38,7 +38,7 @@ def raw_bandwidth_test(net, scenario_module):
 
 
 def zenoh_bandwidth_test(net, scenario_module):
-    print('Doing zenoh bandwidth test')
+    print('Zenoh bandwidth test')
     source, sink = utils.get_source_and_sink(net, scenario_module)
 
     popens = {}
@@ -82,7 +82,7 @@ def main():
     print()
     ping_test(net, scenario_module)
     print()
-    #raw_bandwidth_test(net, scenario_module)
+    raw_bandwidth_test(net, scenario_module)
 
     tshark = utils.start_tshark_on_source(net, scenario_module, '/tmp/source_capture.pcap')
     zenoh_bandwidth_test(net, scenario_module)
@@ -91,7 +91,7 @@ def main():
     scenario_module.stop_network_load(load)
     net.stop()
 
-    utils.process_zenoh_packet_capture('/tmp/source_capture.pcap')
+    #utils.process_zenoh_packet_capture('/tmp/source_capture.pcap')
 
     return 0
 

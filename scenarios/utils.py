@@ -21,29 +21,43 @@ def start_tshark_native(capture_file_path, interface):
         )
 
 
-def start_tshark_on(host, capture_file_path):
-    intf = host.intfList()[0]
-
+def start_tshark_on(host, interface, capture_file_path):
     tshark_process = host.popen(
-        'tshark -i {} -w {}'.format(intf, capture_file_path))
+        'tshark -i {} -w {}'.format(interface, capture_file_path))
     return tshark_process
 
 
 def start_tshark_on_source(net, scenario_module, capture_file_path):
     source, sink = get_source_and_sink(net, scenario_module)
-    return start_tshark_on(source, capture_file_path)
+    interface = scenario_module.get_capture_interface(
+        net,
+        scenario_module.source_name)
+    return start_tshark_on(source, interface, capture_file_path)
 
 
 def start_tshark_on_sink(net, scenario_module, capture_file_path):
     source, sink = get_source_and_sink(net, scenario_module)
-    return start_tshark_on(sink, capture_file_path)
+    interface = scenario_module.get_capture_interface(
+        net,
+        scenario_module.sink_name)
+    return start_tshark_on(sink, interface, capture_file_path)
 
 
 def stop_tshark(tshark):
     tshark.send_signal(SIGINT)
 
 
-def count_zenoh_messages(title, pcap_file, udp_ports=[], include=[], exclude=[]):
+def count_zenoh_messages(
+        title,
+        pcap_file,
+        tcp_ports=[],
+        udp_ports=[],
+        include=[],
+        exclude=[]):
+    tcp_port_dissectors = []
+    for p in tcp_ports:
+        tcp_port_dissectors.append('-d')
+        tcp_port_dissectors.append('tcp.port=={},zenoh-tcp'.format(p))
     udp_port_dissectors = []
     for p in udp_ports:
         udp_port_dissectors.append('-d')
@@ -51,7 +65,7 @@ def count_zenoh_messages(title, pcap_file, udp_ports=[], include=[], exclude=[])
     if type(include) == str:
         include = [include]
     if type(exclude) == str:
-        include = [exclude]
+        exclude = [exclude]
     filter_pattern = ''
     for msgid in include:
         filter_pattern = filter_pattern + 'zenoh.msgid == {} && '.format(msgid)
@@ -64,30 +78,9 @@ def count_zenoh_messages(title, pcap_file, udp_ports=[], include=[], exclude=[])
         filters = []
     proc = subprocess.run(
         ['tshark',
-         '-d', 'tcp.port==7501,zenoh-tcp',
-         '-d', 'tcp.port==7502,zenoh-tcp',
-         '-d', 'tcp.port==7503,zenoh-tcp',
-         '-d', 'tcp.port==7504,zenoh-tcp',
-         '-d', 'tcp.port==7505,zenoh-tcp',
-         '-d', 'tcp.port==7506,zenoh-tcp',
-         '-d', 'tcp.port==7507,zenoh-tcp',
-         '-d', 'tcp.port==7508,zenoh-tcp',
-         '-d', 'tcp.port==7509,zenoh-tcp',
-         '-d', 'tcp.port==7510,zenoh-tcp',
-         '-d', 'tcp.port==7511,zenoh-tcp',
-         '-d', 'tcp.port==7512,zenoh-tcp',
-         '-d', 'tcp.port==7513,zenoh-tcp',
-         '-d', 'tcp.port==7514,zenoh-tcp',
-         '-d', 'tcp.port==7515,zenoh-tcp',
-         '-d', 'tcp.port==7516,zenoh-tcp',
-         '-d', 'tcp.port==7517,zenoh-tcp',
-         '-d', 'tcp.port==7518,zenoh-tcp',
-         '-d', 'tcp.port==7519,zenoh-tcp',
-         '-d', 'tcp.port==7520,zenoh-tcp',
-         '-d', 'tcp.port==7521,zenoh-tcp',
-         '-d', 'tcp.port==7522,zenoh-tcp',
-         '-d', 'tcp.port==7447,zenoh-tcp',
+         '-d', 'tcp.port==7500,zenoh-tcp',
          '-d', 'udp.port==7447,zenoh-udp'] +
+        tcp_port_dissectors +
         udp_port_dissectors +
         filters +
         ['-r', pcap_file,
@@ -103,8 +96,18 @@ def count_zenoh_messages(title, pcap_file, udp_ports=[], include=[], exclude=[])
     os.remove('/tmp/zenoh_filtered.pcap')
 
 
-def process_zenoh_packet_capture(capture_file_path):
-    # Step 1: Find the randomly-chosen UDP ports
+def process_zenoh_packet_capture(capture_file_path, robot_count):
+    # Calculate the TCP port numbers that will be used
+    tcp_ports = []
+    for robot_number in range(0, robot_count):
+        for port_number in range(
+                7501 + robot_number * 50,
+                7522 + robot_number * 50):
+            tcp_ports.append(port_number)
+    tcp_port_matchers = ''
+    for p in tcp_ports:
+        tcp_port_matchers += ' || tcp.port == {}'.format(p)
+    # Find the randomly-chosen UDP ports
     proc = subprocess.run(
         ['tshark',
          '-2',
@@ -124,21 +127,18 @@ def process_zenoh_packet_capture(capture_file_path):
                 udp_ports.append(port_number)
     print()
     print('Found {} randomly-assigned UDP ports:\n\t{}'.format(
-        len(udp_ports), udp_ports))
-    # Step 2: Filter out known non-zenoh packets
+        len(udp_ports),
+        udp_ports))
+    udp_port_matchers = ''
+    for p in udp_ports:
+        udp_port_matchers += ' || udp.port == {}'.format(p)
+    # Filter out known non-zenoh packets
     proc = subprocess.run(
         ['tshark',
          '-2',
-         '-R', 'udp.port == 7447 || '
-               'tcp.port == 7501 || tcp.port == 7502 || tcp.port == 7503 ||'
-               'tcp.port == 7504 || tcp.port == 7505 || tcp.port == 7506 ||'
-               'tcp.port == 7507 || tcp.port == 7508 || tcp.port == 7509 ||'
-               'tcp.port == 7510 || tcp.port == 7511 || tcp.port == 7512 ||'
-               'tcp.port == 7513 || tcp.port == 7514 || tcp.port == 7515 ||'
-               'tcp.port == 7516 || tcp.port == 7517 || tcp.port == 7518 ||'
-               'tcp.port == 7519 || tcp.port == 7520 || tcp.port == 7521 ||'
-               'tcp.port == 7522 || tcp.port == 7523 || tcp.port == 7524 ||'
-               'udp.port != 5001',
+         '-R', 'udp.port == 7447 || tcp.port == 7500'
+               + tcp_port_matchers
+               + udp_port_matchers,
          '-r', capture_file_path,
          '-w', '/tmp/filtered.pcap',
          '-q',
@@ -151,27 +151,71 @@ def process_zenoh_packet_capture(capture_file_path):
     print('Results of initial filter')
     print(proc.stdout)
     print()
-    # Step 3: Counts
     # Count SCOUT (0x01) messages
-    count_zenoh_messages('SCOUT', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x01')
+    count_zenoh_messages(
+        'SCOUT',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x01')
     # Count HELLO (0x02) messages
-    count_zenoh_messages('HELLO', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x02')
+    count_zenoh_messages(
+        'HELLO',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x02')
     # Count INIT (0x03) messages
-    count_zenoh_messages('INIT', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x03')
+    count_zenoh_messages(
+        'INIT',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x03')
     # Count OPEN (0x04) messages
-    count_zenoh_messages('OPEN', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x04')
+    count_zenoh_messages(
+        'OPEN',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x04')
     # Count KEEPALIVE (0x08) messages
-    count_zenoh_messages('KEEPALIVE', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x08')
+    count_zenoh_messages(
+        'KEEPALIVE',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x08')
     # Count LINKSTATELIST (0x10) messages
-    count_zenoh_messages('LINKSTATELIST', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x10')
+    count_zenoh_messages(
+        'LINKSTATELIST',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x10')
     # Count DECLARE (0x0B) messages
-    count_zenoh_messages('DECLARE', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x0b')
+    count_zenoh_messages(
+        'DECLARE',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x0b')
     # Count DATA (0x0C) messages
-    count_zenoh_messages('DATA', '/tmp/filtered.pcap', udp_ports=udp_ports, include='0x0c')
+    count_zenoh_messages(
+        'DATA',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        include='0x0c')
     # Count other messages
-    count_zenoh_messages('other (including TCP ACKs)', '/tmp/filtered.pcap', udp_ports=udp_ports, exclude=['0x01', '0x03', '0x04', '0x08', '0x10', '0x0b', '0x0c'])
+    count_zenoh_messages(
+        'other (including TCP ACKs)',
+        '/tmp/filtered.pcap',
+        tcp_ports=tcp_ports,
+        udp_ports=udp_ports,
+        exclude=['0x01', '0x03', '0x04', '0x08', '0x10', '0x0b', '0x0c'])
 
-    #os.remove(capture_file_path)
+    os.remove(capture_file_path)
     os.remove('/tmp/filtered.pcap')
 
 

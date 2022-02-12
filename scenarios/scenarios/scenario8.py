@@ -74,3 +74,7 @@ def start_network_load(net):
 def stop_network_load(processes):
     for p in processes:
         p.send_signal(SIGINT)
+
+
+def get_capture_interface(net, host_name):
+    return 'any'

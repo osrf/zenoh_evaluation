@@ -2,74 +2,71 @@ use datatypes::*;
 use futures::prelude::*;
 use futures::select;
 use rand::random;
-use std::convert::TryInto;
 use std::env;
 use std::time::Instant;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7507"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
+
+    let port_number = 7507 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     // Input resources
-    let murray_resource_path = format!("/{}/murray", robot_number);
-    let mut murray_change_stream = workspace
-        .subscribe(&murray_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
-    let lena_resource_path = format!("/{}/lena", robot_number);
-    let mut lena_change_stream = workspace
-        .subscribe(&lena_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
+    let murray_resource = format!("/{}/murray", robot_number);
+    let mut murray_subscriber = session.subscribe(&murray_resource).await.unwrap();
+    let lena_resource = format!("/{}/lena", robot_number);
+    let mut lena_subscriber = session.subscribe(&lena_resource).await.unwrap();
 
     // Output resources
-    let volga_resource_path = format!("/{}/volga", robot_number);
-    println!("Georgetown: Data generation started");
-    let data: f64 = random();
-    println!("Georgetown: Data generation done");
+    let volga_resource = format!("/{}/volga", robot_number);
+    let volga_expression_id = session.declare_expr(&volga_resource).await.unwrap();
+    session
+        .declare_publication(volga_expression_id)
+        .await
+        .unwrap();
 
-    println!("Georgetown: Starting loop");
+    let node_name = format!("Georgetown_{}", robot_number);
+    println!("{}: Data generation started", node_name);
+    let data: f64 = random();
+    println!("{}: Data generation done", node_name);
+
+    println!("{}: Starting loop", node_name);
     let mut start_time = Instant::now();
     loop {
         select!(
-            change = murray_change_stream.next().fuse() => {
+            change = murray_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
-                        let _vec3s = deserialize_vector3_stamped(buf.contiguous().as_slice()).unwrap();
-                        println!("Georgetown: Received Vector3Stamped from {}", murray_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value;
+                        let _vec3s = deserialize_vector3_stamped(buf.payload.contiguous().as_slice()).unwrap();
+                        println!("{}: Received Vector3Stamped from {}", node_name, murray_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = lena_change_stream.next().fuse() => {
+            change = lena_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
-                        let _wrench = deserialize_wrench_stamped(buf.contiguous().as_slice()).unwrap();
-                        println!("Georgetown: Received WrenchStamped from {}", lena_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value;
+                        let _wrench = deserialize_wrench_stamped(buf.payload.contiguous().as_slice()).unwrap();
+                        println!("{}: Received WrenchStamped from {}", node_name, lena_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
@@ -78,11 +75,8 @@ async fn main() {
                 if start_time.elapsed().as_millis() > 50 {
                     start_time = Instant::now();
 
-                    println!("Georgetown: Putting generated Float64 to {}", volga_resource_path);
-                    workspace
-                        .put(&volga_resource_path.clone().try_into().unwrap(), data.into())
-                        .await
-                        .unwrap();
+                    println!("{}: Putting generated Float64 to {}", node_name, volga_resource);
+                    session.put(volga_expression_id, data).await.unwrap();
                 }
             },
         )

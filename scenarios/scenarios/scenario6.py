@@ -55,8 +55,8 @@ class ScenarioTopo(Topo):
         # Robot link
         self.addLink(access_point, target_robot, bw=270, delay='2ms', loss=0.14)
         # Other devices
-        self.addLink(switch, other_lan_devices, bw=10000)
-        self.addLink(access_point, other_wifi_devices, bw=8667, delay='2ms', loss=0.14)
+        self.addLink(switch, other_lan_devices, bw=1000)
+        self.addLink(access_point, other_wifi_devices, bw=866.7, delay='2ms', loss=0.14)
 
 
 def configure_network(net):
@@ -77,3 +77,7 @@ def start_network_load(net):
 def stop_network_load(processes):
     for p in processes:
         p.send_signal(SIGINT)
+
+
+def get_capture_interface(net, host_name):
+    return 'any'

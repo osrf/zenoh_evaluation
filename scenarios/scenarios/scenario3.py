@@ -32,9 +32,9 @@ class ScenarioTopo(Topo):
         # Devices
         switch = self.addSwitch('s1')
         access_point = self.addSwitch('a1')
-        target_workstation = self.addHost('h1', cpu=get_cpu_fraction(2000))
-        other_workstation_1 = self.addHost('h2', cpu=get_cpu_fraction(2000))
-        other_workstation_2 = self.addHost('h3', cpu=get_cpu_fraction(2000))
+        target_workstation = self.addHost('h1')
+        other_workstation_1 = self.addHost('h2')
+        other_workstation_2 = self.addHost('h3')
         target_robot = self.addHost('w1', cpu=get_cpu_fraction(1500))
         other_robot_1 = self.addHost('w2', cpu=get_cpu_fraction(1500))
         other_robot_2 = self.addHost('w3', cpu=get_cpu_fraction(1500))
@@ -81,3 +81,7 @@ def start_network_load(net):
 def stop_network_load(processes):
     for p in processes:
         p.send_signal(SIGINT)
+
+
+def get_capture_interface(net, host_name):
+    return 'any'

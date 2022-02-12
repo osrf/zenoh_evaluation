@@ -1,12 +1,10 @@
 [workspace]
 members = [
-    "datatypes",
-    "status_reporter",
-    "fms",
     "arequipa",
     "barcelona",
     "cordoba",
     "delhi",
+    "fms",
     "freeport",
     "geneva",
     "georgetown",
@@ -21,8 +19,10 @@ members = [
     "ponce",
     "portsmouth",
     "rotterdam",
+    "status_reporter",
     "taipei",
     "tripoli",
+    "datatypes",
 ]
 
 [profile.dev]

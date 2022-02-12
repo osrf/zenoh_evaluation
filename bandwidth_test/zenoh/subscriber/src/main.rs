@@ -64,7 +64,7 @@ async fn main() {
                 };
             },
             default => {
-                if start_time.elapsed().as_millis() > 60000 {
+                if start_time.elapsed().as_millis() > 120000 {
                     start_time = Instant::now();
                     let timeout_st = SystemTime::now();
                     let timeout = timeout_st

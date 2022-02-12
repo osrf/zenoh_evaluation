@@ -1,99 +1,92 @@
 use futures::prelude::*;
 use futures::select;
-use std::convert::TryInto;
 use std::env;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7508"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
+
+    let port_number = 7508 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     // Input resources
-    let tigris_resource_path = format!("/{}/tigris", robot_number);
-    let mut tigris_change_stream = workspace
-        .subscribe(&tigris_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
-    let ganges_resource_path = format!("/{}/ganges", robot_number);
-    let mut ganges_change_stream = workspace
-        .subscribe(&ganges_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
-    let nile_resource_path = format!("/{}/nile", robot_number);
-    let mut nile_change_stream = workspace
-        .subscribe(&nile_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
-    let danube_resource_path = format!("/{}/danube", robot_number);
-    let mut danube_change_stream = workspace
-        .subscribe(&danube_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
+    let tigris_resource = format!("/{}/tigris", robot_number);
+    let mut tigris_subscriber = session.subscribe(&tigris_resource).await.unwrap();
+    let ganges_resource = format!("/{}/ganges", robot_number);
+    let mut ganges_subscriber = session.subscribe(&ganges_resource).await.unwrap();
+    let nile_resource = format!("/{}/nile", robot_number);
+    let mut nile_subscriber = session.subscribe(&nile_resource).await.unwrap();
+    let danube_resource = format!("/{}/danube", robot_number);
+    let mut danube_subscriber = session.subscribe(&danube_resource).await.unwrap();
 
     // Output resource
-    let parana_resource_path = format!("/{}/parana", robot_number);
+    let parana_resource = format!("/{}/parana", robot_number);
+    let parana_expression_id = session.declare_expr(&parana_resource).await.unwrap();
+    session
+        .declare_publication(parana_expression_id)
+        .await
+        .unwrap();
 
-    println!("Hamburg: Starting loop");
+    let node_name = format!("Hamburg_{}", robot_number);
+    println!("{}: Starting loop", node_name);
     loop {
         select!(
-            change = tigris_change_stream.next().fuse() => {
+            change = tigris_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        println!("Hamburg: Received value from {}", tigris_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        println!("{}: Received value from {}", node_name, tigris_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = ganges_change_stream.next().fuse() => {
+            change = ganges_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        println!("Hamburg: Received value from {}", ganges_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        println!("{}: Received value from {}", node_name, ganges_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = nile_change_stream.next().fuse() => {
+            change = nile_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        println!("Hamburg: Received value from {}", nile_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        println!("{}: Received value from {}", node_name, nile_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = danube_change_stream.next().fuse() => {
+            change = danube_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let data = change.value.unwrap();
-                        println!("Hamburg: Received value from {}; putting it to {}", nile_resource_path, parana_resource_path);
-                        workspace
-                            .put(&parana_resource_path.clone().try_into().unwrap(), data.into())
-                            .await
-                            .unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let data = change.value;
+                        println!("{}: Received value from {}; putting it to {}", node_name, nile_resource, parana_resource);
+                        session.put(parana_expression_id, data).await.unwrap();
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

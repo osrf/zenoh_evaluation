@@ -2,48 +2,54 @@ use datatypes::*;
 use futures::prelude::*;
 use futures::select;
 use rand::random;
-use std::convert::TryInto;
 use std::env;
 use std::time::Instant;
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7521"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
 
-    let arkansas_resource_path = format!("/{}/arkansas", robot_number);
-    let mut change_stream = workspace
-        .subscribe(&arkansas_resource_path.clone().try_into().unwrap())
+    let port_number = 7521 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
+
+    let arkansas_resource = format!("/{}/arkansas", robot_number);
+    let mut arkansas_subscriber = session.subscribe(&arkansas_resource).await.unwrap();
+
+    let status_resource: String = String::from("/status");
+    let status_expression_id = session.declare_expr(&status_resource).await.unwrap();
+    session
+        .declare_publication(status_expression_id)
         .await
         .unwrap();
 
-    let status_resource: &str = "/status";
-    println!("Status reporter: Data generation started");
+    let node_name = format!("Status_reporter_{}", robot_number);
+    println!("{}: Data generation started", node_name);
     let mut status: data_types::RobotStatus = random();
-    println!("Status reporter: Data generation done");
+    println!("{}: Data generation done", node_name);
 
+    println!("{}: Starting loop", node_name);
     let mut start_time = Instant::now();
     loop {
         select!(
-            change = change_stream.next().fuse() => {
+            change = arkansas_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let _data = change.value.unwrap();
-                        println!("Status reporter: Received value from {}", arkansas_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        let _data = change.value;
+                        println!("{}: Received value from {}", node_name, arkansas_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
@@ -51,17 +57,10 @@ async fn main() {
             default => {
                 if start_time.elapsed().as_millis() > 1000 {
                     start_time = Instant::now();
-                    println!("Status reporter: Putting generated status to resource {}", status_resource);
+                    println!("{}: Putting generated status to resource {}", node_name, status_resource);
                     status.header = random();
                     let buf = serialize_robot_status(&status);
-                    let value = Value::Custom {
-                        encoding_descr: String::from("protobuf"),
-                        data: ZBuf::from(buf),
-                    };
-                    workspace
-                        .put(&status_resource.try_into().unwrap(), value)
-                        .await
-                        .unwrap();
+                    session.put(status_expression_id, buf).await.unwrap();
                 }
             }
         )

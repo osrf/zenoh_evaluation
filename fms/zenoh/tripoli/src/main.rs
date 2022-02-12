@@ -2,92 +2,85 @@ use datatypes::*;
 use futures::prelude::*;
 use futures::select;
 use rand::random;
-use std::convert::TryInto;
 use std::env;
-use zenoh::net::ZBuf;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7520"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
+
+    let port_number = 7520 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     // Input resources
-    let godavari_resource_path = format!("/{}/godavari", robot_number);
-    let mut godavari_change_stream = workspace
-        .subscribe(&godavari_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
-    let delhi_resource_path = format!("/{}/delhi", robot_number);
-    let mut delhi_change_stream = workspace
-        .subscribe(&delhi_resource_path.clone().try_into().unwrap())
-        .await
-        .unwrap();
+    let godavari_resource = format!("/{}/godavari", robot_number);
+    let mut godavari_subscriber = session.subscribe(&godavari_resource).await.unwrap();
+    let delhi_resource = format!("/{}/delhi", robot_number);
+    let mut delhi_subscriber = session.subscribe(&delhi_resource).await.unwrap();
 
     // Output resources
-    let loire_resource_path = format!("/{}/loire", robot_number);
+    let loire_resource = format!("/{}/loire", robot_number);
+    let loire_expression_id = session.declare_expr(&loire_resource).await.unwrap();
+    session
+        .declare_publication(loire_expression_id)
+        .await
+        .unwrap();
 
-    println!("Tripoli: Data generation started");
+    let node_name = format!("Tripoli_{}", robot_number);
+    println!("{}: Data generation started", node_name);
     let pointcloud2_data: data_types::PointCloud2 = random();
-    println!("Tripoli: Data generation done");
-    println!("Tripoli: Starting loop");
+    println!("{}: Data generation done", node_name);
+
+    println!("{}: Starting loop", node_name);
     loop {
         select!(
-            change = delhi_change_stream.next().fuse() => {
+            change = delhi_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let image_size = buf.len();
                         let _image = deserialize_image(buf.contiguous().as_slice()).unwrap();
-                        println!("Tripoli: Received image of {} bytes from {}", image_size, delhi_resource_path);
+                        println!("{}: Received image of {} bytes from {}", node_name, image_size, delhi_resource);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }
             },
-            change = godavari_change_stream.next().fuse() => {
+            change = godavari_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value.payload;
                         let laserscan_size = buf.len();
                         let _laserscan = deserialize_laserscan(buf.contiguous().as_slice()).unwrap();
 
                         let pointcloud2_buf = serialize_pointcloud2(&pointcloud2_data);
                         let pointcloud2_buf_len = pointcloud2_buf.len();
-                        let pointcloud2_value = Value::Custom {
-                            encoding_descr: String::from("protobuf"),
-                            data: ZBuf::from(pointcloud2_buf),
-                        };
 
                         println!(
-                            "Tripoli: Received laser scan of {} bytes from {}, putting PointCloud2 of {} bytes to {}",
+                            "{}: Received laser scan of {} bytes from {}, putting PointCloud2 of {} bytes to {}",
+                            node_name,
                             laserscan_size,
-                            godavari_resource_path,
+                            godavari_resource,
                             pointcloud2_buf_len,
-                            loire_resource_path);
-                        workspace
-                            .put(&loire_resource_path.clone().try_into().unwrap(), pointcloud2_value)
+                            loire_resource);
+                        session
+                            .put(loire_expression_id, pointcloud2_buf)
                             .await
                             .unwrap();
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

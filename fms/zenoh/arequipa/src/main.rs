@@ -1,40 +1,42 @@
 use futures::prelude::*;
 use futures::select;
-use std::convert::TryInto;
 use std::env;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7501"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
 
-    let arkansas_resource_path = format!("/{}/arkansas", robot_number);
-    let mut change_stream = workspace
-        .subscribe(&arkansas_resource_path.clone().try_into().unwrap())
+    let port_number = 7501 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
+
+    let mut subscriber = session
+        .subscribe(format!("/{}/arkansas", robot_number))
         .await
         .unwrap();
 
-    println!("Arequipa: Starting loop");
+    let node_name = format!("Arequipa_{}", robot_number);
+    println!("{}: Starting loop", node_name);
     loop {
         select!(
-            change = change_stream.next().fuse() => {
+            change = subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let _data = change.value.unwrap();
-                        println!("Arequipa: Received value from {}", arkansas_resource_path);
+                    SampleKind::Put | SampleKind::Patch => {
+                        let _data = change.value;
+                        println!("{}: Received value from /arkansas", node_name);
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

@@ -64,8 +64,8 @@ impl Distribution<big_data::Image> for Standard {
             encoding: random_string(32),
             is_bigendian: rng.gen(),
             step: rng.gen(),
-            //data: random_bytes(1920 * 1080 * 3),
-            data: empty(),
+            data: random_bytes(1920 * 1080 * 3),
+            //data: empty(),
         }
     }
 }
@@ -116,8 +116,8 @@ impl Distribution<big_data::PointCloud2> for Standard {
             is_bigendian: rng.gen(),
             point_step: rng.gen(),
             row_step: rng.gen(),
-            //data: random_bytes(4 * 4 * 4 * 1280 * 960),
-            data: empty(),
+            data: random_bytes(4 * 4 * 4 * 1280 * 960),
+            //data: empty(),
             is_dense: rng.gen(),
         }
     }

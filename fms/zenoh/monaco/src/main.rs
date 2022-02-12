@@ -1,53 +1,55 @@
 use datatypes::*;
 use futures::prelude::*;
 use futures::select;
-use std::convert::TryInto;
 use std::env;
-use zenoh::*;
+use zenoh::config::Config;
+use zenoh::prelude::*;
 
 #[async_std::main]
 async fn main() {
-    let mut args_iter = env::args();
-    assert_eq!((2, Some(2)), args_iter.size_hint());
-    let robot_number = args_iter.nth(1).unwrap();
-
     env_logger::init();
 
-    let mut config = Properties::default();
-    config.insert(String::from("listener"), String::from("tcp/0.0.0.0:7514"));
-    let zenoh = Zenoh::new(config.into()).await.unwrap();
-    let workspace = zenoh.workspace(None).await.unwrap();
+    let mut args_iter = env::args();
+    assert_eq!((2, Some(2)), args_iter.size_hint());
+    let robot_number = args_iter.nth(1).unwrap().parse::<i16>().unwrap();
+
+    let port_number = 7514 + (robot_number - 1) * 50;
+    let listener = format!("tcp/0.0.0.0:{}", port_number);
+
+    let mut config = Config::default();
+    config.listeners.push(listener.parse().unwrap());
+    let session = zenoh::open(config).await.unwrap();
 
     // Inputs
-    let congo_resource_path = format!("/{}/congo", robot_number);
-    let mut congo_change_stream = workspace
-        .subscribe(&congo_resource_path.clone().try_into().unwrap())
+    let congo_resource = format!("/{}/congo", robot_number);
+    let mut congo_subscriber = session.subscribe(&congo_resource).await.unwrap();
+
+    // Outpus
+    let ohio_resource = format!("/{}/ohio", robot_number);
+    let ohio_expression_id = session.declare_expr(&ohio_resource).await.unwrap();
+    session
+        .declare_publication(ohio_expression_id)
         .await
         .unwrap();
 
-    // Outpus
-    let ohio_resource_path = format!("/{}/ohio", robot_number);
-
-    println!("Monaco: Starting loop");
+    let node_name = format!("Monaco_{}", robot_number);
+    println!("{}: Starting loop", node_name);
     loop {
         select!(
-            change = congo_change_stream.next().fuse() => {
+            change = congo_subscriber.next() => {
                 let change = change.unwrap();
                 let kind = change.kind;
                 match kind {
-                    ChangeKind::Put | ChangeKind::Patch => {
-                        let buf = match change.value.unwrap() {
-                            Value::Custom {encoding_descr: _, data: buf} => Some(buf),
-                            _ => None,
-                        }.unwrap();
-                        let twist = deserialize_twist(buf.contiguous().as_slice()).unwrap();
-                        println!("Monaco: Received Twist from {}, putting value to {}", congo_resource_path, ohio_resource_path);
-                        workspace
-                            .put(&ohio_resource_path.clone().try_into().unwrap(), twist.linear.unwrap().x.into())
+                    SampleKind::Put | SampleKind::Patch => {
+                        let buf = change.value;
+                        let twist = deserialize_twist(buf.payload.contiguous().as_slice()).unwrap();
+                        println!("{}: Received Twist from {}, putting value to {}", node_name, congo_resource, ohio_resource);
+                        session
+                            .put(ohio_expression_id, twist.linear.unwrap().x)
                             .await
                             .unwrap();
                     },
-                    ChangeKind::Delete => {
+                    SampleKind::Delete => {
                         ()
                     },
                 }

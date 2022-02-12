@@ -46,9 +46,9 @@ class ScenarioTopo(Topo):
         #   latency 
 
         # Links
-        self.addLink(switch, internet_server, bw=10000)
-        self.addLink(switch, cellular_modem, bw=100)
-        self.addLink(cellular_modem, access_point, bw=50000, delay='100ms', loss=0.5)
+        self.addLink(switch, internet_server, bw=1000)
+        self.addLink(switch, cellular_modem, bw=100, delay='100ms', loss=0.5)
+        self.addLink(cellular_modem, access_point, bw=1000)
         self.addLink(access_point, robot, bw=270, delay='2ms', loss=0.14)
 
 
@@ -63,3 +63,9 @@ def start_network_load(net):
 def stop_network_load(processes):
     for p in processes:
         p.send_signal(SIGINT)
+
+
+def get_capture_interface(net, host_name):
+    host = net.get(host_name)
+    #return host.intfList()[0]
+    return 'any'

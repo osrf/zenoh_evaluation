@@ -9,56 +9,41 @@ import time
 import utils
 
 
-def node_names(process_set):
-    node_names_1 = [
-        'arequipa',
-        'barcelona',
-        'cordoba',
-        'delhi',
-        'freeport',
-        'geneva',
-        'georgetown',
-        'hamburg',
-        'hebron',
-        'kingston',
-        ]
-    node_names_2 = [
-        'lyon',
-        'mandalay',
-        'medellin',
-        'monaco',
-        'osaka',
-        'ponce',
-        'portsmouth',
-        'rotterdam',
-        'taipei',
-        'tripoli',
-        ]
-    if process_set == '1':
-        return node_names_1
-    elif process_set == '2':
-        return node_names_2
-    else:
-        return node_names_1 + node_names_2
-
-
-def start_processes(selector, process_set):
+def start_processes(selector, executables, robot_number):
     processes = {}
-    for node_name in node_names(process_set):
-        processes[node_name] = subprocess.Popen(
-            ['../mont_blanc/zenoh/target/debug/' + node_name],
+    for executable in executables:
+        process_key = '{}_{}'.format(executable, robot_number)
+        processes[process_key] = subprocess.Popen(
+            ['../fms/zenoh/target/debug/' + executable,
+             str(robot_number)],
             stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             universal_newlines=True)
         selector.register(
-            processes[node_name].stdout,
+            processes[process_key].stdout,
             selectors.EVENT_READ,
-            data=node_name)
+            data=process_key)
+    return processes
+
+
+def start_processes_no_number(selector, executables):
+    processes = {}
+    for executable in executables:
+        processes[executable] = subprocess.Popen(
+            ['../fms/zenoh/target/debug/' + executable],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True)
+        selector.register(
+            processes[executable].stdout,
+            selectors.EVENT_READ,
+            data=executable)
     return processes
 
 
 def terminate_processes(processes):
-    for p in processes:
-        processes[p].send_signal(SIGINT)
+    for k in processes:
+        processes[k].send_signal(SIGINT)
 
 
 def process_line(processes, line):
@@ -88,9 +73,43 @@ def process_line(processes, line):
     return ignore_line, line_is_expected, started
 
 
-def application_test(process_set):
+def application_test(robot_count, start_fms=True):
     selector = selectors.DefaultSelector()
-    processes = start_processes(selector, process_set)
+
+    robot_executables = [
+        'cordoba',
+        'lyon',
+        'freeport',
+        'medellin',
+        'portsmouth',
+        'delhi',
+        'hamburg',
+        'taipei',
+        'osaka',
+        'hebron',
+        'kingston',
+        'tripoli',
+        'mandalay',
+        'ponce',
+        'geneva',
+        'monaco',
+        'rotterdam',
+        'barcelona',
+        'arequipa',
+        'georgetown',
+        'status_reporter']
+    fms_executables = ['fms']
+
+    processes = {}
+    for robot_number in range(1, robot_count + 1):
+        processes.update(start_processes(
+            selector,
+            robot_executables,
+            str(robot_number)))
+    if start_fms:
+        processes.update(start_processes_no_number(
+            selector,
+            fms_executables))
 
     not_started_processes = list(processes.keys())
     started_processes = []
@@ -103,7 +122,7 @@ def application_test(process_set):
     while True:
         events = selector.select(timeout=2)
         for key, mask in events:
-            node_name = key.data
+            process = key.data
             line = key.fileobj.readline().strip()
             if len(line) == 0:
                 continue
@@ -124,8 +143,8 @@ def application_test(process_set):
                         unexpected_lines[line] = 1
 
             if has_started:
-                not_started_processes.remove(node_name)
-                started_processes.append(node_name)
+                not_started_processes.remove(process)
+                started_processes.append(process)
                 print('Started processes ({}): {}'.format(len(started_processes), started_processes))
                 print('Waiting for processes ({}): {}'.format(len(not_started_processes), not_started_processes))
 
@@ -133,7 +152,7 @@ def application_test(process_set):
                 print('All nodes started')
                 started = True
                 start_time = time.time()
-        if started and (time.time() - start_time) > 30:
+        if started and (time.time() - start_time) > 10:
             break
     print('Run time exceeded; terminating')
     terminate_processes(processes)
@@ -146,16 +165,25 @@ def application_test(process_set):
 
 
 def main():
-    tshark = utils.start_tshark_native('/tmp/application_capture.pcap', 'any')
+    if len(sys.argv) != 2:
+        print('Please supply a robot count')
+        return 1
+    robot_count = int(sys.argv[1])
+    start_fms = True
+    if len(sys.argv) == 3 and sys.argv[2] == 'nofms':
+        start_fms = False
+
+    tshark = utils.start_tshark_native(
+        '/tmp/application_capture.pcap',
+        'any')
     time.sleep(2)
-    process_set = 'full'
-    if len(sys.argv) > 1:
-        process_set = sys.argv[1]
-    application_test(process_set)
+    application_test(robot_count, start_fms)
     time.sleep(2)
     utils.stop_tshark(tshark)
 
-    utils.process_zenoh_packet_capture('/tmp/application_capture.pcap', 1)
+    utils.process_zenoh_packet_capture(
+        '/tmp/application_capture.pcap',
+        robot_count)
 
     return 0
 
