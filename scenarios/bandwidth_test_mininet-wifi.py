@@ -79,6 +79,34 @@ def zenoh_bandwidth_test(net):
         print(l.strip())
 
 
+def fastdds_bandwidth_test(net):
+    print('Doing FastDDS bandwidth test')
+    source, sink = get_source_and_sink(net)
+
+    popens = {}
+    data_lines = []
+    home_path = '/home/' + os.getenv("SUDO_USER")
+    binary_path = home_path + '/zenoh_evaluation/FastddsTester'
+    sink_process = sink.popen(binary_path + '/FastddsTester subscriber')
+    print('\tWaiting for subscriber to start')
+    time.sleep(5)
+    print('\tStarting publisher')
+    source_process = source.popen(binary_path + '/FastddsTester publisher')
+    for host, line in pmonitor({source: source_process, sink: sink_process}, timeoutms=2000):
+        if host:
+            print('\t{}-->{}:'.format(host,len(data_lines)), line)
+            if host == sink and (line.startswith('16') or line.startswith('Received')):
+                data_lines.append(line)
+        if len(data_lines) >= 11:
+        	print('data_lines >= 11, stopping')
+        	break
+    source_process.send_signal(SIGINT)
+    sink_process.send_signal(SIGINT)
+    print('\tCompleted; accumulated data:')
+    for l in data_lines:
+        print(l.strip())
+        
+
 def main():
 	# We only have one case to evaluate, Scenario 4	
 	net = scenarios_mnw.scenario4()
@@ -97,6 +125,7 @@ def main():
 	ping_test(net)
 	raw_bandwidth_test(net)
 	zenoh_bandwidth_test(net)
+	fastdds_bandwidth_test(net)
 
 	print('Stopping mininet')
 	net.stop()

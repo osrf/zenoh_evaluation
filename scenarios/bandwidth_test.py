@@ -64,6 +64,34 @@ def zenoh_bandwidth_test(net, scenario_module):
         print(l.strip())
 
 
+def fastdds_bandwidth_test(net,scenario_module):
+    print('Doing FastDDS bandwidth test')
+    source, sink = get_source_and_sink(net, scenario_module)
+
+    popens = {}
+    data_lines = []
+    home_path = '/home/' + os.getenv("SUDO_USER")
+    binary_path = home_path + '/zenoh_evaluation/FastddsTester'
+    sink_process = sink.popen(binary_path + '/FastddsTester subscriber')
+    print('\tWaiting for subscriber to start')
+    time.sleep(5)
+    print('\tStarting publisher')
+    source_process = source.popen(binary_path + '/FastddsTester publisher')
+    for host, line in pmonitor({source: source_process, sink: sink_process}, timeoutms=2000):
+        if host:
+            print('\t{}-->{}:'.format(host,len(data_lines)), line)
+            if host == sink and (line.startswith('16') or line.startswith('Received')):
+                data_lines.append(line)
+        if len(data_lines) >= 11:
+        	print('data_lines >= 11, stopping')
+        	break
+    source_process.send_signal(SIGINT)
+    sink_process.send_signal(SIGINT)
+    print('\tCompleted; accumulated data:')
+    for l in data_lines:
+        print(l.strip())
+        
+
 def main():
     if len(sys.argv) != 2:
         print('Please supply a scenario name')
@@ -86,6 +114,7 @@ def main():
 
     tshark = utils.start_tshark_on_source(net, scenario_module, '/tmp/source_capture.pcap')
     zenoh_bandwidth_test(net, scenario_module)
+    #fastdds_bandwidth_test(net, scenario_module)
     utils.stop_tshark(tshark)
 
     scenario_module.stop_network_load(load)
