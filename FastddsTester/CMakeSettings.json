@@ -1,0 +1,30 @@
+{
+  "configurations": [
+    {
+      "name": "Debug",
+      "generator": "Unix Makefiles",
+      "configurationType" : "Debug",
+      "buildRoot":  "${projectDir}/build/${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [{
+        "name": "CMAKE_BUILD_TYPE",
+        "value": "Debug"
+        }]
+    },
+    {
+      "name": "Release",
+      "generator": "Unix Makefiles",
+      "configurationType" : "Release",
+      "buildRoot": "${projectDir}/build/${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [{
+        "name": "CMAKE_BUILD_TYPE",
+        "value": "Release"
+        }]
+    }
+  ]
+}
