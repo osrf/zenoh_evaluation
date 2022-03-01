@@ -2975,3 +2975,4 @@ bool LaserScanPubSubType::getKey(
     }
     return true;
 }
+

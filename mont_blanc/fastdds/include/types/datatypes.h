@@ -3235,7 +3235,7 @@ public:
             const PointField& x);
 
     // Manual patch
-    eProsima_user_DllExport const bool operator ==(
+    eProsima_user_DllExport bool operator ==(
             const PointField& x) const;
 
     /*!
@@ -3955,30 +3955,30 @@ public:
      */
     eProsima_user_DllExport std::vector<float>& ranges();
     /*!
-     * @brief This function copies the value in member intensities0
-     * @param _intensities0 New value to be copied in member intensities0
+     * @brief This function copies the value in member intensities
+     * @param _intensities New value to be copied in member intensities
      */
-    eProsima_user_DllExport void intensities0(
-            const std::vector<float>& _intensities0);
+    eProsima_user_DllExport void intensities(
+            const std::vector<float>& _intensities);
 
     /*!
-     * @brief This function moves the value in member intensities0
-     * @param _intensities0 New value to be moved in member intensities0
+     * @brief This function moves the value in member intensities
+     * @param _intensities New value to be moved in member intensities
      */
-    eProsima_user_DllExport void intensities0(
-            std::vector<float>&& _intensities0);
+    eProsima_user_DllExport void intensities(
+            std::vector<float>&& _intensities);
 
     /*!
-     * @brief This function returns a constant reference to member intensities0
-     * @return Constant reference to member intensities0
+     * @brief This function returns a constant reference to member intensities
+     * @return Constant reference to member intensities
      */
-    eProsima_user_DllExport const std::vector<float>& intensities0() const;
+    eProsima_user_DllExport const std::vector<float>& intensities() const;
 
     /*!
-     * @brief This function returns a reference to member intensities0
-     * @return Reference to member intensities0
+     * @brief This function returns a reference to member intensities
+     * @return Reference to member intensities
      */
-    eProsima_user_DllExport std::vector<float>& intensities0();
+    eProsima_user_DllExport std::vector<float>& intensities();
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -4048,7 +4048,7 @@ private:
     float m_range_min;
     float m_range_max;
     std::vector<float> m_ranges;
-    std::vector<float> m_intensities0;
+    std::vector<float> m_intensities;
 };
 
 #endif // _DATATYPES_H_
