@@ -62,6 +62,717 @@ class Cdr;
 
 
 /*!
+ * @brief This class represents the structure Int32 defined by the user in the IDL file.
+ * @ingroup DATATYPES
+ */
+class Int32
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport Int32();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~Int32();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object Int32 that will be copied.
+     */
+    eProsima_user_DllExport Int32(
+            const Int32& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object Int32 that will be copied.
+     */
+    eProsima_user_DllExport Int32(
+            Int32&& x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Int32 that will be copied.
+     */
+    eProsima_user_DllExport Int32& operator =(
+            const Int32& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object Int32 that will be copied.
+     */
+    eProsima_user_DllExport Int32& operator =(
+            Int32&& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Int32 object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const Int32& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Int32 object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const Int32& x);
+
+    /*!
+     * @brief This function sets a value in member data
+     * @param _data New value for member data
+     */
+    eProsima_user_DllExport void data(
+            int32_t _data);
+
+    /*!
+     * @brief This function returns the value of member data
+     * @return Value of member data
+     */
+    eProsima_user_DllExport int32_t data() const;
+
+    /*!
+     * @brief This function returns a reference to member data
+     * @return Reference to member data
+     */
+    eProsima_user_DllExport int32_t& data();
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of a data depending on the buffer alignment.
+     * @param data Data which is calculated its serialized size.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(
+            const Int32& data,
+            size_t current_alignment = 0);
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of the Key of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getKeyMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function tells you if the Key has been defined for this type
+     */
+    eProsima_user_DllExport static bool isKeyDefined();
+
+    /*!
+     * @brief This function serializes the key members of an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serializeKey(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+private:
+
+    int32_t m_data;
+};
+/*!
+ * @brief This class represents the structure Int64 defined by the user in the IDL file.
+ * @ingroup DATATYPES
+ */
+class Int64
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport Int64();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~Int64();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object Int64 that will be copied.
+     */
+    eProsima_user_DllExport Int64(
+            const Int64& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object Int64 that will be copied.
+     */
+    eProsima_user_DllExport Int64(
+            Int64&& x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Int64 that will be copied.
+     */
+    eProsima_user_DllExport Int64& operator =(
+            const Int64& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object Int64 that will be copied.
+     */
+    eProsima_user_DllExport Int64& operator =(
+            Int64&& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Int64 object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const Int64& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Int64 object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const Int64& x);
+
+    /*!
+     * @brief This function sets a value in member data
+     * @param _data New value for member data
+     */
+    eProsima_user_DllExport void data(
+            int64_t _data);
+
+    /*!
+     * @brief This function returns the value of member data
+     * @return Value of member data
+     */
+    eProsima_user_DllExport int64_t data() const;
+
+    /*!
+     * @brief This function returns a reference to member data
+     * @return Reference to member data
+     */
+    eProsima_user_DllExport int64_t& data();
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of a data depending on the buffer alignment.
+     * @param data Data which is calculated its serialized size.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(
+            const Int64& data,
+            size_t current_alignment = 0);
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of the Key of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getKeyMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function tells you if the Key has been defined for this type
+     */
+    eProsima_user_DllExport static bool isKeyDefined();
+
+    /*!
+     * @brief This function serializes the key members of an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serializeKey(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+private:
+
+    int64_t m_data;
+};
+/*!
+ * @brief This class represents the structure Float32 defined by the user in the IDL file.
+ * @ingroup DATATYPES
+ */
+class Float32
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport Float32();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~Float32();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object Float32 that will be copied.
+     */
+    eProsima_user_DllExport Float32(
+            const Float32& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object Float32 that will be copied.
+     */
+    eProsima_user_DllExport Float32(
+            Float32&& x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Float32 that will be copied.
+     */
+    eProsima_user_DllExport Float32& operator =(
+            const Float32& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object Float32 that will be copied.
+     */
+    eProsima_user_DllExport Float32& operator =(
+            Float32&& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Float32 object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const Float32& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Float32 object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const Float32& x);
+
+    /*!
+     * @brief This function sets a value in member data
+     * @param _data New value for member data
+     */
+    eProsima_user_DllExport void data(
+            float _data);
+
+    /*!
+     * @brief This function returns the value of member data
+     * @return Value of member data
+     */
+    eProsima_user_DllExport float data() const;
+
+    /*!
+     * @brief This function returns a reference to member data
+     * @return Reference to member data
+     */
+    eProsima_user_DllExport float& data();
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of a data depending on the buffer alignment.
+     * @param data Data which is calculated its serialized size.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(
+            const Float32& data,
+            size_t current_alignment = 0);
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of the Key of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getKeyMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function tells you if the Key has been defined for this type
+     */
+    eProsima_user_DllExport static bool isKeyDefined();
+
+    /*!
+     * @brief This function serializes the key members of an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serializeKey(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+private:
+
+    float m_data;
+};
+/*!
+ * @brief This class represents the structure Float64 defined by the user in the IDL file.
+ * @ingroup DATATYPES
+ */
+class Float64
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport Float64();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~Float64();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object Float64 that will be copied.
+     */
+    eProsima_user_DllExport Float64(
+            const Float64& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object Float64 that will be copied.
+     */
+    eProsima_user_DllExport Float64(
+            Float64&& x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object Float64 that will be copied.
+     */
+    eProsima_user_DllExport Float64& operator =(
+            const Float64& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object Float64 that will be copied.
+     */
+    eProsima_user_DllExport Float64& operator =(
+            Float64&& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Float64 object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const Float64& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x Float64 object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const Float64& x);
+
+    /*!
+     * @brief This function sets a value in member data
+     * @param _data New value for member data
+     */
+    eProsima_user_DllExport void data(
+            double _data);
+
+    /*!
+     * @brief This function returns the value of member data
+     * @return Value of member data
+     */
+    eProsima_user_DllExport double data() const;
+
+    /*!
+     * @brief This function returns a reference to member data
+     * @return Reference to member data
+     */
+    eProsima_user_DllExport double& data();
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of a data depending on the buffer alignment.
+     * @param data Data which is calculated its serialized size.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(
+            const Float64& data,
+            size_t current_alignment = 0);
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of the Key of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getKeyMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function tells you if the Key has been defined for this type
+     */
+    eProsima_user_DllExport static bool isKeyDefined();
+
+    /*!
+     * @brief This function serializes the key members of an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serializeKey(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+private:
+
+    double m_data;
+};
+/*!
+ * @brief This class represents the structure String defined by the user in the IDL file.
+ * @ingroup DATATYPES
+ */
+class String
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport String();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~String();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object String that will be copied.
+     */
+    eProsima_user_DllExport String(
+            const String& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object String that will be copied.
+     */
+    eProsima_user_DllExport String(
+            String&& x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object String that will be copied.
+     */
+    eProsima_user_DllExport String& operator =(
+            const String& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object String that will be copied.
+     */
+    eProsima_user_DllExport String& operator =(
+            String&& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x String object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const String& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x String object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const String& x);
+
+    /*!
+     * @brief This function copies the value in member data
+     * @param _data New value to be copied in member data
+     */
+    eProsima_user_DllExport void data(
+            const std::string& _data);
+
+    /*!
+     * @brief This function moves the value in member data
+     * @param _data New value to be moved in member data
+     */
+    eProsima_user_DllExport void data(
+            std::string&& _data);
+
+    /*!
+     * @brief This function returns a constant reference to member data
+     * @return Constant reference to member data
+     */
+    eProsima_user_DllExport const std::string& data() const;
+
+    /*!
+     * @brief This function returns a reference to member data
+     * @return Reference to member data
+     */
+    eProsima_user_DllExport std::string& data();
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of a data depending on the buffer alignment.
+     * @param data Data which is calculated its serialized size.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(
+            const String& data,
+            size_t current_alignment = 0);
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of the Key of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getKeyMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function tells you if the Key has been defined for this type
+     */
+    eProsima_user_DllExport static bool isKeyDefined();
+
+    /*!
+     * @brief This function serializes the key members of an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serializeKey(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+private:
+
+    std::string m_data;
+};
+/*!
  * @brief This class represents the structure Timestamp defined by the user in the IDL file.
  * @ingroup DATATYPES
  */
@@ -2523,6 +3234,7 @@ public:
     eProsima_user_DllExport bool operator ==(
             const PointField& x);
 
+    // Manual patch
     eProsima_user_DllExport const bool operator ==(
             const PointField& x) const;
 

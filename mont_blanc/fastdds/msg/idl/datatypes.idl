@@ -1,3 +1,22 @@
+struct Int32 {
+    long data;
+};
+struct Int64 {
+    long long data;
+};
+
+struct Float32 {
+    float data;
+};
+
+struct Float64 {
+    double data;
+};
+
+struct String {
+    string data;
+};
+
 struct Timestamp {
   unsigned long long sec;
   unsigned long nanosec;

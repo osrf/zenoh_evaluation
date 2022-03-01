@@ -88,7 +88,21 @@ find . -name "*.idl" -exec sh -c '
   done' sh {} +
 ```
 
->  If you want to split your headers and sources, remember to move the generated headers to the appropriate location in `include/` and update the generated sources' include statements.
+>  If you want to split your headers and sources, remember to move the generated headers to the appropriate location in `include/` and **update the generated sources' include statements**.
+> 
+> For the generated sources, this means appending `"type/"` to the include path.
+> 
+> In other words:
+> 
+> ```cpp
+> #include "types/datatypesPubSubTypes.h"
+>           ^^^^^
+> 
+> #include "types/datatypes.h"
+>           ^^^^^
+> ```
+> 
+> 
 
 ### The Caveats
 

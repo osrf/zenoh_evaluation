@@ -34,11 +34,748 @@ using namespace eprosima::fastcdr::exception;
 
 #include <utility>
 
+Int32::Int32()
+{
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@cb0ed20
+    m_data = 0;
+
+}
+
+Int32::~Int32()
+{
+}
+
+Int32::Int32(
+        const Int32& x)
+{
+    m_data = x.m_data;
+}
+
+Int32::Int32(
+        Int32&& x)
+{
+    m_data = x.m_data;
+}
+
+Int32& Int32::operator =(
+        const Int32& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+Int32& Int32::operator =(
+        Int32&& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+bool Int32::operator ==(
+        const Int32& x)
+{
+
+    return (m_data == x.m_data);
+}
+
+bool Int32::operator !=(
+        const Int32& x)
+{
+    return !(*this == x);
+}
+
+size_t Int32::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    return current_alignment - initial_alignment;
+}
+
+size_t Int32::getCdrSerializedSize(
+        const Int32& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    return current_alignment - initial_alignment;
+}
+
+void Int32::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+
+    scdr << m_data;
+
+}
+
+void Int32::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+
+    dcdr >> m_data;
+}
+
+/*!
+ * @brief This function sets a value in member data
+ * @param _data New value for member data
+ */
+void Int32::data(
+        int32_t _data)
+{
+    m_data = _data;
+}
+
+/*!
+ * @brief This function returns the value of member data
+ * @return Value of member data
+ */
+int32_t Int32::data() const
+{
+    return m_data;
+}
+
+/*!
+ * @brief This function returns a reference to member data
+ * @return Reference to member data
+ */
+int32_t& Int32::data()
+{
+    return m_data;
+}
+
+
+size_t Int32::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
+
+    return current_align;
+}
+
+bool Int32::isKeyDefined()
+{
+    return false;
+}
+
+void Int32::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+
+}
+
+Int64::Int64()
+{
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@43738a82
+    m_data = 0;
+
+}
+
+Int64::~Int64()
+{
+}
+
+Int64::Int64(
+        const Int64& x)
+{
+    m_data = x.m_data;
+}
+
+Int64::Int64(
+        Int64&& x)
+{
+    m_data = x.m_data;
+}
+
+Int64& Int64::operator =(
+        const Int64& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+Int64& Int64::operator =(
+        Int64&& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+bool Int64::operator ==(
+        const Int64& x)
+{
+
+    return (m_data == x.m_data);
+}
+
+bool Int64::operator !=(
+        const Int64& x)
+{
+    return !(*this == x);
+}
+
+size_t Int64::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    return current_alignment - initial_alignment;
+}
+
+size_t Int64::getCdrSerializedSize(
+        const Int64& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    return current_alignment - initial_alignment;
+}
+
+void Int64::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+
+    scdr << m_data;
+
+}
+
+void Int64::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+
+    dcdr >> m_data;
+}
+
+/*!
+ * @brief This function sets a value in member data
+ * @param _data New value for member data
+ */
+void Int64::data(
+        int64_t _data)
+{
+    m_data = _data;
+}
+
+/*!
+ * @brief This function returns the value of member data
+ * @return Value of member data
+ */
+int64_t Int64::data() const
+{
+    return m_data;
+}
+
+/*!
+ * @brief This function returns a reference to member data
+ * @return Reference to member data
+ */
+int64_t& Int64::data()
+{
+    return m_data;
+}
+
+
+size_t Int64::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
+
+    return current_align;
+}
+
+bool Int64::isKeyDefined()
+{
+    return false;
+}
+
+void Int64::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+
+}
+
+Float32::Float32()
+{
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@22eeefeb
+    m_data = 0.0;
+
+}
+
+Float32::~Float32()
+{
+}
+
+Float32::Float32(
+        const Float32& x)
+{
+    m_data = x.m_data;
+}
+
+Float32::Float32(
+        Float32&& x)
+{
+    m_data = x.m_data;
+}
+
+Float32& Float32::operator =(
+        const Float32& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+Float32& Float32::operator =(
+        Float32&& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+bool Float32::operator ==(
+        const Float32& x)
+{
+
+    return (m_data == x.m_data);
+}
+
+bool Float32::operator !=(
+        const Float32& x)
+{
+    return !(*this == x);
+}
+
+size_t Float32::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    return current_alignment - initial_alignment;
+}
+
+size_t Float32::getCdrSerializedSize(
+        const Float32& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    return current_alignment - initial_alignment;
+}
+
+void Float32::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+
+    scdr << m_data;
+
+}
+
+void Float32::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+
+    dcdr >> m_data;
+}
+
+/*!
+ * @brief This function sets a value in member data
+ * @param _data New value for member data
+ */
+void Float32::data(
+        float _data)
+{
+    m_data = _data;
+}
+
+/*!
+ * @brief This function returns the value of member data
+ * @return Value of member data
+ */
+float Float32::data() const
+{
+    return m_data;
+}
+
+/*!
+ * @brief This function returns a reference to member data
+ * @return Reference to member data
+ */
+float& Float32::data()
+{
+    return m_data;
+}
+
+
+size_t Float32::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
+
+    return current_align;
+}
+
+bool Float32::isKeyDefined()
+{
+    return false;
+}
+
+void Float32::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+
+}
+
+Float64::Float64()
+{
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@78ac1102
+    m_data = 0.0;
+
+}
+
+Float64::~Float64()
+{
+}
+
+Float64::Float64(
+        const Float64& x)
+{
+    m_data = x.m_data;
+}
+
+Float64::Float64(
+        Float64&& x)
+{
+    m_data = x.m_data;
+}
+
+Float64& Float64::operator =(
+        const Float64& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+Float64& Float64::operator =(
+        Float64&& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+bool Float64::operator ==(
+        const Float64& x)
+{
+
+    return (m_data == x.m_data);
+}
+
+bool Float64::operator !=(
+        const Float64& x)
+{
+    return !(*this == x);
+}
+
+size_t Float64::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    return current_alignment - initial_alignment;
+}
+
+size_t Float64::getCdrSerializedSize(
+        const Float64& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    return current_alignment - initial_alignment;
+}
+
+void Float64::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+
+    scdr << m_data;
+
+}
+
+void Float64::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+
+    dcdr >> m_data;
+}
+
+/*!
+ * @brief This function sets a value in member data
+ * @param _data New value for member data
+ */
+void Float64::data(
+        double _data)
+{
+    m_data = _data;
+}
+
+/*!
+ * @brief This function returns the value of member data
+ * @return Value of member data
+ */
+double Float64::data() const
+{
+    return m_data;
+}
+
+/*!
+ * @brief This function returns a reference to member data
+ * @return Reference to member data
+ */
+double& Float64::data()
+{
+    return m_data;
+}
+
+
+size_t Float64::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
+
+    return current_align;
+}
+
+bool Float64::isKeyDefined()
+{
+    return false;
+}
+
+void Float64::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+
+}
+
+String::String()
+{
+    // m_data com.eprosima.idl.parser.typecode.StringTypeCode@6ec8211c
+    m_data ="";
+
+}
+
+String::~String()
+{
+}
+
+String::String(
+        const String& x)
+{
+    m_data = x.m_data;
+}
+
+String::String(
+        String&& x)
+{
+    m_data = std::move(x.m_data);
+}
+
+String& String::operator =(
+        const String& x)
+{
+
+    m_data = x.m_data;
+
+    return *this;
+}
+
+String& String::operator =(
+        String&& x)
+{
+
+    m_data = std::move(x.m_data);
+
+    return *this;
+}
+
+bool String::operator ==(
+        const String& x)
+{
+
+    return (m_data == x.m_data);
+}
+
+bool String::operator !=(
+        const String& x)
+{
+    return !(*this == x);
+}
+
+size_t String::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 255 + 1;
+
+    return current_alignment - initial_alignment;
+}
+
+size_t String::getCdrSerializedSize(
+        const String& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.data().size() + 1;
+
+    return current_alignment - initial_alignment;
+}
+
+void String::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+
+    scdr << m_data;
+
+}
+
+void String::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+
+    dcdr >> m_data;
+}
+
+/*!
+ * @brief This function copies the value in member data
+ * @param _data New value to be copied in member data
+ */
+void String::data(
+        const std::string& _data)
+{
+    m_data = _data;
+}
+
+/*!
+ * @brief This function moves the value in member data
+ * @param _data New value to be moved in member data
+ */
+void String::data(
+        std::string&& _data)
+{
+    m_data = std::move(_data);
+}
+
+/*!
+ * @brief This function returns a constant reference to member data
+ * @return Constant reference to member data
+ */
+const std::string& String::data() const
+{
+    return m_data;
+}
+
+/*!
+ * @brief This function returns a reference to member data
+ * @return Reference to member data
+ */
+std::string& String::data()
+{
+    return m_data;
+}
+
+size_t String::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
+
+    return current_align;
+}
+
+bool String::isKeyDefined()
+{
+    return false;
+}
+
+void String::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+
+}
+
 Timestamp::Timestamp()
 {
-    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@33723e30
+    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2eda0940
     m_sec = 0;
-    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7a30d1e6
+    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@3578436e
     m_nanosec = 0;
 
 }
@@ -230,11 +967,11 @@ void Timestamp::serializeKey(
 
 Header::Header()
 {
-    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1990a65e
+    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@10a035a0
     m_sec = 0;
-    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@64485a47
+    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@67b467e9
     m_nanosec = 0;
-    // m_frame_id com.eprosima.idl.parser.typecode.StringTypeCode@25bbf683
+    // m_frame_id com.eprosima.idl.parser.typecode.StringTypeCode@47db50c5
     m_frame_id ="";
 
 }
@@ -475,11 +1212,11 @@ void Header::serializeKey(
 
 Point::Point()
 {
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@10dba097
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2641e737
     m_x = 0.0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1786f9d5
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@727803de
     m_y = 0.0;
-    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@eb21112
+    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@704921a5
     m_z = 0.0;
 
 }
@@ -713,13 +1450,13 @@ void Point::serializeKey(
 
 Quaternion::Quaternion()
 {
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@149494d8
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@319b92f3
     m_x = 0.0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@710726a3
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@fcd6521
     m_y = 0.0;
-    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@646007f4
+    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@31f924f5
     m_z = 0.0;
-    // m_w com.eprosima.idl.parser.typecode.PrimitiveTypeCode@481a15ff
+    // m_w com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4fcd19b3
     m_w = 0.0;
 
 }
@@ -995,11 +1732,11 @@ void Quaternion::serializeKey(
 
 Vector3::Vector3()
 {
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@545997b1
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@376b4233
     m_x = 0.0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4cf4d528
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7a36aefa
     m_y = 0.0;
-    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@77846d2c
+    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@17211155
     m_z = 0.0;
 
 }
@@ -1233,9 +1970,9 @@ void Vector3::serializeKey(
 
 Vector3Stamped::Vector3Stamped()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@5606c0b
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@641147d0
 
-    // m_vector com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@80ec1f8
+    // m_vector com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@6e38921c
 
 
 }
@@ -1437,9 +2174,9 @@ void Vector3Stamped::serializeKey(
 
 Pose::Pose()
 {
-    // m_position com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@314c508a
+    // m_position com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@38364841
 
-    // m_orientation com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@10b48321
+    // m_orientation com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@28c4711c
 
 
 }
@@ -1641,9 +2378,9 @@ void Pose::serializeKey(
 
 Twist::Twist()
 {
-    // m_linear com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@80ec1f8
+    // m_linear com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@6e38921c
 
-    // m_angular com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@80ec1f8
+    // m_angular com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@6e38921c
 
 
 }
@@ -1845,9 +2582,9 @@ void Twist::serializeKey(
 
 TwistWithCovariance::TwistWithCovariance()
 {
-    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@731f8236
+    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@51b7e5df
 
-    // m_covariance com.eprosima.idl.parser.typecode.SequenceTypeCode@255b53dc
+    // m_covariance com.eprosima.idl.parser.typecode.SequenceTypeCode@18a70f16
 
 
 }
@@ -2062,9 +2799,9 @@ void TwistWithCovariance::serializeKey(
 
 TwistWithCovarianceStamped::TwistWithCovarianceStamped()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@5606c0b
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@641147d0
 
-    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@51b7e5df
+    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@4d826d77
 
 
 }
@@ -2266,9 +3003,9 @@ void TwistWithCovarianceStamped::serializeKey(
 
 Wrench::Wrench()
 {
-    // m_force com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@80ec1f8
+    // m_force com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@6e38921c
 
-    // m_torque com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@80ec1f8
+    // m_torque com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@6e38921c
 
 
 }
@@ -2470,9 +3207,9 @@ void Wrench::serializeKey(
 
 WrenchStamped::WrenchStamped()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@5606c0b
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@641147d0
 
-    // m_wrench com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@18a70f16
+    // m_wrench com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@15bb6bea
 
 
 }
@@ -2674,19 +3411,19 @@ void WrenchStamped::serializeKey(
 
 Image::Image()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@5606c0b
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@641147d0
 
-    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@29ba4338
+    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@41ee392b
     m_height = 0;
-    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@c540f5a
+    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1e67a849
     m_width = 0;
-    // m_encoding com.eprosima.idl.parser.typecode.StringTypeCode@4d826d77
+    // m_encoding com.eprosima.idl.parser.typecode.StringTypeCode@57d5872c
     m_encoding ="";
-    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@61009542
+    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@667a738
     m_is_bigendian = false;
-    // m_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@77e9807f
+    // m_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@36f0f1be
     m_step = 0;
-    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@448ff1a8
+    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@157632c9
 
 
 }
@@ -3126,13 +3863,13 @@ void Image::serializeKey(
 
 PointField::PointField()
 {
-    // m_name com.eprosima.idl.parser.typecode.StringTypeCode@2145433b
+    // m_name com.eprosima.idl.parser.typecode.StringTypeCode@20d3d15a
     m_name ="";
-    // m_offset com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2890c451
+    // m_offset com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2893de87
     m_offset = 0;
-    // m_datatype com.eprosima.idl.parser.typecode.PrimitiveTypeCode@40e6dfe1
+    // m_datatype com.eprosima.idl.parser.typecode.PrimitiveTypeCode@55ca8de8
     m_datatype = 0;
-    // m_count com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1b083826
+    // m_count com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2c34f934
     m_count = 0;
 
 }
@@ -3194,6 +3931,7 @@ bool PointField::operator ==(
     return (m_name == x.m_name && m_offset == x.m_offset && m_datatype == x.m_datatype && m_count == x.m_count);
 }
 
+// Manual patch
 const bool PointField::operator ==(
         const PointField& x) const
 {
@@ -3422,23 +4160,23 @@ void PointField::serializeKey(
 
 PointCloud2::PointCloud2()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@5606c0b
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@641147d0
 
-    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@105fece7
+    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@12d3a4e9
     m_height = 0;
-    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@3ec300f1
+    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@240237d2
     m_width = 0;
-    // m_fields com.eprosima.idl.parser.typecode.SequenceTypeCode@482cd91f
+    // m_fields com.eprosima.idl.parser.typecode.SequenceTypeCode@25a65b77
 
-    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@123f1134
+    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2ed0fbae
     m_is_bigendian = false;
-    // m_point_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7d68ef40
+    // m_point_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@212bf671
     m_point_step = 0;
-    // m_row_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5b0abc94
+    // m_row_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@14a2f921
     m_row_step = 0;
-    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@75c072cb
+    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@3c87521
 
-    // m_is_dense com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1f1c7bf6
+    // m_is_dense com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2aece37d
     m_is_dense = false;
 
 }
@@ -3964,25 +4702,25 @@ void PointCloud2::serializeKey(
 
 LaserScan::LaserScan()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@5606c0b
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@641147d0
 
-    // m_angle_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@12d3a4e9
+    // m_angle_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@17c386de
     m_angle_min = 0.0;
-    // m_angle_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@240237d2
+    // m_angle_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5af97850
     m_angle_max = 0.0;
-    // m_angle_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@25a65b77
+    // m_angle_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5ef60048
     m_angle_increment = 0.0;
-    // m_time_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2ed0fbae
+    // m_time_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1d548a08
     m_time_increment = 0.0;
-    // m_scan_time com.eprosima.idl.parser.typecode.PrimitiveTypeCode@212bf671
+    // m_scan_time com.eprosima.idl.parser.typecode.PrimitiveTypeCode@16aa0a0a
     m_scan_time = 0.0;
-    // m_range_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@14a2f921
+    // m_range_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@780cb77
     m_range_min = 0.0;
-    // m_range_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@3c87521
+    // m_range_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@691a7f8f
     m_range_max = 0.0;
-    // m_ranges com.eprosima.idl.parser.typecode.SequenceTypeCode@2aece37d
+    // m_ranges com.eprosima.idl.parser.typecode.SequenceTypeCode@50a7bc6e
 
-    // m_intensities0 com.eprosima.idl.parser.typecode.SequenceTypeCode@548a102f
+    // m_intensities0 com.eprosima.idl.parser.typecode.SequenceTypeCode@161b062a
 
 
 }
