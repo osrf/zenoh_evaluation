@@ -36,6 +36,14 @@ target_link_libraries(datatypes_lib fastcdr fastrtps)
 add_library(montblanc_node SHARED ./src/Node.cpp)
 target_link_libraries(montblanc_node fastcdr fastrtps)
 
+# add_library(montblanc_utils SHARED ./src/utils.cpp)
+# target_link_libraries(montblanc_utils fastcdr fastrtps)
+
+add_library(montblanc_utils INTERFACE)
+target_include_directories(montblanc_utils INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+  target_link_libraries(montblanc_utils INTERFACE fastcdr fastrtps)
+
 # Executables
 add_executable(main src/main.cpp)
 target_link_libraries(main
