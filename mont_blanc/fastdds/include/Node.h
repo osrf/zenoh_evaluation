@@ -21,6 +21,7 @@
 
 namespace montblanc
 {
+
 // DynamicDataWriterListener ===========================================================================================
 class DynamicDataWriterListener : public eprosima::fastdds::dds::DataWriterListener
 {
