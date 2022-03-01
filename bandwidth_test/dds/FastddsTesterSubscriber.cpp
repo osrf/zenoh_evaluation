@@ -111,8 +111,8 @@ void FastddsTesterSubscriber::SubListener::onSubscriptionMatched(
     if (info.status == MATCHED_MATCHING)
     {
         n_matched++;
-        std::cout << "Subscriber matched" << std::endl;
-        std::cout << "Rx at (ns), Tx time (ns), Transmitted (Bytes), Rate (B/s), Bandwidth (bps), Bandwidth (Mbps)" << std::endl;
+        std::cout << "Subscriber matched\n";
+        std::cout << "Received at,Transmission time (ns),Transmitted (Bytes),Rate (B/s),Bandwidth (bps),Bandwidth (Mbps)\n";
     }
     else
     {

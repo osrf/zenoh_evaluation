@@ -6,6 +6,7 @@ from mininet.link import TCLink
 from mininet.util import dumpNodeConnections, waitListening, decode, pmonitor
 from signal import SIGINT
 import importlib
+import os.path
 import sys
 import time
 import utils
@@ -43,11 +44,14 @@ def zenoh_bandwidth_test(net, scenario_module):
 
     popens = {}
     data_lines = []
-    sink_process = sink.popen('/home/mininet/zenoh_evaluation/bandwidth_test/zenoh/target/debug/subscriber')
-    #print('\tWaiting for subscriber to start')
+    root_dir = '/home/{}/zenoh_evaluation'.format(os.getenv('USER'))
+    sink_process = sink.popen(os.path.join(
+        root_dir,
+        'bandwidth_test/zenoh/target/debug/subscriber'))
     time.sleep(5)
-    #print('\tStarting publisher')
-    source_process = source.popen('/home/mininet/zenoh_evaluation/bandwidth_test/zenoh/target/debug/publisher')
+    source_process = sink.popen(os.path.join(
+        root_dir,
+        'bandwidth_test/zenoh/target/debug/publisher'))
     for host, line in pmonitor({source: source_process, sink: sink_process}, timeoutms=2000):
         if host:
             #print('\t{}:'.format(len(data_lines)), line.strip())
@@ -65,32 +69,33 @@ def zenoh_bandwidth_test(net, scenario_module):
 
 
 def fastdds_bandwidth_test(net,scenario_module):
-    print('Doing FastDDS bandwidth test')
+    print('FastDDS bandwidth test')
     source, sink = get_source_and_sink(net, scenario_module)
 
     popens = {}
     data_lines = []
-    home_path = '/home/' + os.getenv("SUDO_USER")
-    binary_path = home_path + '/zenoh_evaluation/FastddsTester'
-    sink_process = sink.popen(binary_path + '/FastddsTester subscriber')
-    print('\tWaiting for subscriber to start')
-    time.sleep(5)
-    print('\tStarting publisher')
-    source_process = source.popen(binary_path + '/FastddsTester publisher')
+    root_dir = '/home/{}/zenoh_evaluation'.format(os.getenv('USER'))
+    binary = os.path.join(
+        root_dir,
+        '/dds/build/FastDDSBandwidthTest')
+    sink_process = sink.popen([binary, 'subscriber'])
+    time.sleep(2)
+    source_process = sink.popen([binary, 'publisher'])
     for host, line in pmonitor({source: source_process, sink: sink_process}, timeoutms=2000):
         if host:
-            print('\t{}-->{}:'.format(host,len(data_lines)), line)
+            #print('\t{}-->{}:'.format(host,len(data_lines)), line)
             if host == sink and (line.startswith('16') or line.startswith('Received')):
                 data_lines.append(line)
+                print(len(data_lines) - 1, end=' ', flush=True)
         if len(data_lines) >= 11:
-        	print('data_lines >= 11, stopping')
-        	break
+            print('')
+            break
     source_process.send_signal(SIGINT)
     sink_process.send_signal(SIGINT)
     print('\tCompleted; accumulated data:')
     for l in data_lines:
         print(l.strip())
-        
+
 
 def main():
     if len(sys.argv) != 2:
@@ -112,15 +117,19 @@ def main():
     print()
     raw_bandwidth_test(net, scenario_module)
 
-    tshark = utils.start_tshark_on_source(net, scenario_module, '/tmp/source_capture.pcap')
+    tshark = utils.start_tshark_on_source(net, scenario_module, '/tmp/zenoh_source_capture.pcap')
     zenoh_bandwidth_test(net, scenario_module)
-    #fastdds_bandwidth_test(net, scenario_module)
+    utils.stop_tshark(tshark)
+
+    tshark = utils.start_tshark_on_source(net, scenario_module, '/tmp/dds_source_capture.pcap')
+    fastdds_bandwidth_test(net, scenario_module)
     utils.stop_tshark(tshark)
 
     scenario_module.stop_network_load(load)
     net.stop()
 
-    #utils.process_zenoh_packet_capture('/tmp/source_capture.pcap')
+    #utils.process_zenoh_packet_capture('/tmp/zenoh_source_capture.pcap')
+    #utils.process_dds_packet_capture('/tmp/dds_source_capture.pcap')
 
     return 0
 

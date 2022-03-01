@@ -47,10 +47,10 @@ message(STATUS "Configuring FastDDS tester...")
 file(GLOB FASTDDSTESTER_SOURCES_CXX "*.cxx")
 file(GLOB FASTDDSTESTER_SOURCES_CPP "*.cpp")
 
-add_executable(FastddsTester ${FASTDDSTESTER_SOURCES_CXX} ${FASTDDSTESTER_SOURCES_CPP})
-target_compile_definitions(FastddsTester PRIVATE
+add_executable(FastDDSBandwidthTest ${FASTDDSTESTER_SOURCES_CXX} ${FASTDDSTESTER_SOURCES_CPP})
+target_compile_definitions(FastDDSBandwidthTest PRIVATE
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
     $<$<BOOL:${INTERNAL_DEBUG}>:__INTERNALDEBUG> # Internal debug activated.
 )
-target_link_libraries(FastddsTester fastrtps fastcdr foonathan_memory)
-install(TARGETS FastddsTester)
+target_link_libraries(FastDDSBandwidthTest fastrtps fastcdr foonathan_memory)
+install(TARGETS FastDDSBandwidthTest)
