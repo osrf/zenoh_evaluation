@@ -101,8 +101,6 @@ find . -name "*.idl" -exec sh -c '
 > #include "types/datatypes.h"
 >           ^^^^^
 > ```
-> 
-> 
 
 ### The Caveats
 
@@ -116,9 +114,7 @@ This is a [yet unsolved issue](https://github.com/eProsima/Fast-DDS-Gen/issues/9
 
 The fastddsgen IDL spec doesn't explicitly support this case, but the fix that allows this to work is fairly simple-- the generated sources need to be manually patched.
 
-This is because there is a missing `const operator ==` operator overload.
-
-So just manually patch it in the generated header and source file!
+This is because there is a missing `const operator ==` operator overload. This issue [appears to have been fixed in the newest release of fastddsgen](https://github.com/eProsima/Fast-DDS-Gen/issues/98), but since it isn't what is installed by default in the latest version of FastDDS, you either need to upgrade manually, or.. manually patch it in the generated header and source file!
 
 For example:
 
@@ -129,7 +125,7 @@ For example:
             const PointField& x);
 
     // Patched in
-    eProsima_user_DllExport const bool operator ==(
+    eProsima_user_DllExport bool operator ==(
             const PointField& x) const;
 ```
 
@@ -144,7 +140,7 @@ bool PointField::operator ==(
 }
 
 // Patched in
-const bool PointField::operator ==(
+bool PointField::operator ==(
         const PointField& x) const
 {
 
@@ -171,6 +167,83 @@ const bool PointField::operator ==(
 > ```
 > 
 > The `-cs` argument is especially important to prevent keyword conflicts.
+
+## More Gotchas
+
+### Field Max Sizes
+
+Each field actually has a max size (of buffer allocated in memory!) (e.g. for strings, the max size is `255`). If you exceed this amount, FastDDS **FAILS SILENTLY!!!** and the sent message can't get received by subscribers (whether this is due to the message not being published or some issue on the subscriber side remains to be seen).
+
+In order to see the max size, see the `getMaxCdrSerializedSize` method in your generated source files.
+
+For example:
+
+```cpp
+size_t String::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 255 + 1;
+                                                                                       ^^^
+    return current_alignment - initial_alignment;
+}
+```
+
+Or for a sequence type
+
+```cpp
+size_t TwistWithCovariance::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += Twist::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+    current_alignment += (100 * 8) + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+                          ^^^
+
+
+
+    return current_alignment - initial_alignment;
+}
+```
+
+Note that each increment corresponds to a field. 
+
+#### Increasing  Field Max Sizes
+
+There are two ways to increase the max field sizes:
+
+1. Manually patch the generated sources
+   
+   - This is self explanatory, just increase the numbers highlighted in the previous section for the relevant field for the relevant type you want to increase the max field size for
+
+2. Manually specify the max size in your IDL definition
+   
+   - The IDL spec allows you to configure the max size for a field. You can specify the max size explicitly using (or appending to) a `< >` tag. So for example, if we wanted to increase the max size to 1024...
+   
+   - ```cpp
+     // String example
+     struct String {
+         string<1024> data;
+                ^^^^
+     };
+     ```
+   
+   - ```cpp
+     // Sequence example
+     struct TwistWithCovariance {
+         Twist twist;
+         sequence<double, 1024> covariance;
+                          ^^^^
+     };
+     ```
+
+## 
 
 ## Test Topology
 
