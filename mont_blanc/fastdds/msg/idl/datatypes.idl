@@ -16,7 +16,7 @@ struct Float64 {
 };
 
 struct String {
-    string data;
+    string<1024> data;
 };
 
 struct Timestamp {
@@ -27,7 +27,7 @@ struct Timestamp {
 struct Header {
   long sec;
   unsigned long nanosec;
-  string frame_id;
+  string<256> frame_id;
 };
 
 // geometry_msgs subset ========================================================
@@ -67,7 +67,7 @@ struct Twist {
 
 struct TwistWithCovariance {
   Twist twist;
-  sequence<double> covariance;
+  sequence<double, 256> covariance;
 };
 
 struct TwistWithCovarianceStamped {
@@ -90,10 +90,10 @@ struct Image {
   Header header;
   unsigned long height;
   unsigned long width;
-  string encoding;
+  string<256> encoding;
   boolean is_bigendian;
   unsigned long step;
-  sequence<octet> data;
+  sequence<octet, 1024> data;
 };
 
 const octet PointField__INT8 = 1;
@@ -106,7 +106,7 @@ const octet PointField__FLOAT32 = 7;
 const octet PointField__FLOAT64 = 8;
 
 struct PointField {
-    string name;
+    string<256> name;
     unsigned long offset;
     octet datatype;
     unsigned long count;
@@ -116,11 +116,11 @@ struct PointCloud2 {
   Header header;
   unsigned long height;
   unsigned long width;
-  sequence<PointField> fields;
+  sequence<PointField, 256> fields;
   boolean is_bigendian;
   unsigned long point_step;
   unsigned long row_step;
-  sequence<octet> data;
+  sequence<octet, 1024> data;
   boolean is_dense;
 };
 
@@ -133,6 +133,6 @@ struct LaserScan {
   float scan_time;
   float range_min;
   float range_max;
-  sequence<float> ranges;
-  sequence<float> intensities0;
+  sequence<float, 1024> ranges;
+  sequence<float, 1024> intensities;
 };
