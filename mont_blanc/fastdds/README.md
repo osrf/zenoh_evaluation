@@ -88,6 +88,8 @@ find . -name "*.idl" -exec sh -c '
   done' sh {} +
 ```
 
+>  If you want to split your headers and sources, remember to move the generated headers to the appropriate location in `include/` and update the generated sources' include statements.
+
 ### The Caveats
 
 **IDL includes**
@@ -95,8 +97,6 @@ find . -name "*.idl" -exec sh -c '
 The IDL spec allows for other IDL definitions to be included in another definition. `fastddsgen` invokes a pre-processor to replace the include line with the contents of the included file. This works as intended, but for some reason very often, `fastddsgen` deterministically fails to generate a valid source file.
 
 This is a [yet unsolved issue](https://github.com/eProsima/Fast-DDS-Gen/issues/97), so the way around this is to list all IDL definitions in a **single file**, doing the job of the pre-processor.
-
-
 
 **Custom IDL Types in Sequence**
 
@@ -110,7 +110,7 @@ For example:
 
 ```cpp
 // TypeName.h
- 
+
     eProsima_user_DllExport bool operator ==(
             const PointField& x);
 
@@ -137,8 +137,6 @@ const bool PointField::operator ==(
     return (m_name == x.m_name && m_offset == x.m_offset && m_datatype == x.m_datatype && m_count == x.m_count);
 }
 ```
-
-
 
 ### Generating Examples
 
