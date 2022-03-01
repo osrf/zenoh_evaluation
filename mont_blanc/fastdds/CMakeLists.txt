@@ -36,12 +36,29 @@ target_link_libraries(datatypes_lib fastcdr fastrtps)
 add_library(montblanc_node SHARED ./src/Node.cpp)
 target_link_libraries(montblanc_node fastcdr fastrtps)
 
+# Executables
 add_executable(main src/main.cpp)
 target_link_libraries(main
   fastcdr
   fastrtps
   datatypes_lib
   montblanc_node)
+
+file(GLOB_RECURSE node_files RELATIVE ${CMAKE_SOURCE_DIR} "src/nodes/*.cpp")
+
+foreach(file_path ${node_files})
+  string( REPLACE ".cpp" "" new_name ${file_path} )
+  get_filename_component(filename ${new_name} NAME)
+  add_executable( ${filename} ${file_path} )
+  target_link_libraries(${filename}
+    fastcdr
+    fastrtps
+    datatypes_lib
+    montblanc_node)
+  set_target_properties(${filename}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nodes")
+endforeach()
 
 # add_executable(Header
 #   src/HeaderPublisher.cxx
