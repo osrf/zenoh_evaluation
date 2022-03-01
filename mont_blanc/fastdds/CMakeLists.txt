@@ -25,11 +25,12 @@ endif()
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/include/
-  ${PROJECT_SOURCE_DIR}/msg/gen/
 )
 
 # Libs
-add_library(datatypes_lib SHARED ./src/types/datatypes.cxx ./src/types/datatypesPubSubTypes.cxx)
+add_library(datatypes_lib SHARED
+  ./src/types/datatypes.cxx
+  ./src/types/datatypesPubSubTypes.cxx)
 target_link_libraries(datatypes_lib fastcdr fastrtps)
 
 add_library(montblanc_node SHARED ./src/Node.cpp)
