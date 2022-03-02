@@ -1,0 +1,138 @@
+// std_msgs subset =============================================================
+struct Int32 {
+    long data;
+};
+
+struct Int64 {
+    long long data;
+};
+
+struct Float32 {
+    float data;
+};
+
+struct Float64 {
+    double data;
+};
+
+struct String {
+    string<1024> data;
+};
+
+struct Timestamp {
+  unsigned long long sec;
+  unsigned long nanosec;
+};
+
+struct Header {
+  long sec;
+  unsigned long nanosec;
+  string<256> frame_id;
+};
+
+// geometry_msgs subset ========================================================
+struct Point {
+  double x;
+  double y;
+  double z;
+};
+
+struct Quaternion {
+  double x;
+  double y;
+  double z;
+  double w;
+};
+
+struct Vector3 {
+  double x;
+  double y;
+  double z;
+};
+
+struct Vector3Stamped {
+  Header header;
+  Vector3 vector;
+};
+
+struct Pose {
+  Point position;
+  Quaternion orientation;
+};
+
+struct Twist {
+  Vector3 linear;
+  Vector3 angular;
+};
+
+struct TwistWithCovariance {
+  Twist twist;
+  sequence<double, 256> covariance;
+};
+
+struct TwistWithCovarianceStamped {
+  Header header;
+  TwistWithCovariance twist;
+};
+
+struct Wrench {
+  Vector3 force;
+  Vector3 torque;
+};
+
+struct WrenchStamped {
+  Header header;
+  Wrench wrench;
+};
+
+// sensor_msgs subset ==========================================================
+struct Image {
+  Header header;
+  unsigned long height;
+  unsigned long width;
+  string<256> encoding;
+  boolean is_bigendian;
+  unsigned long step;
+  sequence<octet, 3840 * 2160 * 3> data; // Provisioning for 4K images
+};
+
+const octet PointField__INT8 = 1;
+const octet PointField__UINT8 = 2;
+const octet PointField__INT16 = 3;
+const octet PointField__UINT16 = 4;
+const octet PointField__INT32 = 5;
+const octet PointField__UINT32 = 6;
+const octet PointField__FLOAT32 = 7;
+const octet PointField__FLOAT64 = 8;
+
+struct PointField {
+    string<256> name;
+    unsigned long offset;
+    octet datatype;
+    unsigned long count;
+};
+
+struct PointCloud2 {
+  Header header;
+  unsigned long height;
+  unsigned long width;
+  sequence<PointField, 256> fields;
+  boolean is_bigendian;
+  unsigned long point_step;
+  unsigned long row_step;
+  sequence<octet, 4 * 4 * 4 * 1920 * 1080> data;
+  boolean is_dense;
+};
+
+struct LaserScan {
+  Header header;
+  float angle_min;
+  float angle_max;
+  float angle_increment;
+  float time_increment;
+  float scan_time;
+  float range_min;
+  float range_max;
+  sequence<float, 1024> ranges;
+  sequence<float, 1024> intensities;
+};
