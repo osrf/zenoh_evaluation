@@ -1,5 +1,3 @@
-#include "Node.h"
-
 #include <fastdds/dds/domain/DomainParticipantFactory.hpp>
 
 #include <fastdds/dds/subscriber/SampleInfo.hpp>
@@ -7,6 +5,8 @@
 
 #include <fastdds/dds/publisher/qos/PublisherQos.hpp>
 #include <fastdds/dds/publisher/qos/DataWriterQos.hpp>
+
+#include "Node.h"
 
 
 using namespace eprosima::fastdds::dds;
