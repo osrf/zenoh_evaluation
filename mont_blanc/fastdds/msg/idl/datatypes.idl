@@ -93,7 +93,7 @@ struct Image {
   string<256> encoding;
   boolean is_bigendian;
   unsigned long step;
-  sequence<octet, 1024> data;
+  sequence<octet, 3840 * 2160 * 3> data; // Provisioning for 4K images
 };
 
 const octet PointField__INT8 = 1;
@@ -120,7 +120,7 @@ struct PointCloud2 {
   boolean is_bigendian;
   unsigned long point_step;
   unsigned long row_step;
-  sequence<octet, 1024> data;
+  sequence<octet, 4 * 4 * 4 * 1920 * 1080> data;
   boolean is_dense;
 };
 

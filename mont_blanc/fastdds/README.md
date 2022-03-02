@@ -174,7 +174,7 @@ bool PointField::operator ==(
 
 Each field actually has a max size (of buffer allocated in memory!) (e.g. for strings, the max size is `255`). If you exceed this amount, FastDDS **FAILS SILENTLY!!!** and the sent message can't get received by subscribers (whether this is due to the message not being published or some issue on the subscriber side remains to be seen).
 
-In order to see the max size, see the `getMaxCdrSerializedSize` method in your generated source files.
+In order to see the max size, see the `getMaxCdrSerializedSize` method in your generated source files (for the non-PubSubType source file).
 
 For example:
 
