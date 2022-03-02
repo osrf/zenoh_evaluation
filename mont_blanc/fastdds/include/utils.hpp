@@ -89,6 +89,46 @@ Image random_image(size_t len = 0) // 1920 * 1080 * 3
     return image_msg;
 }
 
+PointField random_pointfield(size_t len = 32)
+{
+    PointField pt_msg;
+
+    pt_msg.name(montblanc::random_string(len));
+    pt_msg.offset(montblanc::random_number<unsigned long>());
+    pt_msg.datatype(montblanc::random_number<uint8_t>());
+    pt_msg.count(montblanc::random_number<unsigned long>(0, 1));
+
+    return pt_msg;
+}
+
+PointCloud2 random_pointcloud(size_t len = 0) // 4 * 4 * 4 * 1280 * 960
+{
+    PointCloud2 pc_msg;
+
+    pc_msg.header(montblanc::random_header());
+
+    pc_msg.height(montblanc::random_number<unsigned long>());
+    pc_msg.width(montblanc::random_number<unsigned long>());
+
+    std::vector<PointField> pts(3);
+    for (int i=0; i < 3; ++i)
+    {
+        pts.push_back(random_pointfield());
+    }
+
+    pc_msg.fields(pts);
+
+    pc_msg.is_bigendian(montblanc::random_number<int>(0, 1));
+    pc_msg.point_step(montblanc::random_number<unsigned long>());
+    pc_msg.row_step(montblanc::random_number<unsigned long>());
+
+    pc_msg.data(montblanc::random_number_vector<uint8_t>(len));
+
+    pc_msg.is_dense(montblanc::random_number<int>(0, 1));
+
+    return pc_msg;
+}
+
 
 } // namespace montblanc
 
