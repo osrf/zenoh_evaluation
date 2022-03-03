@@ -1,6 +1,21 @@
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "Node.h"
 #include "utils.hpp"
@@ -23,18 +38,20 @@ int main() {
     auto congo_prev = steady_clock::now();
     auto congo_now = steady_clock::now();
 
-    // PUB =============================================================================================================
-    DataWriter* ohio_writer = node.create_datawriter("/ohio", static_cast<TypeSupport>(new Float32PubSubType()));
+    // PUB =========================================================================================
+    DataWriter* ohio_writer = node.create_datawriter(
+      "/ohio",
+      static_cast<TypeSupport>(new Float32PubSubType()));
     Float32 ohio_msg;
 
-    // RANDOMIZE =======================================================================================================
+    // RANDOMIZE ===================================================================================
     printf("%s: Data generation started\n", name.c_str());
 
     ohio_msg.data(montblanc::random_number<float>());
 
     printf("%s: Data generation done\n\n", name.c_str());
 
-    // SUB =============================================================================================================
+    // SUB =========================================================================================
     DataReader* congo_reader = node.create_datareader(
       "/congo",
       static_cast<TypeSupport>(new TwistPubSubType()),
@@ -59,7 +76,7 @@ int main() {
       }
     );
 
-    // LOOP ============================================================================================================
+    // LOOP ========================================================================================
     congo_next = steady_clock::now();
     congo_prev = steady_clock::now();
     congo_now = steady_clock::now();

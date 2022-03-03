@@ -1,6 +1,21 @@
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "Node.h"
 #include "utils.hpp"
@@ -27,18 +42,20 @@ int main() {
     auto columbia_prev = steady_clock::now();
     auto columbia_now = steady_clock::now();
 
-    // PUB =============================================================================================================
-    DataWriter* loire_writer = node.create_datawriter("/loire", static_cast<TypeSupport>(new PointCloud2PubSubType()));
+    // PUB =========================================================================================
+    DataWriter* loire_writer = node.create_datawriter(
+      "/loire",
+      static_cast<TypeSupport>(new PointCloud2PubSubType()));
     PointCloud2 loire_msg;
 
-    // RANDOMIZE =======================================================================================================
+    // RANDOMIZE ===================================================================================
     printf("%s: Data generation started\n", name.c_str());
 
     loire_msg = montblanc::random_pointcloud();
 
     printf("%s: Data generation done\n\n", name.c_str());
 
-    // SUB =============================================================================================================
+    // SUB =========================================================================================
     DataReader* godavari_reader = node.create_datareader(
       "/godavari",
       static_cast<TypeSupport>(new LaserScanPubSubType()),
@@ -54,7 +71,8 @@ int main() {
         {
           if (info.valid_data)
           {
-            printf("%s: Received LaserScan<%zu, %zu> from /godavari, putting PointCloud2<%zu> to /loire, | <%ld μs>\n",
+            printf("%s: Received LaserScan<%zu, %zu> from /godavari, "
+                   "putting PointCloud2<%zu> to /loire, | <%ld μs>\n",
                    name.c_str(),
                    msg.ranges().size(),
                    msg.intensities().size(),
@@ -90,7 +108,7 @@ int main() {
       }
     );
 
-    // LOOP ============================================================================================================
+    // LOOP ========================================================================================
     godavari_next = steady_clock::now();
     godavari_prev = steady_clock::now();
     godavari_now = steady_clock::now();

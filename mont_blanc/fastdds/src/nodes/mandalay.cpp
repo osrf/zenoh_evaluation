@@ -1,6 +1,21 @@
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "Node.h"
 #include "utils.hpp"
@@ -47,17 +62,23 @@ int main() {
     auto pub_prev = steady_clock::now();
     auto pub_now = steady_clock::now();
 
-    // PUB =============================================================================================================
-    DataWriter* tagus_writer = node.create_datawriter("/tagus", static_cast<TypeSupport>(new PosePubSubType()));
+    // PUB =========================================================================================
+    DataWriter* tagus_writer = node.create_datawriter(
+      "/tagus",
+      static_cast<TypeSupport>(new PosePubSubType()));
     Pose tagus_msg;
 
-    DataWriter* missouri_writer = node.create_datawriter("/missouri", static_cast<TypeSupport>(new ImagePubSubType()));
+    DataWriter* missouri_writer = node.create_datawriter(
+      "/missouri",
+      static_cast<TypeSupport>(new ImagePubSubType()));
     Image missouri_msg;
 
-    DataWriter* brazos_writer = node.create_datawriter("/brazos", static_cast<TypeSupport>(new PointCloud2PubSubType()));
+    DataWriter* brazos_writer = node.create_datawriter(
+      "/brazos",
+      static_cast<TypeSupport>(new PointCloud2PubSubType()));
     PointCloud2 brazos_msg;
 
-    // RANDOMIZE =======================================================================================================
+    // RANDOMIZE ===================================================================================
     printf("%s: Data generation started\n", name.c_str());
 
     tagus_msg = montblanc::random_pose();
@@ -66,7 +87,7 @@ int main() {
 
     printf("%s: Data generation done\n\n", name.c_str());
 
-    // SUB =============================================================================================================
+    // SUB =========================================================================================
     DataReader* danube_reader = node.create_datareader(
       "/danube",
       static_cast<TypeSupport>(new StringPubSubType()),
@@ -210,7 +231,7 @@ int main() {
       }
     );
 
-    // LOOP ============================================================================================================
+    // LOOP ========================================================================================
     danube_next = steady_clock::now();
     danube_prev = steady_clock::now();
     danube_now = steady_clock::now();
@@ -247,7 +268,8 @@ int main() {
       pub_now = steady_clock::now();
       pub_next = pub_now + milliseconds(100);
 
-      printf("%s: Putting generated Pose to /tagus, Image<%zu> to /missouri, PointCloud2<%zu> to /brazos | <%ld μs>\n",
+      printf("%s: Putting generated Pose to /tagus, Image<%zu> to /missouri, "
+             "PointCloud2<%zu> to /brazos | <%ld μs>\n",
              name.c_str(),
              missouri_msg.data().size(),
              brazos_msg.data().size(),

@@ -1,6 +1,21 @@
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "Node.h"
 #include "utils.hpp"
@@ -23,18 +38,20 @@ int main() {
     auto prev = steady_clock::now();
     auto now = steady_clock::now();
 
-    // PUB =============================================================================================================
-    DataWriter* danube_writer = node.create_datawriter("/danube", static_cast<TypeSupport>(new StringPubSubType()));
+    // PUB =========================================================================================
+    DataWriter* danube_writer = node.create_datawriter(
+      "/danube",
+      static_cast<TypeSupport>(new StringPubSubType()));
     String danube_msg;
 
-    // RANDOMIZE =======================================================================================================
+    // RANDOMIZE ===================================================================================
     printf("%s: Data generation started\n", name.c_str());
 
     danube_msg.data(montblanc::random_string(256));
 
     printf("%s: Data generation done\n\n", name.c_str());
 
-    // LOOP ============================================================================================================
+    // LOOP ========================================================================================
     next = steady_clock::now();
     prev = steady_clock::now();
     now = steady_clock::now();

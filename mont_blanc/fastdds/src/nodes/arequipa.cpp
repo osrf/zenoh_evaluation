@@ -1,6 +1,21 @@
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "Node.h"
 #include "utils.hpp"
@@ -23,13 +38,13 @@ int main() {
     auto arkansas_prev = steady_clock::now();
     auto arkansas_now = steady_clock::now();
 
-    // PUB =============================================================================================================
+    // PUB =========================================================================================
     // NONE
 
-    // RANDOMIZE =======================================================================================================
+    // RANDOMIZE ===================================================================================
     // NONE
 
-    // SUB =============================================================================================================
+    // SUB =========================================================================================
     DataReader* arkansas_reader = node.create_datareader(
       "/arkansas",
       static_cast<TypeSupport>(new StringPubSubType()),
@@ -54,7 +69,7 @@ int main() {
       }
     );
 
-    // LOOP ============================================================================================================
+    // LOOP ========================================================================================
     arkansas_next = steady_clock::now();
     arkansas_prev = steady_clock::now();
     arkansas_now = steady_clock::now();

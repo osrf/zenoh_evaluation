@@ -1,6 +1,21 @@
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "Node.h"
 #include "utils.hpp"
@@ -55,15 +70,17 @@ int main() {
     auto volga_prev = steady_clock::now();
     auto volga_now = steady_clock::now();
 
-    // PUB =============================================================================================================
-    DataWriter* congo_writer = node.create_datawriter("/congo", static_cast<TypeSupport>(new TwistPubSubType()));
+    // PUB =========================================================================================
+    DataWriter* congo_writer = node.create_datawriter(
+      "/congo",
+      static_cast<TypeSupport>(new TwistPubSubType()));
     Twist congo_msg;
 
     DataWriter* mekong_writer = node.create_datawriter(
         "/mekong", static_cast<TypeSupport>(new TwistWithCovarianceStampedPubSubType()));
     TwistWithCovarianceStamped mekong_msg;
 
-    // RANDOMIZE =======================================================================================================
+    // RANDOMIZE ===================================================================================
     printf("%s: Data generation started\n", name.c_str());
 
     congo_msg = montblanc::random_twist();
@@ -71,7 +88,7 @@ int main() {
 
     printf("%s: Data generation done\n\n", name.c_str());
 
-    // SUB =============================================================================================================
+    // SUB =========================================================================================
     DataReader* tagus_reader = node.create_datareader(
       "/tagus",
       static_cast<TypeSupport>(new PosePubSubType()),
@@ -164,8 +181,8 @@ int main() {
                    msg.data().size(),
                    mekong_msg.twist().covariance().size(),
                    duration_cast<microseconds>(brazos_now - brazos_prev).count());
-            congo_writer->write(&congo_msg); // ========================================================================
-            mekong_writer->write(&mekong_msg); // ======================================================================
+            congo_writer->write(&congo_msg);  // ===================================================
+            mekong_writer->write(&mekong_msg);  // =================================================
           }
         }
       }
@@ -289,7 +306,7 @@ int main() {
       }
     );
 
-    // LOOP ============================================================================================================
+    // LOOP ========================================================================================
     tagus_next = steady_clock::now();
     tagus_prev = steady_clock::now();
     tagus_now = steady_clock::now();

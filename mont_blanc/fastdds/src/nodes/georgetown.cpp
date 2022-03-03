@@ -1,6 +1,21 @@
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "Node.h"
 #include "utils.hpp"
@@ -31,18 +46,20 @@ int main() {
     auto pub_prev = steady_clock::now();
     auto pub_now = steady_clock::now();
 
-    // PUB =============================================================================================================
-    DataWriter* volga_writer = node.create_datawriter("/volga", static_cast<TypeSupport>(new Float64PubSubType()));
+    // PUB =========================================================================================
+    DataWriter* volga_writer = node.create_datawriter(
+      "/volga",
+      static_cast<TypeSupport>(new Float64PubSubType()));
     Float64 volga_msg;
 
-    // RANDOMIZE =======================================================================================================
+    // RANDOMIZE ===================================================================================
     printf("%s: Data generation started\n", name.c_str());
 
     volga_msg.data(montblanc::random_number<double>());
 
     printf("%s: Data generation done\n\n", name.c_str());
 
-    // SUB =============================================================================================================
+    // SUB =========================================================================================
     DataReader* murray_reader = node.create_datareader(
       "/murray",
       static_cast<TypeSupport>(new Vector3StampedPubSubType()),
@@ -89,7 +106,7 @@ int main() {
       }
     );
 
-    // LOOP ============================================================================================================
+    // LOOP ========================================================================================
     murray_next = steady_clock::now();
     murray_prev = steady_clock::now();
     murray_now = steady_clock::now();
