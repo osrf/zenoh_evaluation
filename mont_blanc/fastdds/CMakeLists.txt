@@ -28,16 +28,22 @@ include_directories(
 )
 
 # Libs
-add_library(datatypes_lib SHARED
-  ./src/types/datatypes.cxx
-  ./src/types/datatypesPubSubTypes.cxx)
-target_link_libraries(datatypes_lib fastcdr fastrtps)
+# The following is really hacky but...
+include(ExternalProject)
+ExternalProject_Add(fastdds_montblanc_types
+  SOURCE_DIR ${CMAKE_SOURCE_DIR}/../dds
+  BINARY_DIR ${CMAKE_BINARY_DIR}/dds-build
+  STEP_TARGETS build
+  EXCLUDE_FROM_ALL TRUE
+  INSTALL_COMMAND cmake -E echo "Skipping install step.")
+
+add_library(datatypes_lib UNKNOWN IMPORTED)
+set_target_properties(datatypes_lib PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../dds/lib/libdatatypes_lib.so)
+include_directories(${CMAKE_SOURCE_DIR}/../dds/include)
+add_dependencies(datatypes_lib fastdds_montblanc_types)
 
 add_library(montblanc_node SHARED ./src/Node.cpp)
 target_link_libraries(montblanc_node fastcdr fastrtps)
-
-# add_library(montblanc_utils SHARED ./src/utils.cpp)
-# target_link_libraries(montblanc_utils fastcdr fastrtps)
 
 add_library(montblanc_utils INTERFACE)
 target_include_directories(montblanc_utils INTERFACE
@@ -45,13 +51,6 @@ target_include_directories(montblanc_utils INTERFACE
   target_link_libraries(montblanc_utils INTERFACE fastcdr fastrtps)
 
 # Executables
-add_executable(main src/main.cpp)
-target_link_libraries(main
-  fastcdr
-  fastrtps
-  datatypes_lib
-  montblanc_node)
-
 file(GLOB_RECURSE node_files RELATIVE ${CMAKE_SOURCE_DIR} "src/nodes/*.cpp")
 
 foreach(file_path ${node_files})
@@ -67,18 +66,3 @@ foreach(file_path ${node_files})
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nodes")
 endforeach()
-
-# add_executable(Header
-#   src/HeaderPublisher.cxx
-#   src/HeaderSubscriber.cxx
-#   src/HeaderPubSubMain.cxx)
-# target_link_libraries(Header
-#   fastcdr
-#   fastrtps
-#   msg_lib)
-# # install(TARGETS msg_lib)
-# install(TARGETS MSG_TYPES
-#     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-#
-# # target_link_libraries(test lib)
