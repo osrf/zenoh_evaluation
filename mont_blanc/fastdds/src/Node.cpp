@@ -47,48 +47,51 @@ namespace montblanc
 
 // DynamicDataWriterListener =======================================================================
 void DynamicDataWriterListener::on_publication_matched(
-  DataWriter*,
-  const PublicationMatchedStatus& info) {}
+  DataWriter *,
+  const PublicationMatchedStatus & info) {}
 
 // DynamicDataReaderListener =======================================================================
 void DynamicDataReaderListener::on_subscription_matched(
-  DataReader* reader, const SubscriptionMatchedStatus& info) {}
+  DataReader * reader, const SubscriptionMatchedStatus & info) {}
 
-void DynamicDataReaderListener::on_data_available(DataReader* reader)
+void DynamicDataReaderListener::on_data_available(DataReader * reader)
 {
   next_sample_cb_(reader);
 }
 
 DynamicDataReaderListener::DynamicDataReaderListener(
   std::function<void(DataReader *)> next_sample_cb)
-  : next_sample_cb_(next_sample_cb) {}
+: next_sample_cb_(next_sample_cb) {}
 
 // Node ============================================================================================
 Node::Node(std::string name)
-  : name_(std::move(name))
-  , participant_(nullptr)
-  , publisher_(nullptr)
-  , subscriber_(nullptr)
-  , topics_(std::map<std::string, Topic*>())
-  , datawriters_(std::vector<DataWriter*>())  // one Publisher controls multiple DataWriters
-  , datareaders_(std::vector<DataReader*>())  // one Subscriber manages multiple DataReaders
+: name_(std::move(name)),
+  participant_(nullptr),
+  publisher_(nullptr),
+  subscriber_(nullptr),
+  topics_(std::map<std::string, Topic *>()),
+  datawriters_(std::vector<DataWriter *>()),  // one Publisher controls multiple DataWriters
+  datareaders_(std::vector<DataReader *>()),  // one Subscriber manages multiple DataReaders
 {}
 
 Node::~Node()
 {
   // Writers and Readers
-  for (auto datawriter : datawriters_)
+  for (auto datawriter : datawriters_) {
     publisher_->delete_datawriter(datawriter);
-  for (auto datareader : datareaders_)
+  }
+  for (auto datareader : datareaders_) {
     subscriber_->delete_datareader(datareader);
+  }
 
   // Pubsub
-  if (publisher_ != nullptr) participant_->delete_publisher(publisher_);
-  if (subscriber_ != nullptr) participant_->delete_subscriber(subscriber_);
+  if (publisher_ != nullptr) {participant_->delete_publisher(publisher_);}
+  if (subscriber_ != nullptr) {participant_->delete_subscriber(subscriber_);}
 
   // Topics
-  for (auto topic_pair : topics_)
+  for (auto topic_pair : topics_) {
     participant_->delete_topic(topic_pair.second);
+  }
 
   DomainParticipantFactory::get_instance()->delete_participant(participant_);
 }
@@ -99,18 +102,15 @@ bool Node::init()
   pqos.name(name_.c_str());
 
   participant_ = DomainParticipantFactory::get_instance()->create_participant(0, pqos);
-  if (participant_ == nullptr)
-  {
-      return false;
-  }
+  if (participant_ == nullptr) {return false;}
 
   printf("[Node Participant Ready]: %s\n", name_.c_str());
   return true;
 }
 
-std::string Node::name() { return name_; }
+std::string Node::name() {return name_;}
 
-DataWriter* Node::create_datawriter(std::string topic_name,
+DataWriter * Node::create_datawriter(std::string topic_name,
                                     TypeSupport type)
 {
   type.register_type(participant_);
@@ -123,7 +123,7 @@ DataWriter* Node::create_datawriter(std::string topic_name,
 
   // Topic
   auto topic_it = topics_.find(topic_name);
-  Topic* topic_;
+  Topic * topic_;
 
   if (topic_it == topics_.end()) {
     topic_ = participant_->create_topic(topic_name.c_str(),
@@ -137,8 +137,8 @@ DataWriter* Node::create_datawriter(std::string topic_name,
   }
 
   // Writer
-  DynamicDataWriterListener* listener_ = new DynamicDataWriterListener();
-  DataWriter* datawriter_ = publisher_->create_datawriter(topic_,
+  DynamicDataWriterListener * listener_ = new DynamicDataWriterListener();
+  DataWriter * datawriter_ = publisher_->create_datawriter(topic_,
                                                           DATAWRITER_QOS_DEFAULT,
                                                           listener_);
   assert (datawriter_ != nullptr);
@@ -148,7 +148,7 @@ DataWriter* Node::create_datawriter(std::string topic_name,
   return datawriter_;
 }
 
-DataReader* Node::create_datareader(std::string topic_name,
+DataReader * Node::create_datareader(std::string topic_name,
                                     TypeSupport type,
                                     std::function<void(DataReader *)> cb)
 {
@@ -162,7 +162,7 @@ DataReader* Node::create_datareader(std::string topic_name,
 
   // Topic
   auto topic_it = topics_.find(topic_name);
-  Topic* topic_;
+  Topic * topic_;
 
   if (topic_it == topics_.end()) {
     topic_ = participant_->create_topic(topic_name.c_str(),
@@ -176,8 +176,8 @@ DataReader* Node::create_datareader(std::string topic_name,
   }
 
   // Reader
-  DynamicDataReaderListener* listener_ = new DynamicDataReaderListener(cb);
-  DataReader* datareader_ = subscriber_->create_datareader(topic_,
+  DynamicDataReaderListener * listener_ = new DynamicDataReaderListener(cb);
+  DataReader * datareader_ = subscriber_->create_datareader(topic_,
                                                            DATAREADER_QOS_DEFAULT,
                                                            listener_);
   assert (datareader_ != nullptr);

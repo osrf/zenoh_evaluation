@@ -40,7 +40,7 @@ class DynamicDataWriterListener : public eprosima::fastdds::dds::DataWriterListe
 {
 public:
   void on_publication_matched(
-    eprosima::fastdds::dds::DataWriter* writer,
+    eprosima::fastdds::dds::DataWriter * writer,
     const eprosima::fastdds::dds::PublicationMatchedStatus& info) override;
 };
 
@@ -52,10 +52,10 @@ public:
   DynamicDataReaderListener(
     std::function<void(eprosima::fastdds::dds::DataReader *)> next_sample_cb_);
 
-  void on_data_available(eprosima::fastdds::dds::DataReader* reader) override;
+  void on_data_available(eprosima::fastdds::dds::DataReader * reader) override;
   void on_subscription_matched(
-    eprosima::fastdds::dds::DataReader* reader,
-    const eprosima::fastdds::dds::SubscriptionMatchedStatus& info) override;
+    eprosima::fastdds::dds::DataReader * reader,
+    const eprosima::fastdds::dds::SubscriptionMatchedStatus & info) override;
 
 private:
    std::function<void(eprosima::fastdds::dds::DataReader *)> next_sample_cb_;
@@ -72,24 +72,24 @@ public:
   bool init();
   std::string name();
 
-  eprosima::fastdds::dds::DataWriter* create_datawriter(
+  eprosima::fastdds::dds::DataWriter * create_datawriter(
     std::string topic_name,
     eprosima::fastdds::dds::TypeSupport type);
-  eprosima::fastdds::dds::DataReader* create_datareader(
+  eprosima::fastdds::dds::DataReader * create_datareader(
     std::string topic_name,
     eprosima::fastdds::dds::TypeSupport type,
     std::function<void(eprosima::fastdds::dds::DataReader *)> cb);
 
 private:
-  eprosima::fastdds::dds::DomainParticipant* participant_;
+  eprosima::fastdds::dds::DomainParticipant * participant_;
 
-  eprosima::fastdds::dds::Publisher* publisher_;
-  eprosima::fastdds::dds::Subscriber* subscriber_;
+  eprosima::fastdds::dds::Publisher * publisher_;
+  eprosima::fastdds::dds::Subscriber * subscriber_;
 
-  std::map<std::string, eprosima::fastdds::dds::Topic*> topics_;
+  std::map<std::string, eprosima::fastdds::dds::Topic *> topics_;
 
-  std::vector<eprosima::fastdds::dds::DataWriter*> datawriters_;
-  std::vector<eprosima::fastdds::dds::DataReader*> datareaders_;
+  std::vector<eprosima::fastdds::dds::DataWriter *> datawriters_;
+  std::vector<eprosima::fastdds::dds::DataReader *> datareaders_;
 
   std::string name_;
 };

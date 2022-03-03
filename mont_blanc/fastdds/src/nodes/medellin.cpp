@@ -27,50 +27,50 @@
 using namespace eprosima::fastdds::dds;
 
 int main() {
-    std::string name = "Medellin";
+  std::string name = "Medellin";
 
-    montblanc::Node node = montblanc::Node(name.c_str());
-    node.init();
+  montblanc::Node node = montblanc::Node(name.c_str());
+  node.init();
 
-    using namespace std::chrono;
+  using namespace std::chrono;
 
-    auto next = steady_clock::now();
-    auto prev = steady_clock::now();
-    auto now = steady_clock::now();
+  auto next = steady_clock::now();
+  auto prev = steady_clock::now();
+  auto now = steady_clock::now();
 
-    // PUB =========================================================================================
-    DataWriter* nile_writer = node.create_datawriter(
-      "/nile",
-      static_cast<TypeSupport>(new Int32PubSubType()));
-    Int32 nile_msg;
+  // PUB =========================================================================================
+  DataWriter * nile_writer = node.create_datawriter(
+    "/nile",
+    static_cast<TypeSupport>(new Int32PubSubType()));
+  Int32 nile_msg;
 
-    // RANDOMIZE ===================================================================================
-    printf("%s: Data generation started\n", name.c_str());
+  // RANDOMIZE ===================================================================================
+  printf("%s: Data generation started\n", name.c_str());
 
-    nile_msg.data(montblanc::random_number<int32_t>());
+  nile_msg.data(montblanc::random_number<int32_t>());
 
-    printf("%s: Data generation done\n\n", name.c_str());
+  printf("%s: Data generation done\n\n", name.c_str());
 
-    // LOOP ========================================================================================
-    next = steady_clock::now();
-    prev = steady_clock::now();
+  // LOOP ========================================================================================
+  next = steady_clock::now();
+  prev = steady_clock::now();
+  now = steady_clock::now();
+
+  printf("%s: Starting loop\n", name.c_str());
+
+  while (true)
+  {
+    prev = now;
     now = steady_clock::now();
+    next = now + milliseconds(10);
 
-    printf("%s: Starting loop\n", name.c_str());
+    printf("%s: Putting generated Int32 to /nile | <%ld μs>\n",
+           name.c_str(),
+           duration_cast<microseconds>(now - prev).count());
+    nile_writer->write(&nile_msg);
 
-    while (true)
-    {
-      prev = now;
-      now = steady_clock::now();
-      next = now + milliseconds(10);
+    std::this_thread::sleep_until(next);
+  }
 
-      printf("%s: Putting generated Int32 to /nile | <%ld μs>\n",
-             name.c_str(),
-             duration_cast<microseconds>(now - prev).count());
-      nile_writer->write(&nile_msg);
-
-      std::this_thread::sleep_until(next);
-    }
-
-    return 0;
+  return 0;
 }

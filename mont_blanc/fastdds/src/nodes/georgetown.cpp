@@ -27,114 +27,114 @@
 using namespace eprosima::fastdds::dds;
 
 int main() {
-    std::string name = "Georgetown";
+  std::string name = "Georgetown";
 
-    montblanc::Node node = montblanc::Node(name.c_str());
-    node.init();
+  montblanc::Node node = montblanc::Node(name.c_str());
+  node.init();
 
-    using namespace std::chrono;
+  using namespace std::chrono;
 
-    auto murray_next = steady_clock::now();
-    auto murray_prev = steady_clock::now();
-    auto murray_now = steady_clock::now();
+  auto murray_next = steady_clock::now();
+  auto murray_prev = steady_clock::now();
+  auto murray_now = steady_clock::now();
 
-    auto lena_next = steady_clock::now();
-    auto lena_prev = steady_clock::now();
-    auto lena_now = steady_clock::now();
+  auto lena_next = steady_clock::now();
+  auto lena_prev = steady_clock::now();
+  auto lena_now = steady_clock::now();
 
-    auto pub_next = steady_clock::now();
-    auto pub_prev = steady_clock::now();
-    auto pub_now = steady_clock::now();
+  auto pub_next = steady_clock::now();
+  auto pub_prev = steady_clock::now();
+  auto pub_now = steady_clock::now();
 
-    // PUB =========================================================================================
-    DataWriter* volga_writer = node.create_datawriter(
-      "/volga",
-      static_cast<TypeSupport>(new Float64PubSubType()));
-    Float64 volga_msg;
+  // PUB =========================================================================================
+  DataWriter * volga_writer = node.create_datawriter(
+    "/volga",
+    static_cast<TypeSupport>(new Float64PubSubType()));
+  Float64 volga_msg;
 
-    // RANDOMIZE ===================================================================================
-    printf("%s: Data generation started\n", name.c_str());
+  // RANDOMIZE ===================================================================================
+  printf("%s: Data generation started\n", name.c_str());
 
-    volga_msg.data(montblanc::random_number<double>());
+  volga_msg.data(montblanc::random_number<double>());
 
-    printf("%s: Data generation done\n\n", name.c_str());
+  printf("%s: Data generation done\n\n", name.c_str());
 
-    // SUB =========================================================================================
-    DataReader* murray_reader = node.create_datareader(
-      "/murray",
-      static_cast<TypeSupport>(new Vector3StampedPubSubType()),
-      [&](DataReader* reader) -> void
-      {
-        Vector3Stamped msg;
-        SampleInfo info;
-
-        murray_prev = murray_now;
-        murray_now = steady_clock::now();
-
-        if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-          if (info.valid_data)
-          {
-            printf("%s: Received Vector3Stamped from /murray | <%ld μs>\n",
-                   name.c_str(),
-                   duration_cast<microseconds>(murray_now - murray_prev).count());
-          }
-        }
-      }
-    );
-
-    DataReader* lena_reader = node.create_datareader(
-      "/lena",
-      static_cast<TypeSupport>(new WrenchStampedPubSubType()),
-      [&](DataReader* reader) -> void
-      {
-        WrenchStamped msg;
-        SampleInfo info;
-
-        lena_prev = lena_now;
-        lena_now = steady_clock::now();
-
-        if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-          if (info.valid_data)
-          {
-            printf("%s: Received WrenchStamped from /lena | <%ld μs>\n",
-                   name.c_str(),
-                   duration_cast<microseconds>(lena_now - lena_prev).count());
-          }
-        }
-      }
-    );
-
-    // LOOP ========================================================================================
-    murray_next = steady_clock::now();
-    murray_prev = steady_clock::now();
-    murray_now = steady_clock::now();
-
-    lena_next = steady_clock::now();
-    lena_prev = steady_clock::now();
-    lena_now = steady_clock::now();
-
-    pub_next = steady_clock::now();
-    pub_prev = steady_clock::now();
-    pub_now = steady_clock::now();
-
-    printf("%s: Starting loop\n", name.c_str());
-
-    while (true)
+  // SUB =========================================================================================
+  DataReader * murray_reader = node.create_datareader(
+    "/murray",
+    static_cast<TypeSupport>(new Vector3StampedPubSubType()),
+    [&](DataReader * reader) -> void
     {
-      pub_prev = pub_now;
-      pub_now = steady_clock::now();
-      pub_next = pub_now + milliseconds(50);
+      Vector3Stamped msg;
+      SampleInfo info;
 
-      printf("%s: Putting generated Float64 to /volga | <%ld μs>\n",
-             name.c_str(),
-             duration_cast<microseconds>(pub_now - pub_prev).count());
+      murray_prev = murray_now;
+      murray_now = steady_clock::now();
 
-      volga_writer->write(&volga_msg);
-
-      std::this_thread::sleep_until(pub_next);
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
+      {
+        if (info.valid_data)
+        {
+          printf("%s: Received Vector3Stamped from /murray | <%ld μs>\n",
+                 name.c_str(),
+                 duration_cast<microseconds>(murray_now - murray_prev).count());
+        }
+      }
     }
+  );
 
-    return 0;
+  DataReader * lena_reader = node.create_datareader(
+    "/lena",
+    static_cast<TypeSupport>(new WrenchStampedPubSubType()),
+    [&](DataReader * reader) -> void
+    {
+      WrenchStamped msg;
+      SampleInfo info;
+
+      lena_prev = lena_now;
+      lena_now = steady_clock::now();
+
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
+      {
+        if (info.valid_data)
+        {
+          printf("%s: Received WrenchStamped from /lena | <%ld μs>\n",
+                 name.c_str(),
+                 duration_cast<microseconds>(lena_now - lena_prev).count());
+        }
+      }
+    }
+  );
+
+  // LOOP ========================================================================================
+  murray_next = steady_clock::now();
+  murray_prev = steady_clock::now();
+  murray_now = steady_clock::now();
+
+  lena_next = steady_clock::now();
+  lena_prev = steady_clock::now();
+  lena_now = steady_clock::now();
+
+  pub_next = steady_clock::now();
+  pub_prev = steady_clock::now();
+  pub_now = steady_clock::now();
+
+  printf("%s: Starting loop\n", name.c_str());
+
+  while (true)
+  {
+    pub_prev = pub_now;
+    pub_now = steady_clock::now();
+    pub_next = pub_now + milliseconds(50);
+
+    printf("%s: Putting generated Float64 to /volga | <%ld μs>\n",
+           name.c_str(),
+           duration_cast<microseconds>(pub_now - pub_prev).count());
+
+    volga_writer->write(&volga_msg);
+
+    std::this_thread::sleep_until(pub_next);
+  }
+
+  return 0;
 }
