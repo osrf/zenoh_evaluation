@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Hebron";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -58,15 +59,15 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     chenab_prev = chenab_now;
     chenab_now = steady_clock::now();
     chenab_next = chenab_now + milliseconds(100);
 
-    printf("%s: Putting generated Quaternion to /chenab | <%ld μs>\n",
-           name.c_str(),
-           duration_cast<microseconds>(chenab_now - chenab_prev).count());
+    printf(
+      "%s: Putting generated Quaternion to /chenab | <%ld μs>\n",
+      name.c_str(),
+      duration_cast<microseconds>(chenab_now - chenab_prev).count());
     chenab_writer->write(&chenab_msg);
 
     std::this_thread::sleep_until(chenab_next);

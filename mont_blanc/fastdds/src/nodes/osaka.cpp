@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Osaka";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -77,14 +78,13 @@ int main() {
       parana_prev = parana_now;
       parana_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received String<%zu> from /parana | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(parana_now - parana_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received String<%zu> from /parana | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(parana_now - parana_prev).count());
         }
       }
     }
@@ -101,14 +101,13 @@ int main() {
       columbia_prev = columbia_now;
       columbia_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Image<%zu> from /columbia | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(columbia_now - columbia_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Image<%zu> from /columbia | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(columbia_now - columbia_prev).count());
         }
       }
     }
@@ -125,18 +124,17 @@ int main() {
       colorado_prev = colorado_now;
       colorado_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Image<%zu> from /colorado, putting PointCloud2<%zu> to /salween, "
-                 "putting LaserScan<%zu, %zu> to /godavari | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 salween_msg.data().size(),
-                 godavari_msg.ranges().size(),
-                 godavari_msg.intensities().size(),
-                 duration_cast<microseconds>(colorado_now - colorado_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Image<%zu> from /colorado, putting PointCloud2<%zu> to /salween, "
+            "putting LaserScan<%zu, %zu> to /godavari | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            salween_msg.data().size(),
+            godavari_msg.ranges().size(),
+            godavari_msg.intensities().size(),
+            duration_cast<microseconds>(colorado_now - colorado_prev).count());
           salween_writer->write(&salween_msg);
           godavari_writer->write(&godavari_msg);
         }
@@ -159,9 +157,8 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
-      std::this_thread::sleep_for(milliseconds(1000));
+  while (true) {
+    std::this_thread::sleep_for(milliseconds(1000));
   }
 
   return 0;

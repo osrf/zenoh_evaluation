@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Mandalay";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -99,14 +100,13 @@ int main() {
       danube_prev = danube_now;
       danube_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received String<%zu> from /danube | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(danube_now - danube_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received String<%zu> from /danube | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(danube_now - danube_prev).count());
         }
       }
     }
@@ -123,13 +123,12 @@ int main() {
       chenab_prev = chenab_now;
       chenab_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Quaternion from /chenab | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(chenab_now - chenab_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Quaternion from /chenab | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(chenab_now - chenab_prev).count());
         }
       }
     }
@@ -146,14 +145,13 @@ int main() {
       salween_prev = salween_now;
       salween_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received PointCloud2<%zu> from /salween | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(salween_now - salween_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received PointCloud2<%zu> from /salween | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(salween_now - salween_prev).count());
         }
       }
     }
@@ -170,15 +168,14 @@ int main() {
       godavari_prev = godavari_now;
       godavari_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received LaserScan<%zu, %zu> from /godavari | <%ld μs>\n",
-                 name.c_str(),
-                 msg.ranges().size(),
-                 msg.intensities().size(),
-                 duration_cast<microseconds>(godavari_now - godavari_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received LaserScan<%zu, %zu> from /godavari | <%ld μs>\n",
+            name.c_str(),
+            msg.ranges().size(),
+            msg.intensities().size(),
+            duration_cast<microseconds>(godavari_now - godavari_prev).count());
         }
       }
     }
@@ -195,13 +192,12 @@ int main() {
       yamuna_prev = yamuna_now;
       yamuna_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Vector3 from /yamuna | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Vector3 from /yamuna | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
         }
       }
     }
@@ -218,14 +214,13 @@ int main() {
       loire_prev = loire_now;
       loire_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received PointCloud2<%zu> from /loire | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(loire_now - loire_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received PointCloud2<%zu> from /loire | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(loire_now - loire_prev).count());
         }
       }
     }
@@ -262,18 +257,18 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     pub_prev = pub_now;
     pub_now = steady_clock::now();
     pub_next = pub_now + milliseconds(100);
 
-    printf("%s: Putting generated Pose to /tagus, Image<%zu> to /missouri, "
-           "PointCloud2<%zu> to /brazos | <%ld μs>\n",
-           name.c_str(),
-           missouri_msg.data().size(),
-           brazos_msg.data().size(),
-           duration_cast<microseconds>(pub_now - pub_prev).count());
+    printf(
+      "%s: Putting generated Pose to /tagus, Image<%zu> to /missouri, "
+      "PointCloud2<%zu> to /brazos | <%ld μs>\n",
+      name.c_str(),
+      missouri_msg.data().size(),
+      brazos_msg.data().size(),
+      duration_cast<microseconds>(pub_now - pub_prev).count());
 
     tagus_writer->write(&tagus_msg);
     missouri_writer->write(&missouri_msg);

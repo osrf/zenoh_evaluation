@@ -36,21 +36,21 @@ namespace montblanc
 {
 
 // DynamicDataWriterListener =======================================================================
-class DynamicDataWriterListener : public eprosima::fastdds::dds::DataWriterListener
+class DynamicDataWriterListener: public eprosima::fastdds::dds::DataWriterListener
 {
 public:
   void on_publication_matched(
     eprosima::fastdds::dds::DataWriter * writer,
-    const eprosima::fastdds::dds::PublicationMatchedStatus& info) override;
+    const eprosima::fastdds::dds::PublicationMatchedStatus & info) override;
 };
 
 
 // DynamicDataReaderListener =======================================================================
-class DynamicDataReaderListener : public eprosima::fastdds::dds::DataReaderListener
+class DynamicDataReaderListener: public eprosima::fastdds::dds::DataReaderListener
 {
 public:
   DynamicDataReaderListener(
-    std::function<void(eprosima::fastdds::dds::DataReader *)> next_sample_cb_);
+    std::function < void(eprosima::fastdds::dds::DataReader *) > next_sample_cb_);
 
   void on_data_available(eprosima::fastdds::dds::DataReader * reader) override;
   void on_subscription_matched(
@@ -58,7 +58,7 @@ public:
     const eprosima::fastdds::dds::SubscriptionMatchedStatus & info) override;
 
 private:
-   std::function<void(eprosima::fastdds::dds::DataReader *)> next_sample_cb_;
+  std::function < void(eprosima::fastdds::dds::DataReader *) > next_sample_cb_;
 };
 
 
@@ -78,7 +78,7 @@ public:
   eprosima::fastdds::dds::DataReader * create_datareader(
     std::string topic_name,
     eprosima::fastdds::dds::TypeSupport type,
-    std::function<void(eprosima::fastdds::dds::DataReader *)> cb);
+    std::function < void(eprosima::fastdds::dds::DataReader *) > cb);
 
 private:
   eprosima::fastdds::dds::DomainParticipant * participant_;
@@ -86,10 +86,10 @@ private:
   eprosima::fastdds::dds::Publisher * publisher_;
   eprosima::fastdds::dds::Subscriber * subscriber_;
 
-  std::map<std::string, eprosima::fastdds::dds::Topic *> topics_;
+  std::map < std::string, eprosima::fastdds::dds::Topic * > topics_;
 
-  std::vector<eprosima::fastdds::dds::DataWriter *> datawriters_;
-  std::vector<eprosima::fastdds::dds::DataReader *> datareaders_;
+  std::vector < eprosima::fastdds::dds::DataWriter * > datawriters_;
+  std::vector < eprosima::fastdds::dds::DataReader * > datareaders_;
 
   std::string name_;
 };

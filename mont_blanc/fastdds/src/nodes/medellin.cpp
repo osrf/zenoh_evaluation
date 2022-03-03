@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Medellin";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -58,15 +59,15 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     prev = now;
     now = steady_clock::now();
     next = now + milliseconds(10);
 
-    printf("%s: Putting generated Int32 to /nile | <%ld μs>\n",
-           name.c_str(),
-           duration_cast<microseconds>(now - prev).count());
+    printf(
+      "%s: Putting generated Int32 to /nile | <%ld μs>\n",
+      name.c_str(),
+      duration_cast<microseconds>(now - prev).count());
     nile_writer->write(&nile_msg);
 
     std::this_thread::sleep_until(next);

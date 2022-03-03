@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Rotterdam";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -63,15 +64,14 @@ int main() {
       mekong_prev = mekong_now;
       mekong_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received TwistWithCovarianceStamped<%zu> from /mekong, "
-                 "putting Vector3Stamped to /murray | <%ld μs>\n",
-                 name.c_str(),
-                 msg.twist().covariance().size(),
-                 duration_cast<microseconds>(mekong_now - mekong_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received TwistWithCovarianceStamped<%zu> from /mekong, "
+            "putting Vector3Stamped to /murray | <%ld μs>\n",
+            name.c_str(),
+            msg.twist().covariance().size(),
+            duration_cast<microseconds>(mekong_now - mekong_prev).count());
           murray_writer->write(&murray_msg);
         }
       }
@@ -85,9 +85,8 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
-      std::this_thread::sleep_for(milliseconds(1000));
+  while (true) {
+    std::this_thread::sleep_for(milliseconds(1000));
   }
 
   return 0;

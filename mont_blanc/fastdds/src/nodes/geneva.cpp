@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Geneva";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -75,16 +76,15 @@ int main() {
       parana_prev = parana_now;
       parana_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received String<%zu> from /parana, putting String<%zu> to /arkansas "
-                 "| <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 arkansas_msg.data().size(),
-                 duration_cast<microseconds>(parana_now - parana_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received String<%zu> from /parana, putting String<%zu> to /arkansas "
+            "| <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            arkansas_msg.data().size(),
+            duration_cast<microseconds>(parana_now - parana_prev).count());
           arkansas_writer->write(&arkansas_msg);
         }
       }
@@ -102,14 +102,13 @@ int main() {
       danube_prev = danube_now;
       danube_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received String<%zu> from /danube | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(danube_now - danube_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received String<%zu> from /danube | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(danube_now - danube_prev).count());
         }
       }
     }
@@ -126,13 +125,12 @@ int main() {
       tagus_prev = tagus_now;
       tagus_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Pose from /tagus | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(tagus_now - tagus_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Pose from /tagus | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(tagus_now - tagus_prev).count());
         }
       }
     }
@@ -149,13 +147,12 @@ int main() {
       congo_prev = congo_now;
       congo_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Twist from /congo | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(congo_now - congo_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Twist from /congo | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(congo_now - congo_prev).count());
         }
       }
     }
@@ -180,9 +177,8 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
-      std::this_thread::sleep_for(milliseconds(1000));
+  while (true) {
+    std::this_thread::sleep_for(milliseconds(1000));
   }
 
   return 0;

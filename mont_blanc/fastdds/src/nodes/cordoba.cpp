@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Cordoba";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -58,15 +59,15 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     prev = now;
     now = steady_clock::now();
     next = now + milliseconds(100);
 
-    printf("%s: Putting generated Float32 to /amazon | <%ld μs>\n",
-           name.c_str(),
-           duration_cast<microseconds>(now - prev).count());
+    printf(
+      "%s: Putting generated Float32 to /amazon | <%ld μs>\n",
+      name.c_str(),
+      duration_cast<microseconds>(now - prev).count());
     amazon_writer->write(&amazon_msg);
 
     std::this_thread::sleep_until(next);

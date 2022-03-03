@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Kingston";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -58,15 +59,15 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     yamuna_prev = yamuna_now;
     yamuna_now = steady_clock::now();
     yamuna_next = yamuna_now + milliseconds(100);
 
-    printf("%s: Putting generated Vector3 to /yamuna | <%ld μs>\n",
-           name.c_str(),
-           duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
+    printf(
+      "%s: Putting generated Vector3 to /yamuna | <%ld μs>\n",
+      name.c_str(),
+      duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
     yamuna_writer->write(&yamuna_msg);
 
     std::this_thread::sleep_until(yamuna_next);

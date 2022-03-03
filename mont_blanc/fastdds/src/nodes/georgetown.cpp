@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Georgetown";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -71,13 +72,12 @@ int main() {
       murray_prev = murray_now;
       murray_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Vector3Stamped from /murray | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(murray_now - murray_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Vector3Stamped from /murray | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(murray_now - murray_prev).count());
         }
       }
     }
@@ -94,13 +94,12 @@ int main() {
       lena_prev = lena_now;
       lena_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received WrenchStamped from /lena | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(lena_now - lena_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received WrenchStamped from /lena | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(lena_now - lena_prev).count());
         }
       }
     }
@@ -121,15 +120,15 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     pub_prev = pub_now;
     pub_now = steady_clock::now();
     pub_next = pub_now + milliseconds(50);
 
-    printf("%s: Putting generated Float64 to /volga | <%ld μs>\n",
-           name.c_str(),
-           duration_cast<microseconds>(pub_now - pub_prev).count());
+    printf(
+      "%s: Putting generated Float64 to /volga | <%ld μs>\n",
+      name.c_str(),
+      duration_cast<microseconds>(pub_now - pub_prev).count());
 
     volga_writer->write(&volga_msg);
 

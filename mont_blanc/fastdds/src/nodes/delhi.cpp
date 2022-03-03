@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Delhi";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -58,16 +59,16 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     prev = now;
     now = steady_clock::now();
     next = now + milliseconds(100);
 
-    printf("%s: Putting generated Image<%ld> to /columbia | <%ld μs>\n",
-           name.c_str(),
-           columbia_msg.data().size(),
-           duration_cast<microseconds>(now - prev).count());
+    printf(
+      "%s: Putting generated Image<%ld> to /columbia | <%ld μs>\n",
+      name.c_str(),
+      columbia_msg.data().size(),
+      duration_cast<microseconds>(now - prev).count());
     columbia_writer->write(&columbia_msg);
 
     std::this_thread::sleep_until(next);

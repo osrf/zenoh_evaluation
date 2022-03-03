@@ -71,7 +71,7 @@ Node::Node(std::string name)
   subscriber_(nullptr),
   topics_(std::map<std::string, Topic *>()),
   datawriters_(std::vector<DataWriter *>()),  // one Publisher controls multiple DataWriters
-  datareaders_(std::vector<DataReader *>()),  // one Subscriber manages multiple DataReaders
+  datareaders_(std::vector<DataReader *>())  // one Subscriber manages multiple DataReaders
 {}
 
 Node::~Node()
@@ -110,15 +110,16 @@ bool Node::init()
 
 std::string Node::name() {return name_;}
 
-DataWriter * Node::create_datawriter(std::string topic_name,
-                                    TypeSupport type)
+DataWriter * Node::create_datawriter(
+  std::string topic_name,
+  TypeSupport type)
 {
   type.register_type(participant_);
 
   // Pub
   if (publisher_ == nullptr) {
     publisher_ = participant_->create_publisher(PUBLISHER_QOS_DEFAULT, nullptr);
-    assert (publisher_ != nullptr);
+    assert(publisher_ != nullptr);
   }
 
   // Topic
@@ -126,10 +127,11 @@ DataWriter * Node::create_datawriter(std::string topic_name,
   Topic * topic_;
 
   if (topic_it == topics_.end()) {
-    topic_ = participant_->create_topic(topic_name.c_str(),
-                                        type.get_type_name(),
-                                        TOPIC_QOS_DEFAULT);
-    assert (topic_ != nullptr);
+    topic_ = participant_->create_topic(
+      topic_name.c_str(),
+      type.get_type_name(),
+      TOPIC_QOS_DEFAULT);
+    assert(topic_ != nullptr);
 
     topics_.insert({topic_name, topic_});
   } else {
@@ -138,26 +140,28 @@ DataWriter * Node::create_datawriter(std::string topic_name,
 
   // Writer
   DynamicDataWriterListener * listener_ = new DynamicDataWriterListener();
-  DataWriter * datawriter_ = publisher_->create_datawriter(topic_,
-                                                          DATAWRITER_QOS_DEFAULT,
-                                                          listener_);
-  assert (datawriter_ != nullptr);
+  DataWriter * datawriter_ = publisher_->create_datawriter(
+    topic_,
+    DATAWRITER_QOS_DEFAULT,
+    listener_);
+  assert(datawriter_ != nullptr);
 
   datawriters_.push_back(datawriter_);
 
   return datawriter_;
 }
 
-DataReader * Node::create_datareader(std::string topic_name,
-                                    TypeSupport type,
-                                    std::function<void(DataReader *)> cb)
+DataReader * Node::create_datareader(
+  std::string topic_name,
+  TypeSupport type,
+  std::function<void(DataReader *)> cb)
 {
   type.register_type(participant_);
 
   // Sub
   if (subscriber_ == nullptr) {
     subscriber_ = participant_->create_subscriber(SUBSCRIBER_QOS_DEFAULT, nullptr);
-    assert (subscriber_ != nullptr);
+    assert(subscriber_ != nullptr);
   }
 
   // Topic
@@ -165,10 +169,11 @@ DataReader * Node::create_datareader(std::string topic_name,
   Topic * topic_;
 
   if (topic_it == topics_.end()) {
-    topic_ = participant_->create_topic(topic_name.c_str(),
-                                        type.get_type_name(),
-                                        TOPIC_QOS_DEFAULT);
-    assert (topic_ != nullptr);
+    topic_ = participant_->create_topic(
+      topic_name.c_str(),
+      type.get_type_name(),
+      TOPIC_QOS_DEFAULT);
+    assert(topic_ != nullptr);
 
     topics_.insert({topic_name, topic_});
   } else {
@@ -177,10 +182,11 @@ DataReader * Node::create_datareader(std::string topic_name,
 
   // Reader
   DynamicDataReaderListener * listener_ = new DynamicDataReaderListener(cb);
-  DataReader * datareader_ = subscriber_->create_datareader(topic_,
-                                                           DATAREADER_QOS_DEFAULT,
-                                                           listener_);
-  assert (datareader_ != nullptr);
+  DataReader * datareader_ = subscriber_->create_datareader(
+    topic_,
+    DATAREADER_QOS_DEFAULT,
+    listener_);
+  assert(datareader_ != nullptr);
 
   datareaders_.push_back(datareader_);
 

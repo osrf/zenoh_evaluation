@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Hamburg";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -75,13 +76,12 @@ int main() {
       tigris_prev = tigris_now;
       tigris_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Float32 from /tigris | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(tigris_now - tigris_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Float32 from /tigris | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(tigris_now - tigris_prev).count());
         }
       }
     }
@@ -98,13 +98,12 @@ int main() {
       ganges_prev = ganges_now;
       ganges_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Int64 from /ganges | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(ganges_now - ganges_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Int64 from /ganges | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(ganges_now - ganges_prev).count());
         }
       }
     }
@@ -121,13 +120,12 @@ int main() {
       nile_prev = nile_now;
       nile_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Int32 from /nile | <%ld μs>\n",
-                 name.c_str(),
-                 duration_cast<microseconds>(nile_now - nile_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Int32 from /nile | <%ld μs>\n",
+            name.c_str(),
+            duration_cast<microseconds>(nile_now - nile_prev).count());
         }
       }
     }
@@ -144,17 +142,16 @@ int main() {
       danube_prev = danube_now;
       danube_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received String<%zu> from /danube, putting String<%zu> to /parana "
-                 "| <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 parana_msg.data().size(),
-                 duration_cast<microseconds>(danube_now - danube_prev).count());
-         parana_writer->write(&parana_msg);
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received String<%zu> from /danube, putting String<%zu> to /parana "
+            "| <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            parana_msg.data().size(),
+            duration_cast<microseconds>(danube_now - danube_prev).count());
+          parana_writer->write(&parana_msg);
         }
       }
     }
@@ -179,9 +176,8 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
-      std::this_thread::sleep_for(milliseconds(1000));
+  while (true) {
+    std::this_thread::sleep_for(milliseconds(1000));
   }
 
   return 0;

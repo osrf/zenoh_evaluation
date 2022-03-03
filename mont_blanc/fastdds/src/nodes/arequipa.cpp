@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Arequipa";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -56,14 +57,13 @@ int main() {
       arkansas_prev = arkansas_now;
       arkansas_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received String<%zu> from /arkansas | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(arkansas_now - arkansas_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received String<%zu> from /arkansas | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(arkansas_now - arkansas_prev).count());
         }
       }
     }
@@ -76,9 +76,8 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
-      std::this_thread::sleep_for(milliseconds(1000));
+  while (true) {
+    std::this_thread::sleep_for(milliseconds(1000));
   }
 
   return 0;

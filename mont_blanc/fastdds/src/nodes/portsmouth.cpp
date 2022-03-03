@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Portsmouth";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -58,16 +59,16 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
+  while (true) {
     prev = now;
     now = steady_clock::now();
     next = now + milliseconds(200);
 
-    printf("%s: Putting generated String<%zu> to /danube | <%ld μs>\n",
-           name.c_str(),
-           danube_msg.data().size(),
-           duration_cast<microseconds>(now - prev).count());
+    printf(
+      "%s: Putting generated String<%zu> to /danube | <%ld μs>\n",
+      name.c_str(),
+      danube_msg.data().size(),
+      duration_cast<microseconds>(now - prev).count());
     danube_writer->write(&danube_msg);
 
     std::this_thread::sleep_until(next);

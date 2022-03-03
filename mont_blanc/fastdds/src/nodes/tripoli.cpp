@@ -26,7 +26,8 @@
 
 using namespace eprosima::fastdds::dds;
 
-int main() {
+int main()
+{
   std::string name = "Tripoli";
 
   montblanc::Node node = montblanc::Node(name.c_str());
@@ -67,17 +68,16 @@ int main() {
       godavari_prev = godavari_now;
       godavari_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received LaserScan<%zu, %zu> from /godavari, "
-                 "putting PointCloud2<%zu> to /loire, | <%ld μs>\n",
-                 name.c_str(),
-                 msg.ranges().size(),
-                 msg.intensities().size(),
-                 loire_msg.data().size(),
-                 duration_cast<microseconds>(godavari_now - godavari_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received LaserScan<%zu, %zu> from /godavari, "
+            "putting PointCloud2<%zu> to /loire, | <%ld μs>\n",
+            name.c_str(),
+            msg.ranges().size(),
+            msg.intensities().size(),
+            loire_msg.data().size(),
+            duration_cast<microseconds>(godavari_now - godavari_prev).count());
           loire_writer->write(&loire_msg);
         }
       }
@@ -95,14 +95,13 @@ int main() {
       columbia_prev = columbia_now;
       columbia_now = steady_clock::now();
 
-      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-      {
-        if (info.valid_data)
-        {
-          printf("%s: Received Image<%zu> from /columbia | <%ld μs>\n",
-                 name.c_str(),
-                 msg.data().size(),
-                 duration_cast<microseconds>(columbia_now - columbia_prev).count());
+      if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
+        if (info.valid_data) {
+          printf(
+            "%s: Received Image<%zu> from /columbia | <%ld μs>\n",
+            name.c_str(),
+            msg.data().size(),
+            duration_cast<microseconds>(columbia_now - columbia_prev).count());
         }
       }
     }
@@ -119,9 +118,8 @@ int main() {
 
   printf("%s: Starting loop\n", name.c_str());
 
-  while (true)
-  {
-      std::this_thread::sleep_for(milliseconds(1000));
+  while (true) {
+    std::this_thread::sleep_for(milliseconds(1000));
   }
 
   return 0;
