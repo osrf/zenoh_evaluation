@@ -53,6 +53,12 @@ Also remember to make sure that your installed libraries are findable! You can a
 export LD_LIBRARY_PATH=/usr/local/lib/
 ```
 
+## A Note on the Spec
+
+You'll notice if you dig into the utility `Node` class that was written, that only **one** publisher and/or subscriber is initialized and associated with any number of datareaders and datawriters.
+
+This is **as intended** by the DDS spec, which you can find on [page 8 of the spec (page 20 on the PDF)](https://www.omg.org/spec/DDS/1.4/PDF).
+
 ## Message Generation
 
 Because the mont_blanc test scenario contains a whole bunch of ROS2 message structs (including nested structs), the FastDDS generator tool [fastddsgen](https://fast-dds.docs.eprosima.com/en/latest/fastddsgen/usage/usage.html) was used to do the conversion from IDL.
@@ -78,7 +84,7 @@ If you want to generate your own message objects, run the following commands on 
 This will generate all yet-to-be-generated type files and place them in the same directory structure that they appeared in the `idl/` directory!
 
 ```shell
-cd <REPO_ROOT>/msg/idl
+cd <REPO_ROOT>/mont_blanc/dds/msg/idl
 
 find . -name "*.idl" -exec sh -c '
   for file do
