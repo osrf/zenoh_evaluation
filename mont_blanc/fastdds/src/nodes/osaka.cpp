@@ -34,6 +34,10 @@ int main() {
 
     using namespace std::chrono;
 
+    auto parana_next = steady_clock::now();
+    auto parana_prev = steady_clock::now();
+    auto parana_now = steady_clock::now();
+
     auto columbia_next = steady_clock::now();
     auto columbia_prev = steady_clock::now();
     auto columbia_now = steady_clock::now();
@@ -62,6 +66,30 @@ int main() {
     printf("%s: Data generation done\n\n", name.c_str());
 
     // SUB =========================================================================================
+    DataReader* parana_reader = node.create_datareader(
+      "/parana",
+      static_cast<TypeSupport>(new StringPubSubType()),
+      [&](DataReader* reader) -> void
+      {
+        String msg;
+        SampleInfo info;
+
+        parana_prev = parana_now;
+        parana_now = steady_clock::now();
+
+        if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
+        {
+          if (info.valid_data)
+          {
+            printf("%s: Received String<%zu> from /parana | <%ld μs>\n",
+                   name.c_str(),
+                   msg.data().size(),
+                   duration_cast<microseconds>(parana_now - parana_prev).count());
+          }
+        }
+      }
+    );
+
     DataReader* columbia_reader = node.create_datareader(
       "/columbia",
       static_cast<TypeSupport>(new ImagePubSubType()),
@@ -117,6 +145,10 @@ int main() {
     );
 
     // LOOP ========================================================================================
+    parana_next = steady_clock::now();
+    parana_prev = steady_clock::now();
+    parana_now = steady_clock::now();
+
     columbia_next = steady_clock::now();
     columbia_prev = steady_clock::now();
     columbia_now = steady_clock::now();

@@ -48,6 +48,8 @@
 
 - [x] **osaka**
   
+  - sub: `String` **/parana**
+  
   - sub: `Image` **/columbia**
   
   - sub: `Image` **/colorado**
