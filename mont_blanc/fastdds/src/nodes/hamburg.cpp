@@ -131,8 +131,10 @@ int main() {
         {
           if (info.valid_data)
           {
-            printf("%s: Received String from /danube, putting String to /parana | <%ld μs>\n",
+            printf("%s: Received String<%zu> from /danube, putting String<%zu> to /parana | <%ld μs>\n",
                    name.c_str(),
+                   msg.data().size(),
+                   parana_msg.data().size(),
                    duration_cast<microseconds>(danube_now - danube_prev).count());
            parana_writer->write(&parana_msg);
           }

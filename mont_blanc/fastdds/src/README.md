@@ -30,7 +30,7 @@
   
   - sub: `Int32` **/nile**
   
-  - sub: `String` **/danube***
+  - sub: `String` **/danube**
   
   - 
   
@@ -42,11 +42,11 @@
 
 - [x] **taipei**
   
-  - sub: `Image` **/columbia*
+  - sub: `Image` **/columbia**
   - 
   - pub: same `Image` to **/colorado** on receive **/columbia**
 
-- [ ] **osaka**
+- [x] **osaka**
   
   - sub: `Image` **/columbia**
   
@@ -58,25 +58,25 @@
   
   - pub: `LaserScan` to **/godavari** on receive **/colorado**
 
-- [ ] **hebron**
+- [x] **hebron**
   
   - pub: `Quaternion` to **/chenab** every 100ms
 
-- [ ] **kingston**
+- [x] **kingston**
   
   - pub: `Vector3` to **/yamuna** every 100ms
 
-- [ ] **tripoli**
+- [x] **tripoli**
   
   - sub: `LaserScan` **/godavari**
   
-  - sub: `Image` **/columbia***
+  - sub: `Image` **/columbia**
   
   - 
   
   - pub: `PointCloud2` to **/loire** on receive **/godavari**
 
-- [ ] **mandalay**
+- [x] **mandalay**
   
   - sub: `String` **/danube**
   
@@ -98,7 +98,7 @@
   
   - pub: `PointCloud2` to **/brazos** every 100ms
 
-- [ ] **ponce**
+- [x] **ponce**
   
   - sub: `Pose` **/tagus**
   
@@ -124,7 +124,7 @@
   
   - pub: `TwistWithCovarianceStamped` to **/mekong** on receive **/brazos**
 
-- [ ] **geneva**
+- [x] **geneva**
   
   - sub: `String` **/parana**
   
@@ -138,7 +138,7 @@
   
   - pub: `String` to **/arkansas** on receive **/parana**
 
-- [ ] **monaco**
+- [x] **monaco**
   
   - sub: `Twist` **/congo**
   
@@ -146,15 +146,15 @@
   
   - pub: `Float32` to **/ohio** on receive **/congo**
 
-- [ ] **rotterdam**
+- [x] **rotterdam**
   
   - sub: `TwistWithCovarianceStamped` **/mekong**
   
   - 
   
-  - pub: `Vector3Stamped` to **/murray** on receive **/rotterdam**
+  - pub: `Vector3Stamped` to **/murray** on receive **/mekong**
 
-- [ ] **barcelona**
+- [x] **barcelona**
   
   - sub: `TwistWithCovarianceStamped` **/mekong**
   
@@ -162,11 +162,11 @@
   
   - pub: `WrenchStamped` to **/lena** on receive **/mekong**
 
-- [ ] **arequipa**
+- [x] **arequipa**
   
   - sub: `String` **/arkansas**
 
-- [ ] **georgetown**
+- [x] **georgetown**
   
   - sub: `Vector3Stamped` **/murray**
   

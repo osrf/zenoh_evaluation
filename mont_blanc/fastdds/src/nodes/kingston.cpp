@@ -12,48 +12,47 @@
 using namespace eprosima::fastdds::dds;
 
 int main() {
-    std::string name = "Portsmouth";
+    std::string name = "Kingston";
 
     montblanc::Node node = montblanc::Node(name.c_str());
     node.init();
 
     using namespace std::chrono;
 
-    auto next = steady_clock::now();
-    auto prev = steady_clock::now();
-    auto now = steady_clock::now();
+    auto yamuna_next = steady_clock::now();
+    auto yamuna_prev = steady_clock::now();
+    auto yamuna_now = steady_clock::now();
 
     // PUB =============================================================================================================
-    DataWriter* danube_writer = node.create_datawriter("/danube", static_cast<TypeSupport>(new StringPubSubType()));
-    String danube_msg;
+    DataWriter* yamuna_writer = node.create_datawriter("/yamuna", static_cast<TypeSupport>(new Vector3PubSubType()));
+    Vector3 yamuna_msg;
 
     // RANDOMIZE =======================================================================================================
     printf("%s: Data generation started\n", name.c_str());
 
-    danube_msg.data(montblanc::random_string(256));
+    yamuna_msg = montblanc::random_vector3();
 
     printf("%s: Data generation done\n\n", name.c_str());
 
     // LOOP ============================================================================================================
-    next = steady_clock::now();
-    prev = steady_clock::now();
-    now = steady_clock::now();
+    yamuna_next = steady_clock::now();
+    yamuna_prev = steady_clock::now();
+    yamuna_now = steady_clock::now();
 
     printf("%s: Starting loop\n", name.c_str());
 
     while (true)
     {
-      prev = now;
-      now = steady_clock::now();
-      next = now + milliseconds(200);
+      yamuna_prev = yamuna_now;
+      yamuna_now = steady_clock::now();
+      yamuna_next = yamuna_now + milliseconds(100);
 
-      printf("%s: Putting generated String<%zu> to /danube | <%ld μs>\n",
+      printf("%s: Putting generated Vector3 to /yamuna | <%ld μs>\n",
              name.c_str(),
-             danube_msg.data().size(),
-             duration_cast<microseconds>(now - prev).count());
-      danube_writer->write(&danube_msg);
+             duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
+      yamuna_writer->write(&yamuna_msg);
 
-      std::this_thread::sleep_until(next);
+      std::this_thread::sleep_until(yamuna_next);
     }
 
     return 0;
