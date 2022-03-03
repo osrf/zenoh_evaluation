@@ -71,6 +71,110 @@ Header random_header(size_t len = 16)
     return header_msg;
 }
 
+Quaternion random_quaternion()
+{
+    Quaternion q_msg;
+
+    q_msg.x(montblanc::random_number<double>());
+    q_msg.y(montblanc::random_number<double>());
+    q_msg.z(montblanc::random_number<double>());
+    q_msg.w(montblanc::random_number<double>());
+
+    return q_msg;
+}
+
+Point random_point()
+{
+    Point p_msg;
+
+    p_msg.x(montblanc::random_number<double>());
+    p_msg.y(montblanc::random_number<double>());
+    p_msg.z(montblanc::random_number<double>());
+
+    return p_msg;
+}
+
+Pose random_pose()
+{
+    Pose pose_msg;
+
+    pose_msg.position(montblanc::random_point());
+    pose_msg.orientation(montblanc::random_quaternion());
+
+    return pose_msg;
+}
+
+Vector3 random_vector3()
+{
+    Vector3 vec_msg;
+
+    vec_msg.x(montblanc::random_number<double>());
+    vec_msg.y(montblanc::random_number<double>());
+    vec_msg.z(montblanc::random_number<double>());
+
+    return vec_msg;
+}
+
+Vector3Stamped random_vector3stamped()
+{
+    Vector3Stamped vec_msg;
+
+    vec_msg.header(montblanc::random_header());
+    vec_msg.vector(montblanc::random_vector3());
+
+    return vec_msg;
+}
+
+Twist random_twist()
+{
+    Twist twist_msg;
+
+    twist_msg.linear(montblanc::random_vector3());
+    twist_msg.angular(montblanc::random_vector3());
+
+    return twist_msg;
+}
+
+TwistWithCovariance random_twistwithcovariance(size_t len = 36)
+{
+    TwistWithCovariance twist_msg;
+
+    twist_msg.twist(montblanc::random_twist());
+    twist_msg.covariance(montblanc::random_number_vector<double>(len));
+
+    return twist_msg;
+}
+
+TwistWithCovarianceStamped random_twistwithcovariancestamped(size_t len = 36)
+{
+    TwistWithCovarianceStamped twist_msg;
+
+    twist_msg.header(montblanc::random_header());
+    twist_msg.twist(montblanc::random_twistwithcovariance(len));
+
+    return twist_msg;
+}
+
+Wrench random_wrench()
+{
+    Wrench wrench_msg;
+
+    wrench_msg.force(montblanc::random_vector3());
+    wrench_msg.torque(montblanc::random_vector3());
+
+    return wrench_msg;
+}
+
+WrenchStamped random_wrenchstamped()
+{
+    WrenchStamped wrench_msg;
+
+    wrench_msg.header(montblanc::random_header());
+    wrench_msg.wrench(montblanc::random_wrench());
+
+    return wrench_msg;
+}
+
 Image random_image(size_t len = 0) // 1920 * 1080 * 3
 {
     Image image_msg;
@@ -127,6 +231,26 @@ PointCloud2 random_pointcloud(size_t len = 0) // 4 * 4 * 4 * 1280 * 960
     pc_msg.is_dense(montblanc::random_number<int>(0, 1));
 
     return pc_msg;
+}
+
+LaserScan random_laserscan(size_t len = 1024)
+{
+    LaserScan scan_msg;
+
+    scan_msg.header(montblanc::random_header());
+
+    scan_msg.angle_min(montblanc::random_number<float>());
+    scan_msg.angle_max(montblanc::random_number<float>());
+    scan_msg.angle_increment(montblanc::random_number<float>());
+    scan_msg.time_increment(montblanc::random_number<float>());
+    scan_msg.scan_time(montblanc::random_number<float>());
+    scan_msg.range_min(montblanc::random_number<float>());
+    scan_msg.range_max(montblanc::random_number<float>());
+
+    scan_msg.ranges(montblanc::random_number_vector<float>(len));
+    scan_msg.intensities(montblanc::random_number_vector<float>(len));
+
+    return scan_msg;
 }
 
 
