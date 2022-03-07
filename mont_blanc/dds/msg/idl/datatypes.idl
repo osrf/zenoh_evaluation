@@ -1,22 +1,36 @@
-// std_msgs subset =============================================================
+// Copyright 2022 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// std_msgs subset =================================================================================
 struct Int32 {
-    long data;
+  long data;
 };
 
 struct Int64 {
-    long long data;
+  long long data;
 };
 
 struct Float32 {
-    float data;
+  float data;
 };
 
 struct Float64 {
-    double data;
+  double data;
 };
 
 struct String {
-    string<1024> data;
+  string<1024> data;
 };
 
 struct Timestamp {
@@ -30,7 +44,7 @@ struct Header {
   string<256> frame_id;
 };
 
-// geometry_msgs subset ========================================================
+// geometry_msgs subset ============================================================================
 struct Point {
   double x;
   double y;
@@ -85,7 +99,7 @@ struct WrenchStamped {
   Wrench wrench;
 };
 
-// sensor_msgs subset ==========================================================
+// sensor_msgs subset ==============================================================================
 struct Image {
   Header header;
   unsigned long height;
