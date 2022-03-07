@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.0)
 project(fastdds_montblanc)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -38,7 +38,7 @@ ExternalProject_Add(fastdds_montblanc_types
   INSTALL_COMMAND cmake -E echo "Skipping install step.")
 
 add_library(datatypes_lib UNKNOWN IMPORTED)
-set_target_properties(datatypes_lib PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../dds/lib/libdatatypes_lib.so)
+set_target_properties(datatypes_lib PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/dds-build/lib/libdatatypes_lib.so)
 include_directories(${CMAKE_SOURCE_DIR}/../dds/include)
 add_dependencies(datatypes_lib fastdds_montblanc_types)
 
