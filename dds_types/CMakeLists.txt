@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.0)
 
 project(dds_types)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
@@ -23,10 +22,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
     endif()
 endif()
 
-include_directories(${PROJECT_SOURCE_DIR}/include/)
+include_directories(include)
 
 # Libs
-add_library(datatypes_lib SHARED
-  ./src/types/datatypes.cxx
-  ./src/types/datatypesPubSubTypes.cxx)
-target_link_libraries(datatypes_lib fastcdr fastrtps)
+add_library(${PROJECT_NAME} SHARED
+  src/types/datatypes.cxx
+  src/types/datatypesPubSubTypes.cxx)
+target_link_libraries(${PROJECT_NAME} fastcdr fastrtps)
