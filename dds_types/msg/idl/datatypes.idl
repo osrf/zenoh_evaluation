@@ -150,3 +150,30 @@ struct LaserScan {
   sequence<float, 1024> ranges;
   sequence<float, 1024> intensities;
 };
+
+// Big chunks of data ==============================================================================
+struct BasicTypes {
+  boolean bool_value;
+  long int32_value;
+  unsigned long uint32_value;
+  long long int64_value;
+  unsigned long long uint64_value;
+  float float_value;
+  double double_value;
+  string<128> string_value;
+};
+
+struct BigData {
+  Timestamp timestamp;
+  boolean bool_value;
+  long int32_value;
+  unsigned long uint32_value;
+  long long int64_value;
+  unsigned long long uint64_value;
+  float float_value;
+  double double_value;
+  string<256> string_value;
+  sequence<BasicTypes, 3> basic_types_values;
+  Image image_value;
+  PointCloud2 point_cloud_value;
+};

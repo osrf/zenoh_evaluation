@@ -4050,5 +4050,687 @@ private:
     std::vector<float> m_ranges;
     std::vector<float> m_intensities;
 };
+/*!
+ * @brief This class represents the structure BasicTypes defined by the user in the IDL file.
+ * @ingroup DATATYPES
+ */
+class BasicTypes
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport BasicTypes();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~BasicTypes();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object BasicTypes that will be copied.
+     */
+    eProsima_user_DllExport BasicTypes(
+            const BasicTypes& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object BasicTypes that will be copied.
+     */
+    eProsima_user_DllExport BasicTypes(
+            BasicTypes&& x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object BasicTypes that will be copied.
+     */
+    eProsima_user_DllExport BasicTypes& operator =(
+            const BasicTypes& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object BasicTypes that will be copied.
+     */
+    eProsima_user_DllExport BasicTypes& operator =(
+            BasicTypes&& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x BasicTypes object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const BasicTypes& x);
+
+    // Manual patch
+    eProsima_user_DllExport bool operator ==(
+            const BasicTypes& x) const;
+
+    /*!
+     * @brief Comparison operator.
+     * @param x BasicTypes object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const BasicTypes& x);
+
+    /*!
+     * @brief This function sets a value in member bool_value
+     * @param _bool_value New value for member bool_value
+     */
+    eProsima_user_DllExport void bool_value(
+            bool _bool_value);
+
+    /*!
+     * @brief This function returns the value of member bool_value
+     * @return Value of member bool_value
+     */
+    eProsima_user_DllExport bool bool_value() const;
+
+    /*!
+     * @brief This function returns a reference to member bool_value
+     * @return Reference to member bool_value
+     */
+    eProsima_user_DllExport bool& bool_value();
+
+    /*!
+     * @brief This function sets a value in member int32_value
+     * @param _int32_value New value for member int32_value
+     */
+    eProsima_user_DllExport void int32_value(
+            int32_t _int32_value);
+
+    /*!
+     * @brief This function returns the value of member int32_value
+     * @return Value of member int32_value
+     */
+    eProsima_user_DllExport int32_t int32_value() const;
+
+    /*!
+     * @brief This function returns a reference to member int32_value
+     * @return Reference to member int32_value
+     */
+    eProsima_user_DllExport int32_t& int32_value();
+
+    /*!
+     * @brief This function sets a value in member uint32_value
+     * @param _uint32_value New value for member uint32_value
+     */
+    eProsima_user_DllExport void uint32_value(
+            uint32_t _uint32_value);
+
+    /*!
+     * @brief This function returns the value of member uint32_value
+     * @return Value of member uint32_value
+     */
+    eProsima_user_DllExport uint32_t uint32_value() const;
+
+    /*!
+     * @brief This function returns a reference to member uint32_value
+     * @return Reference to member uint32_value
+     */
+    eProsima_user_DllExport uint32_t& uint32_value();
+
+    /*!
+     * @brief This function sets a value in member int64_value
+     * @param _int64_value New value for member int64_value
+     */
+    eProsima_user_DllExport void int64_value(
+            int64_t _int64_value);
+
+    /*!
+     * @brief This function returns the value of member int64_value
+     * @return Value of member int64_value
+     */
+    eProsima_user_DllExport int64_t int64_value() const;
+
+    /*!
+     * @brief This function returns a reference to member int64_value
+     * @return Reference to member int64_value
+     */
+    eProsima_user_DllExport int64_t& int64_value();
+
+    /*!
+     * @brief This function sets a value in member uint64_value
+     * @param _uint64_value New value for member uint64_value
+     */
+    eProsima_user_DllExport void uint64_value(
+            uint64_t _uint64_value);
+
+    /*!
+     * @brief This function returns the value of member uint64_value
+     * @return Value of member uint64_value
+     */
+    eProsima_user_DllExport uint64_t uint64_value() const;
+
+    /*!
+     * @brief This function returns a reference to member uint64_value
+     * @return Reference to member uint64_value
+     */
+    eProsima_user_DllExport uint64_t& uint64_value();
+
+    /*!
+     * @brief This function sets a value in member float_value
+     * @param _float_value New value for member float_value
+     */
+    eProsima_user_DllExport void float_value(
+            float _float_value);
+
+    /*!
+     * @brief This function returns the value of member float_value
+     * @return Value of member float_value
+     */
+    eProsima_user_DllExport float float_value() const;
+
+    /*!
+     * @brief This function returns a reference to member float_value
+     * @return Reference to member float_value
+     */
+    eProsima_user_DllExport float& float_value();
+
+    /*!
+     * @brief This function sets a value in member double_value
+     * @param _double_value New value for member double_value
+     */
+    eProsima_user_DllExport void double_value(
+            double _double_value);
+
+    /*!
+     * @brief This function returns the value of member double_value
+     * @return Value of member double_value
+     */
+    eProsima_user_DllExport double double_value() const;
+
+    /*!
+     * @brief This function returns a reference to member double_value
+     * @return Reference to member double_value
+     */
+    eProsima_user_DllExport double& double_value();
+
+    /*!
+     * @brief This function copies the value in member string_value
+     * @param _string_value New value to be copied in member string_value
+     */
+    eProsima_user_DllExport void string_value(
+            const std::string& _string_value);
+
+    /*!
+     * @brief This function moves the value in member string_value
+     * @param _string_value New value to be moved in member string_value
+     */
+    eProsima_user_DllExport void string_value(
+            std::string&& _string_value);
+
+    /*!
+     * @brief This function returns a constant reference to member string_value
+     * @return Constant reference to member string_value
+     */
+    eProsima_user_DllExport const std::string& string_value() const;
+
+    /*!
+     * @brief This function returns a reference to member string_value
+     * @return Reference to member string_value
+     */
+    eProsima_user_DllExport std::string& string_value();
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of a data depending on the buffer alignment.
+     * @param data Data which is calculated its serialized size.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(
+            const BasicTypes& data,
+            size_t current_alignment = 0);
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of the Key of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getKeyMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function tells you if the Key has been defined for this type
+     */
+    eProsima_user_DllExport static bool isKeyDefined();
+
+    /*!
+     * @brief This function serializes the key members of an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serializeKey(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+private:
+
+    bool m_bool_value;
+    int32_t m_int32_value;
+    uint32_t m_uint32_value;
+    int64_t m_int64_value;
+    uint64_t m_uint64_value;
+    float m_float_value;
+    double m_double_value;
+    std::string m_string_value;
+};
+/*!
+ * @brief This class represents the structure BigData defined by the user in the IDL file.
+ * @ingroup DATATYPES
+ */
+class BigData
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport BigData();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~BigData();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object BigData that will be copied.
+     */
+    eProsima_user_DllExport BigData(
+            const BigData& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object BigData that will be copied.
+     */
+    eProsima_user_DllExport BigData(
+            BigData&& x);
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object BigData that will be copied.
+     */
+    eProsima_user_DllExport BigData& operator =(
+            const BigData& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object BigData that will be copied.
+     */
+    eProsima_user_DllExport BigData& operator =(
+            BigData&& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x BigData object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const BigData& x);
+
+    /*!
+     * @brief Comparison operator.
+     * @param x BigData object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const BigData& x);
+
+    /*!
+     * @brief This function copies the value in member timestamp
+     * @param _timestamp New value to be copied in member timestamp
+     */
+    eProsima_user_DllExport void timestamp(
+            const Timestamp& _timestamp);
+
+    /*!
+     * @brief This function moves the value in member timestamp
+     * @param _timestamp New value to be moved in member timestamp
+     */
+    eProsima_user_DllExport void timestamp(
+            Timestamp&& _timestamp);
+
+    /*!
+     * @brief This function returns a constant reference to member timestamp
+     * @return Constant reference to member timestamp
+     */
+    eProsima_user_DllExport const Timestamp& timestamp() const;
+
+    /*!
+     * @brief This function returns a reference to member timestamp
+     * @return Reference to member timestamp
+     */
+    eProsima_user_DllExport Timestamp& timestamp();
+    /*!
+     * @brief This function sets a value in member bool_value
+     * @param _bool_value New value for member bool_value
+     */
+    eProsima_user_DllExport void bool_value(
+            bool _bool_value);
+
+    /*!
+     * @brief This function returns the value of member bool_value
+     * @return Value of member bool_value
+     */
+    eProsima_user_DllExport bool bool_value() const;
+
+    /*!
+     * @brief This function returns a reference to member bool_value
+     * @return Reference to member bool_value
+     */
+    eProsima_user_DllExport bool& bool_value();
+
+    /*!
+     * @brief This function sets a value in member int32_value
+     * @param _int32_value New value for member int32_value
+     */
+    eProsima_user_DllExport void int32_value(
+            int32_t _int32_value);
+
+    /*!
+     * @brief This function returns the value of member int32_value
+     * @return Value of member int32_value
+     */
+    eProsima_user_DllExport int32_t int32_value() const;
+
+    /*!
+     * @brief This function returns a reference to member int32_value
+     * @return Reference to member int32_value
+     */
+    eProsima_user_DllExport int32_t& int32_value();
+
+    /*!
+     * @brief This function sets a value in member uint32_value
+     * @param _uint32_value New value for member uint32_value
+     */
+    eProsima_user_DllExport void uint32_value(
+            uint32_t _uint32_value);
+
+    /*!
+     * @brief This function returns the value of member uint32_value
+     * @return Value of member uint32_value
+     */
+    eProsima_user_DllExport uint32_t uint32_value() const;
+
+    /*!
+     * @brief This function returns a reference to member uint32_value
+     * @return Reference to member uint32_value
+     */
+    eProsima_user_DllExport uint32_t& uint32_value();
+
+    /*!
+     * @brief This function sets a value in member int64_value
+     * @param _int64_value New value for member int64_value
+     */
+    eProsima_user_DllExport void int64_value(
+            int64_t _int64_value);
+
+    /*!
+     * @brief This function returns the value of member int64_value
+     * @return Value of member int64_value
+     */
+    eProsima_user_DllExport int64_t int64_value() const;
+
+    /*!
+     * @brief This function returns a reference to member int64_value
+     * @return Reference to member int64_value
+     */
+    eProsima_user_DllExport int64_t& int64_value();
+
+    /*!
+     * @brief This function sets a value in member uint64_value
+     * @param _uint64_value New value for member uint64_value
+     */
+    eProsima_user_DllExport void uint64_value(
+            uint64_t _uint64_value);
+
+    /*!
+     * @brief This function returns the value of member uint64_value
+     * @return Value of member uint64_value
+     */
+    eProsima_user_DllExport uint64_t uint64_value() const;
+
+    /*!
+     * @brief This function returns a reference to member uint64_value
+     * @return Reference to member uint64_value
+     */
+    eProsima_user_DllExport uint64_t& uint64_value();
+
+    /*!
+     * @brief This function sets a value in member float_value
+     * @param _float_value New value for member float_value
+     */
+    eProsima_user_DllExport void float_value(
+            float _float_value);
+
+    /*!
+     * @brief This function returns the value of member float_value
+     * @return Value of member float_value
+     */
+    eProsima_user_DllExport float float_value() const;
+
+    /*!
+     * @brief This function returns a reference to member float_value
+     * @return Reference to member float_value
+     */
+    eProsima_user_DllExport float& float_value();
+
+    /*!
+     * @brief This function sets a value in member double_value
+     * @param _double_value New value for member double_value
+     */
+    eProsima_user_DllExport void double_value(
+            double _double_value);
+
+    /*!
+     * @brief This function returns the value of member double_value
+     * @return Value of member double_value
+     */
+    eProsima_user_DllExport double double_value() const;
+
+    /*!
+     * @brief This function returns a reference to member double_value
+     * @return Reference to member double_value
+     */
+    eProsima_user_DllExport double& double_value();
+
+    /*!
+     * @brief This function copies the value in member string_value
+     * @param _string_value New value to be copied in member string_value
+     */
+    eProsima_user_DllExport void string_value(
+            const std::string& _string_value);
+
+    /*!
+     * @brief This function moves the value in member string_value
+     * @param _string_value New value to be moved in member string_value
+     */
+    eProsima_user_DllExport void string_value(
+            std::string&& _string_value);
+
+    /*!
+     * @brief This function returns a constant reference to member string_value
+     * @return Constant reference to member string_value
+     */
+    eProsima_user_DllExport const std::string& string_value() const;
+
+    /*!
+     * @brief This function returns a reference to member string_value
+     * @return Reference to member string_value
+     */
+    eProsima_user_DllExport std::string& string_value();
+    /*!
+     * @brief This function copies the value in member basic_types_values
+     * @param _basic_types_values New value to be copied in member basic_types_values
+     */
+    eProsima_user_DllExport void basic_types_values(
+            const std::vector<BasicTypes>& _basic_types_values);
+
+    /*!
+     * @brief This function moves the value in member basic_types_values
+     * @param _basic_types_values New value to be moved in member basic_types_values
+     */
+    eProsima_user_DllExport void basic_types_values(
+            std::vector<BasicTypes>&& _basic_types_values);
+
+    /*!
+     * @brief This function returns a constant reference to member basic_types_values
+     * @return Constant reference to member basic_types_values
+     */
+    eProsima_user_DllExport const std::vector<BasicTypes>& basic_types_values() const;
+
+    /*!
+     * @brief This function returns a reference to member basic_types_values
+     * @return Reference to member basic_types_values
+     */
+    eProsima_user_DllExport std::vector<BasicTypes>& basic_types_values();
+    /*!
+     * @brief This function copies the value in member image_value
+     * @param _image_value New value to be copied in member image_value
+     */
+    eProsima_user_DllExport void image_value(
+            const Image& _image_value);
+
+    /*!
+     * @brief This function moves the value in member image_value
+     * @param _image_value New value to be moved in member image_value
+     */
+    eProsima_user_DllExport void image_value(
+            Image&& _image_value);
+
+    /*!
+     * @brief This function returns a constant reference to member image_value
+     * @return Constant reference to member image_value
+     */
+    eProsima_user_DllExport const Image& image_value() const;
+
+    /*!
+     * @brief This function returns a reference to member image_value
+     * @return Reference to member image_value
+     */
+    eProsima_user_DllExport Image& image_value();
+    /*!
+     * @brief This function copies the value in member point_cloud_value
+     * @param _point_cloud_value New value to be copied in member point_cloud_value
+     */
+    eProsima_user_DllExport void point_cloud_value(
+            const PointCloud2& _point_cloud_value);
+
+    /*!
+     * @brief This function moves the value in member point_cloud_value
+     * @param _point_cloud_value New value to be moved in member point_cloud_value
+     */
+    eProsima_user_DllExport void point_cloud_value(
+            PointCloud2&& _point_cloud_value);
+
+    /*!
+     * @brief This function returns a constant reference to member point_cloud_value
+     * @return Constant reference to member point_cloud_value
+     */
+    eProsima_user_DllExport const PointCloud2& point_cloud_value() const;
+
+    /*!
+     * @brief This function returns a reference to member point_cloud_value
+     * @return Reference to member point_cloud_value
+     */
+    eProsima_user_DllExport PointCloud2& point_cloud_value();
+
+    /*!
+     * @brief This function returns the maximum serialized size of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function returns the serialized size of a data depending on the buffer alignment.
+     * @param data Data which is calculated its serialized size.
+     * @param current_alignment Buffer alignment.
+     * @return Serialized size.
+     */
+    eProsima_user_DllExport static size_t getCdrSerializedSize(
+            const BigData& data,
+            size_t current_alignment = 0);
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+    /*!
+     * @brief This function returns the maximum serialized size of the Key of an object
+     * depending on the buffer alignment.
+     * @param current_alignment Buffer alignment.
+     * @return Maximum serialized size.
+     */
+    eProsima_user_DllExport static size_t getKeyMaxCdrSerializedSize(
+            size_t current_alignment = 0);
+
+    /*!
+     * @brief This function tells you if the Key has been defined for this type
+     */
+    eProsima_user_DllExport static bool isKeyDefined();
+
+    /*!
+     * @brief This function serializes the key members of an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serializeKey(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+private:
+
+    Timestamp m_timestamp;
+    bool m_bool_value;
+    int32_t m_int32_value;
+    uint32_t m_uint32_value;
+    int64_t m_int64_value;
+    uint64_t m_uint64_value;
+    float m_float_value;
+    double m_double_value;
+    std::string m_string_value;
+    std::vector<BasicTypes> m_basic_types_values;
+    Image m_image_value;
+    PointCloud2 m_point_cloud_value;
+};
 
 #endif // _DATATYPES_H_

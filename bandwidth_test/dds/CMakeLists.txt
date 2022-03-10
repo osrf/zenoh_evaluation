@@ -1,17 +1,3 @@
-# Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 cmake_minimum_required(VERSION 2.8.12)
 
 if(NOT CMAKE_VERSION VERSION_LESS 3.0)
@@ -20,9 +6,9 @@ endif()
 
 project(FastddsTester)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
 # Find requirements
 if(NOT fastcdr_FOUND)
@@ -37,24 +23,37 @@ if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
 
-#Check C++11
-include(CheckCXXCompilerFlag)
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
-        CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    check_cxx_compiler_flag(-std=c++11 SUPPORTS_CXX11)
-    if(NOT SUPPORTS_CXX11)
-        message(FATAL_ERROR "Compiler doesn't support C++11")
-    endif()
-endif()
+include_directories(include)
 
-message(STATUS "Configuring FastDDS tester...")
-file(GLOB FASTDDSTESTER_SOURCES_CXX "*.cxx")
-file(GLOB FASTDDSTESTER_SOURCES_CPP "*.cpp")
+add_library(datatypes UNKNOWN IMPORTED)
+set_target_properties(datatypes PROPERTIES
+  IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../../dds_types/build/lib/libdds_types.so)
+include_directories(${CMAKE_SOURCE_DIR}/../../dds_types/include)
+add_dependencies(datatypes fastdds_montblanc_types)
 
-add_executable(FastDDSBandwidthTest ${FASTDDSTESTER_SOURCES_CXX} ${FASTDDSTESTER_SOURCES_CPP})
-target_compile_definitions(FastDDSBandwidthTest PRIVATE
+add_library(dds_node SHARED src/Node.cpp)
+target_link_libraries(dds_node fastcdr fastrtps)
+
+add_executable(publisher src/publisher.cpp)
+target_compile_definitions(publisher PRIVATE
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
-    $<$<BOOL:${INTERNAL_DEBUG}>:__INTERNALDEBUG> # Internal debug activated.
+    $<$<BOOL:${INTERNAL_DEBUG}>:__INTERNALDEBUG>
 )
-target_link_libraries(FastDDSBandwidthTest fastrtps fastcdr foonathan_memory)
-install(TARGETS FastDDSBandwidthTest)
+target_link_libraries(publisher
+  fastrtps
+  fastcdr
+  foonathan_memory
+  datatypes
+  dds_node)
+
+add_executable(subscriber src/subscriber.cpp)
+target_compile_definitions(subscriber PRIVATE
+    $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
+    $<$<BOOL:${INTERNAL_DEBUG}>:__INTERNALDEBUG>
+)
+target_link_libraries(subscriber
+  fastrtps
+  fastcdr
+  foonathan_memory
+  datatypes
+  dds_node)

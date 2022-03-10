@@ -36,7 +36,7 @@ using namespace eprosima::fastcdr::exception;
 
 Int32::Int32()
 {
-    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5891e32e
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2758fe70
     m_data = 0;
 
 }
@@ -182,7 +182,7 @@ void Int32::serializeKey(
 
 Int64::Int64()
 {
-    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7403c468
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@6ebc05a6
     m_data = 0;
 
 }
@@ -328,7 +328,7 @@ void Int64::serializeKey(
 
 Float32::Float32()
 {
-    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@289d1c02
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@3cef309d
     m_data = 0.0;
 
 }
@@ -474,7 +474,7 @@ void Float32::serializeKey(
 
 Float64::Float64()
 {
-    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@3891771e
+    // m_data com.eprosima.idl.parser.typecode.PrimitiveTypeCode@3d99d22e
     m_data = 0.0;
 
 }
@@ -620,7 +620,7 @@ void Float64::serializeKey(
 
 String::String()
 {
-    // m_data com.eprosima.idl.parser.typecode.StringTypeCode@43a0cee9
+    // m_data com.eprosima.idl.parser.typecode.StringTypeCode@57855c9a
     m_data ="";
 
 }
@@ -773,9 +773,9 @@ void String::serializeKey(
 
 Timestamp::Timestamp()
 {
-    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@149494d8
+    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@68bbe345
     m_sec = 0;
-    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@710726a3
+    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@30b8a058
     m_nanosec = 0;
 
 }
@@ -967,11 +967,11 @@ void Timestamp::serializeKey(
 
 Header::Header()
 {
-    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@78186a70
+    // m_sec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4bbfb90a
     m_sec = 0;
-    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@306279ee
+    // m_nanosec com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7c29daf3
     m_nanosec = 0;
-    // m_frame_id com.eprosima.idl.parser.typecode.StringTypeCode@545997b1
+    // m_frame_id com.eprosima.idl.parser.typecode.StringTypeCode@9660f4e
     m_frame_id ="";
 
 }
@@ -1212,11 +1212,11 @@ void Header::serializeKey(
 
 Point::Point()
 {
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5c18298f
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@76707e36
     m_x = 0.0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@31f924f5
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@614ddd49
     m_y = 0.0;
-    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5579bb86
+    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1f554b06
     m_z = 0.0;
 
 }
@@ -1450,13 +1450,13 @@ void Point::serializeKey(
 
 Quaternion::Quaternion()
 {
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@17211155
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@131276c2
     m_x = 0.0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@b3d7190
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@26aa12dd
     m_y = 0.0;
-    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@fe18270
+    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@711f39f9
     m_z = 0.0;
-    // m_w com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5123a213
+    // m_w com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7f13d6e
     m_w = 0.0;
 
 }
@@ -1732,11 +1732,11 @@ void Quaternion::serializeKey(
 
 Vector3::Vector3()
 {
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@52525845
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@51cdd8a
     m_x = 0.0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@68ceda24
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@23faf8f2
     m_y = 0.0;
-    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@281e3708
+    // m_z com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2d6eabae
     m_z = 0.0;
 
 }
@@ -1970,9 +1970,9 @@ void Vector3::serializeKey(
 
 Vector3Stamped::Vector3Stamped()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@473b46c3
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@37374a5e
 
-    // m_vector com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@516be40f
+    // m_vector com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@4671e53b
 
 
 }
@@ -2174,9 +2174,9 @@ void Vector3Stamped::serializeKey(
 
 Pose::Pose()
 {
-    // m_position com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@797badd3
+    // m_position com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@6950e31
 
-    // m_orientation com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@77be656f
+    // m_orientation com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@b7dd107
 
 
 }
@@ -2378,9 +2378,9 @@ void Pose::serializeKey(
 
 Twist::Twist()
 {
-    // m_linear com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@516be40f
+    // m_linear com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@4671e53b
 
-    // m_angular com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@516be40f
+    // m_angular com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@4671e53b
 
 
 }
@@ -2582,9 +2582,9 @@ void Twist::serializeKey(
 
 TwistWithCovariance::TwistWithCovariance()
 {
-    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@770c2e6b
+    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@706a04ae
 
-    // m_covariance com.eprosima.idl.parser.typecode.SequenceTypeCode@1a052a00
+    // m_covariance com.eprosima.idl.parser.typecode.SequenceTypeCode@6eceb130
 
 
 }
@@ -2799,9 +2799,9 @@ void TwistWithCovariance::serializeKey(
 
 TwistWithCovarianceStamped::TwistWithCovarianceStamped()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@473b46c3
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@37374a5e
 
-    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@145eaa29
+    // m_twist com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@954b04f
 
 
 }
@@ -3003,9 +3003,9 @@ void TwistWithCovarianceStamped::serializeKey(
 
 Wrench::Wrench()
 {
-    // m_force com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@516be40f
+    // m_force com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@4671e53b
 
-    // m_torque com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@516be40f
+    // m_torque com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@4671e53b
 
 
 }
@@ -3207,9 +3207,9 @@ void Wrench::serializeKey(
 
 WrenchStamped::WrenchStamped()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@473b46c3
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@37374a5e
 
-    // m_wrench com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@157632c9
+    // m_wrench com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@306279ee
 
 
 }
@@ -3411,19 +3411,19 @@ void WrenchStamped::serializeKey(
 
 Image::Image()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@473b46c3
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@37374a5e
 
-    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@275710fc
+    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4cf4d528
     m_height = 0;
-    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@525f1e4e
+    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@77846d2c
     m_width = 0;
-    // m_encoding com.eprosima.idl.parser.typecode.StringTypeCode@75f9eccc
+    // m_encoding com.eprosima.idl.parser.typecode.StringTypeCode@548ad73b
     m_encoding ="";
-    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@52aa2946
+    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4c762604
     m_is_bigendian = false;
-    // m_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4de5031f
+    // m_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2641e737
     m_step = 0;
-    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@67e2d983
+    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@727803de
 
 
 }
@@ -3863,13 +3863,13 @@ void Image::serializeKey(
 
 PointField::PointField()
 {
-    // m_name com.eprosima.idl.parser.typecode.StringTypeCode@20d3d15a
+    // m_name com.eprosima.idl.parser.typecode.StringTypeCode@68ceda24
     m_name ="";
-    // m_offset com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2893de87
+    // m_offset com.eprosima.idl.parser.typecode.PrimitiveTypeCode@281e3708
     m_offset = 0;
-    // m_datatype com.eprosima.idl.parser.typecode.PrimitiveTypeCode@55ca8de8
+    // m_datatype com.eprosima.idl.parser.typecode.PrimitiveTypeCode@35a50a4c
     m_datatype = 0;
-    // m_count com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2c34f934
+    // m_count com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1f021e6c
     m_count = 0;
 
 }
@@ -4160,23 +4160,23 @@ void PointField::serializeKey(
 
 PointCloud2::PointCloud2()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@473b46c3
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@37374a5e
 
-    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@12d3a4e9
+    // m_height com.eprosima.idl.parser.typecode.PrimitiveTypeCode@103f852
     m_height = 0;
-    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@240237d2
+    // m_width com.eprosima.idl.parser.typecode.PrimitiveTypeCode@587c290d
     m_width = 0;
-    // m_fields com.eprosima.idl.parser.typecode.SequenceTypeCode@25a65b77
+    // m_fields com.eprosima.idl.parser.typecode.SequenceTypeCode@4516af24
 
-    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2ed0fbae
+    // m_is_bigendian com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4ae82894
     m_is_bigendian = false;
-    // m_point_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@212bf671
+    // m_point_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@543788f3
     m_point_step = 0;
-    // m_row_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@14a2f921
+    // m_row_step com.eprosima.idl.parser.typecode.PrimitiveTypeCode@6d3af739
     m_row_step = 0;
-    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@3c87521
+    // m_data com.eprosima.idl.parser.typecode.SequenceTypeCode@1da51a35
 
-    // m_is_dense com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2aece37d
+    // m_is_dense com.eprosima.idl.parser.typecode.PrimitiveTypeCode@16022d9d
     m_is_dense = false;
 
 }
@@ -4702,25 +4702,25 @@ void PointCloud2::serializeKey(
 
 LaserScan::LaserScan()
 {
-    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@473b46c3
+    // m_header com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@37374a5e
 
-    // m_angle_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@17c386de
+    // m_angle_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@44a3ec6b
     m_angle_min = 0.0;
-    // m_angle_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5af97850
+    // m_angle_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@71623278
     m_angle_max = 0.0;
-    // m_angle_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5ef60048
+    // m_angle_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@768b970c
     m_angle_increment = 0.0;
-    // m_time_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1d548a08
+    // m_time_increment com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5a4041cc
     m_time_increment = 0.0;
-    // m_scan_time com.eprosima.idl.parser.typecode.PrimitiveTypeCode@16aa0a0a
+    // m_scan_time com.eprosima.idl.parser.typecode.PrimitiveTypeCode@15b3e5b
     m_scan_time = 0.0;
-    // m_range_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@780cb77
+    // m_range_min com.eprosima.idl.parser.typecode.PrimitiveTypeCode@61ca2dfa
     m_range_min = 0.0;
-    // m_range_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@691a7f8f
+    // m_range_max com.eprosima.idl.parser.typecode.PrimitiveTypeCode@4b53f538
     m_range_max = 0.0;
-    // m_ranges com.eprosima.idl.parser.typecode.SequenceTypeCode@50a7bc6e
+    // m_ranges com.eprosima.idl.parser.typecode.SequenceTypeCode@134593bf
 
-    // m_intensities com.eprosima.idl.parser.typecode.SequenceTypeCode@161b062a
+    // m_intensities com.eprosima.idl.parser.typecode.SequenceTypeCode@4bb4de6a
 
 
 }
@@ -5285,4 +5285,1149 @@ void LaserScan::serializeKey(
 {
     (void) scdr;
               
+}
+
+BasicTypes::BasicTypes()
+{
+    // m_bool_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7ba18f1b
+    m_bool_value = false;
+    // m_int32_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2f8f5f62
+    m_int32_value = 0;
+    // m_uint32_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1068e947
+    m_uint32_value = 0;
+    // m_int64_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7dc222ae
+    m_int64_value = 0;
+    // m_uint64_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@aecb35a
+    m_uint64_value = 0;
+    // m_float_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5fcd892a
+    m_float_value = 0.0;
+    // m_double_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@8b87145
+    m_double_value = 0.0;
+    // m_string_value com.eprosima.idl.parser.typecode.StringTypeCode@6483f5ae
+    m_string_value ="";
+
+}
+
+BasicTypes::~BasicTypes()
+{
+
+
+
+
+
+
+
+
+}
+
+BasicTypes::BasicTypes(
+        const BasicTypes& x)
+{
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = x.m_string_value;
+}
+
+BasicTypes::BasicTypes(
+        BasicTypes&& x)
+{
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = std::move(x.m_string_value);
+}
+
+BasicTypes& BasicTypes::operator =(
+        const BasicTypes& x)
+{
+
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = x.m_string_value;
+
+    return *this;
+}
+
+BasicTypes& BasicTypes::operator =(
+        BasicTypes&& x)
+{
+
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = std::move(x.m_string_value);
+
+    return *this;
+}
+
+bool BasicTypes::operator ==(
+        const BasicTypes& x)
+{
+
+    return (m_bool_value == x.m_bool_value && m_int32_value == x.m_int32_value && m_uint32_value == x.m_uint32_value && m_int64_value == x.m_int64_value && m_uint64_value == x.m_uint64_value && m_float_value == x.m_float_value && m_double_value == x.m_double_value && m_string_value == x.m_string_value);
+}
+
+bool BasicTypes::operator ==(
+        const BasicTypes& x) const
+{
+
+    return (m_bool_value == x.m_bool_value && m_int32_value == x.m_int32_value && m_uint32_value == x.m_uint32_value && m_int64_value == x.m_int64_value && m_uint64_value == x.m_uint64_value && m_float_value == x.m_float_value && m_double_value == x.m_double_value && m_string_value == x.m_string_value);
+}
+
+bool BasicTypes::operator !=(
+        const BasicTypes& x)
+{
+    return !(*this == x);
+}
+
+size_t BasicTypes::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 1 + eprosima::fastcdr::Cdr::alignment(current_alignment, 1);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 128 + 1;
+
+
+    return current_alignment - initial_alignment;
+}
+
+size_t BasicTypes::getCdrSerializedSize(
+        const BasicTypes& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += 1 + eprosima::fastcdr::Cdr::alignment(current_alignment, 1);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.string_value().size() + 1;
+
+
+    return current_alignment - initial_alignment;
+}
+
+void BasicTypes::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+
+    scdr << m_bool_value;
+    scdr << m_int32_value;
+    scdr << m_uint32_value;
+    scdr << m_int64_value;
+    scdr << m_uint64_value;
+    scdr << m_float_value;
+    scdr << m_double_value;
+    scdr << m_string_value;
+
+}
+
+void BasicTypes::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+
+    dcdr >> m_bool_value;
+    dcdr >> m_int32_value;
+    dcdr >> m_uint32_value;
+    dcdr >> m_int64_value;
+    dcdr >> m_uint64_value;
+    dcdr >> m_float_value;
+    dcdr >> m_double_value;
+    dcdr >> m_string_value;
+}
+
+/*!
+ * @brief This function sets a value in member bool_value
+ * @param _bool_value New value for member bool_value
+ */
+void BasicTypes::bool_value(
+        bool _bool_value)
+{
+    m_bool_value = _bool_value;
+}
+
+/*!
+ * @brief This function returns the value of member bool_value
+ * @return Value of member bool_value
+ */
+bool BasicTypes::bool_value() const
+{
+    return m_bool_value;
+}
+
+/*!
+ * @brief This function returns a reference to member bool_value
+ * @return Reference to member bool_value
+ */
+bool& BasicTypes::bool_value()
+{
+    return m_bool_value;
+}
+
+/*!
+ * @brief This function sets a value in member int32_value
+ * @param _int32_value New value for member int32_value
+ */
+void BasicTypes::int32_value(
+        int32_t _int32_value)
+{
+    m_int32_value = _int32_value;
+}
+
+/*!
+ * @brief This function returns the value of member int32_value
+ * @return Value of member int32_value
+ */
+int32_t BasicTypes::int32_value() const
+{
+    return m_int32_value;
+}
+
+/*!
+ * @brief This function returns a reference to member int32_value
+ * @return Reference to member int32_value
+ */
+int32_t& BasicTypes::int32_value()
+{
+    return m_int32_value;
+}
+
+/*!
+ * @brief This function sets a value in member uint32_value
+ * @param _uint32_value New value for member uint32_value
+ */
+void BasicTypes::uint32_value(
+        uint32_t _uint32_value)
+{
+    m_uint32_value = _uint32_value;
+}
+
+/*!
+ * @brief This function returns the value of member uint32_value
+ * @return Value of member uint32_value
+ */
+uint32_t BasicTypes::uint32_value() const
+{
+    return m_uint32_value;
+}
+
+/*!
+ * @brief This function returns a reference to member uint32_value
+ * @return Reference to member uint32_value
+ */
+uint32_t& BasicTypes::uint32_value()
+{
+    return m_uint32_value;
+}
+
+/*!
+ * @brief This function sets a value in member int64_value
+ * @param _int64_value New value for member int64_value
+ */
+void BasicTypes::int64_value(
+        int64_t _int64_value)
+{
+    m_int64_value = _int64_value;
+}
+
+/*!
+ * @brief This function returns the value of member int64_value
+ * @return Value of member int64_value
+ */
+int64_t BasicTypes::int64_value() const
+{
+    return m_int64_value;
+}
+
+/*!
+ * @brief This function returns a reference to member int64_value
+ * @return Reference to member int64_value
+ */
+int64_t& BasicTypes::int64_value()
+{
+    return m_int64_value;
+}
+
+/*!
+ * @brief This function sets a value in member uint64_value
+ * @param _uint64_value New value for member uint64_value
+ */
+void BasicTypes::uint64_value(
+        uint64_t _uint64_value)
+{
+    m_uint64_value = _uint64_value;
+}
+
+/*!
+ * @brief This function returns the value of member uint64_value
+ * @return Value of member uint64_value
+ */
+uint64_t BasicTypes::uint64_value() const
+{
+    return m_uint64_value;
+}
+
+/*!
+ * @brief This function returns a reference to member uint64_value
+ * @return Reference to member uint64_value
+ */
+uint64_t& BasicTypes::uint64_value()
+{
+    return m_uint64_value;
+}
+
+/*!
+ * @brief This function sets a value in member float_value
+ * @param _float_value New value for member float_value
+ */
+void BasicTypes::float_value(
+        float _float_value)
+{
+    m_float_value = _float_value;
+}
+
+/*!
+ * @brief This function returns the value of member float_value
+ * @return Value of member float_value
+ */
+float BasicTypes::float_value() const
+{
+    return m_float_value;
+}
+
+/*!
+ * @brief This function returns a reference to member float_value
+ * @return Reference to member float_value
+ */
+float& BasicTypes::float_value()
+{
+    return m_float_value;
+}
+
+/*!
+ * @brief This function sets a value in member double_value
+ * @param _double_value New value for member double_value
+ */
+void BasicTypes::double_value(
+        double _double_value)
+{
+    m_double_value = _double_value;
+}
+
+/*!
+ * @brief This function returns the value of member double_value
+ * @return Value of member double_value
+ */
+double BasicTypes::double_value() const
+{
+    return m_double_value;
+}
+
+/*!
+ * @brief This function returns a reference to member double_value
+ * @return Reference to member double_value
+ */
+double& BasicTypes::double_value()
+{
+    return m_double_value;
+}
+
+/*!
+ * @brief This function copies the value in member string_value
+ * @param _string_value New value to be copied in member string_value
+ */
+void BasicTypes::string_value(
+        const std::string& _string_value)
+{
+    m_string_value = _string_value;
+}
+
+/*!
+ * @brief This function moves the value in member string_value
+ * @param _string_value New value to be moved in member string_value
+ */
+void BasicTypes::string_value(
+        std::string&& _string_value)
+{
+    m_string_value = std::move(_string_value);
+}
+
+/*!
+ * @brief This function returns a constant reference to member string_value
+ * @return Constant reference to member string_value
+ */
+const std::string& BasicTypes::string_value() const
+{
+    return m_string_value;
+}
+
+/*!
+ * @brief This function returns a reference to member string_value
+ * @return Reference to member string_value
+ */
+std::string& BasicTypes::string_value()
+{
+    return m_string_value;
+}
+
+size_t BasicTypes::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
+
+
+
+
+
+
+
+
+
+    return current_align;
+}
+
+bool BasicTypes::isKeyDefined()
+{
+    return false;
+}
+
+void BasicTypes::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+            
+}
+
+BigData::BigData()
+{
+    // m_timestamp com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@b9afc07
+
+    // m_bool_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@382db087
+    m_bool_value = false;
+    // m_int32_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@73d4cc9e
+    m_int32_value = 0;
+    // m_uint32_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@80169cf
+    m_uint32_value = 0;
+    // m_int64_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5427c60c
+    m_int64_value = 0;
+    // m_uint64_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@15bfd87
+    m_uint64_value = 0;
+    // m_float_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@543e710e
+    m_float_value = 0.0;
+    // m_double_value com.eprosima.idl.parser.typecode.PrimitiveTypeCode@57f23557
+    m_double_value = 0.0;
+    // m_string_value com.eprosima.idl.parser.typecode.StringTypeCode@3d0f8e03
+    m_string_value ="";
+    // m_basic_types_values com.eprosima.idl.parser.typecode.SequenceTypeCode@6366ebe0
+
+    // m_image_value com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@44f75083
+
+    // m_point_cloud_value com.eprosima.fastdds.idl.parser.typecode.StructTypeCode@2698dc7
+
+
+}
+
+BigData::~BigData()
+{
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+BigData::BigData(
+        const BigData& x)
+{
+    m_timestamp = x.m_timestamp;
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = x.m_string_value;
+    m_basic_types_values = x.m_basic_types_values;
+    m_image_value = x.m_image_value;
+    m_point_cloud_value = x.m_point_cloud_value;
+}
+
+BigData::BigData(
+        BigData&& x)
+{
+    m_timestamp = std::move(x.m_timestamp);
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = std::move(x.m_string_value);
+    m_basic_types_values = std::move(x.m_basic_types_values);
+    m_image_value = std::move(x.m_image_value);
+    m_point_cloud_value = std::move(x.m_point_cloud_value);
+}
+
+BigData& BigData::operator =(
+        const BigData& x)
+{
+
+    m_timestamp = x.m_timestamp;
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = x.m_string_value;
+    m_basic_types_values = x.m_basic_types_values;
+    m_image_value = x.m_image_value;
+    m_point_cloud_value = x.m_point_cloud_value;
+
+    return *this;
+}
+
+BigData& BigData::operator =(
+        BigData&& x)
+{
+
+    m_timestamp = std::move(x.m_timestamp);
+    m_bool_value = x.m_bool_value;
+    m_int32_value = x.m_int32_value;
+    m_uint32_value = x.m_uint32_value;
+    m_int64_value = x.m_int64_value;
+    m_uint64_value = x.m_uint64_value;
+    m_float_value = x.m_float_value;
+    m_double_value = x.m_double_value;
+    m_string_value = std::move(x.m_string_value);
+    m_basic_types_values = std::move(x.m_basic_types_values);
+    m_image_value = std::move(x.m_image_value);
+    m_point_cloud_value = std::move(x.m_point_cloud_value);
+
+    return *this;
+}
+
+bool BigData::operator ==(
+        const BigData& x)
+{
+
+    return (m_timestamp == x.m_timestamp && m_bool_value == x.m_bool_value && m_int32_value == x.m_int32_value && m_uint32_value == x.m_uint32_value && m_int64_value == x.m_int64_value && m_uint64_value == x.m_uint64_value && m_float_value == x.m_float_value && m_double_value == x.m_double_value && m_string_value == x.m_string_value && m_basic_types_values == x.m_basic_types_values && m_image_value == x.m_image_value && m_point_cloud_value == x.m_point_cloud_value);
+}
+
+bool BigData::operator !=(
+        const BigData& x)
+{
+    return !(*this == x);
+}
+
+size_t BigData::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += Timestamp::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += 1 + eprosima::fastcdr::Cdr::alignment(current_alignment, 1);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 256 + 1;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    for(size_t a = 0; a < 3; ++a)
+    {
+        current_alignment += BasicTypes::getMaxCdrSerializedSize(current_alignment);}
+
+    current_alignment += Image::getMaxCdrSerializedSize(current_alignment);
+    current_alignment += PointCloud2::getMaxCdrSerializedSize(current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
+size_t BigData::getCdrSerializedSize(
+        const BigData& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+
+    current_alignment += Timestamp::getCdrSerializedSize(data.timestamp(), current_alignment);
+    current_alignment += 1 + eprosima::fastcdr::Cdr::alignment(current_alignment, 1);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 8 + eprosima::fastcdr::Cdr::alignment(current_alignment, 8);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.string_value().size() + 1;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    for(size_t a = 0; a < data.basic_types_values().size(); ++a)
+    {
+        current_alignment += BasicTypes::getCdrSerializedSize(data.basic_types_values().at(a), current_alignment);}
+
+    current_alignment += Image::getCdrSerializedSize(data.image_value(), current_alignment);
+    current_alignment += PointCloud2::getCdrSerializedSize(data.point_cloud_value(), current_alignment);
+
+    return current_alignment - initial_alignment;
+}
+
+void BigData::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+
+    scdr << m_timestamp;
+    scdr << m_bool_value;
+    scdr << m_int32_value;
+    scdr << m_uint32_value;
+    scdr << m_int64_value;
+    scdr << m_uint64_value;
+    scdr << m_float_value;
+    scdr << m_double_value;
+    scdr << m_string_value;
+    scdr << m_basic_types_values;
+    scdr << m_image_value;
+    scdr << m_point_cloud_value;
+
+}
+
+void BigData::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+
+    dcdr >> m_timestamp;
+    dcdr >> m_bool_value;
+    dcdr >> m_int32_value;
+    dcdr >> m_uint32_value;
+    dcdr >> m_int64_value;
+    dcdr >> m_uint64_value;
+    dcdr >> m_float_value;
+    dcdr >> m_double_value;
+    dcdr >> m_string_value;
+    dcdr >> m_basic_types_values;
+    dcdr >> m_image_value;
+    dcdr >> m_point_cloud_value;
+}
+
+/*!
+ * @brief This function copies the value in member timestamp
+ * @param _timestamp New value to be copied in member timestamp
+ */
+void BigData::timestamp(
+        const Timestamp& _timestamp)
+{
+    m_timestamp = _timestamp;
+}
+
+/*!
+ * @brief This function moves the value in member timestamp
+ * @param _timestamp New value to be moved in member timestamp
+ */
+void BigData::timestamp(
+        Timestamp&& _timestamp)
+{
+    m_timestamp = std::move(_timestamp);
+}
+
+/*!
+ * @brief This function returns a constant reference to member timestamp
+ * @return Constant reference to member timestamp
+ */
+const Timestamp& BigData::timestamp() const
+{
+    return m_timestamp;
+}
+
+/*!
+ * @brief This function returns a reference to member timestamp
+ * @return Reference to member timestamp
+ */
+Timestamp& BigData::timestamp()
+{
+    return m_timestamp;
+}
+/*!
+ * @brief This function sets a value in member bool_value
+ * @param _bool_value New value for member bool_value
+ */
+void BigData::bool_value(
+        bool _bool_value)
+{
+    m_bool_value = _bool_value;
+}
+
+/*!
+ * @brief This function returns the value of member bool_value
+ * @return Value of member bool_value
+ */
+bool BigData::bool_value() const
+{
+    return m_bool_value;
+}
+
+/*!
+ * @brief This function returns a reference to member bool_value
+ * @return Reference to member bool_value
+ */
+bool& BigData::bool_value()
+{
+    return m_bool_value;
+}
+
+/*!
+ * @brief This function sets a value in member int32_value
+ * @param _int32_value New value for member int32_value
+ */
+void BigData::int32_value(
+        int32_t _int32_value)
+{
+    m_int32_value = _int32_value;
+}
+
+/*!
+ * @brief This function returns the value of member int32_value
+ * @return Value of member int32_value
+ */
+int32_t BigData::int32_value() const
+{
+    return m_int32_value;
+}
+
+/*!
+ * @brief This function returns a reference to member int32_value
+ * @return Reference to member int32_value
+ */
+int32_t& BigData::int32_value()
+{
+    return m_int32_value;
+}
+
+/*!
+ * @brief This function sets a value in member uint32_value
+ * @param _uint32_value New value for member uint32_value
+ */
+void BigData::uint32_value(
+        uint32_t _uint32_value)
+{
+    m_uint32_value = _uint32_value;
+}
+
+/*!
+ * @brief This function returns the value of member uint32_value
+ * @return Value of member uint32_value
+ */
+uint32_t BigData::uint32_value() const
+{
+    return m_uint32_value;
+}
+
+/*!
+ * @brief This function returns a reference to member uint32_value
+ * @return Reference to member uint32_value
+ */
+uint32_t& BigData::uint32_value()
+{
+    return m_uint32_value;
+}
+
+/*!
+ * @brief This function sets a value in member int64_value
+ * @param _int64_value New value for member int64_value
+ */
+void BigData::int64_value(
+        int64_t _int64_value)
+{
+    m_int64_value = _int64_value;
+}
+
+/*!
+ * @brief This function returns the value of member int64_value
+ * @return Value of member int64_value
+ */
+int64_t BigData::int64_value() const
+{
+    return m_int64_value;
+}
+
+/*!
+ * @brief This function returns a reference to member int64_value
+ * @return Reference to member int64_value
+ */
+int64_t& BigData::int64_value()
+{
+    return m_int64_value;
+}
+
+/*!
+ * @brief This function sets a value in member uint64_value
+ * @param _uint64_value New value for member uint64_value
+ */
+void BigData::uint64_value(
+        uint64_t _uint64_value)
+{
+    m_uint64_value = _uint64_value;
+}
+
+/*!
+ * @brief This function returns the value of member uint64_value
+ * @return Value of member uint64_value
+ */
+uint64_t BigData::uint64_value() const
+{
+    return m_uint64_value;
+}
+
+/*!
+ * @brief This function returns a reference to member uint64_value
+ * @return Reference to member uint64_value
+ */
+uint64_t& BigData::uint64_value()
+{
+    return m_uint64_value;
+}
+
+/*!
+ * @brief This function sets a value in member float_value
+ * @param _float_value New value for member float_value
+ */
+void BigData::float_value(
+        float _float_value)
+{
+    m_float_value = _float_value;
+}
+
+/*!
+ * @brief This function returns the value of member float_value
+ * @return Value of member float_value
+ */
+float BigData::float_value() const
+{
+    return m_float_value;
+}
+
+/*!
+ * @brief This function returns a reference to member float_value
+ * @return Reference to member float_value
+ */
+float& BigData::float_value()
+{
+    return m_float_value;
+}
+
+/*!
+ * @brief This function sets a value in member double_value
+ * @param _double_value New value for member double_value
+ */
+void BigData::double_value(
+        double _double_value)
+{
+    m_double_value = _double_value;
+}
+
+/*!
+ * @brief This function returns the value of member double_value
+ * @return Value of member double_value
+ */
+double BigData::double_value() const
+{
+    return m_double_value;
+}
+
+/*!
+ * @brief This function returns a reference to member double_value
+ * @return Reference to member double_value
+ */
+double& BigData::double_value()
+{
+    return m_double_value;
+}
+
+/*!
+ * @brief This function copies the value in member string_value
+ * @param _string_value New value to be copied in member string_value
+ */
+void BigData::string_value(
+        const std::string& _string_value)
+{
+    m_string_value = _string_value;
+}
+
+/*!
+ * @brief This function moves the value in member string_value
+ * @param _string_value New value to be moved in member string_value
+ */
+void BigData::string_value(
+        std::string&& _string_value)
+{
+    m_string_value = std::move(_string_value);
+}
+
+/*!
+ * @brief This function returns a constant reference to member string_value
+ * @return Constant reference to member string_value
+ */
+const std::string& BigData::string_value() const
+{
+    return m_string_value;
+}
+
+/*!
+ * @brief This function returns a reference to member string_value
+ * @return Reference to member string_value
+ */
+std::string& BigData::string_value()
+{
+    return m_string_value;
+}
+/*!
+ * @brief This function copies the value in member basic_types_values
+ * @param _basic_types_values New value to be copied in member basic_types_values
+ */
+void BigData::basic_types_values(
+        const std::vector<BasicTypes>& _basic_types_values)
+{
+    m_basic_types_values = _basic_types_values;
+}
+
+/*!
+ * @brief This function moves the value in member basic_types_values
+ * @param _basic_types_values New value to be moved in member basic_types_values
+ */
+void BigData::basic_types_values(
+        std::vector<BasicTypes>&& _basic_types_values)
+{
+    m_basic_types_values = std::move(_basic_types_values);
+}
+
+/*!
+ * @brief This function returns a constant reference to member basic_types_values
+ * @return Constant reference to member basic_types_values
+ */
+const std::vector<BasicTypes>& BigData::basic_types_values() const
+{
+    return m_basic_types_values;
+}
+
+/*!
+ * @brief This function returns a reference to member basic_types_values
+ * @return Reference to member basic_types_values
+ */
+std::vector<BasicTypes>& BigData::basic_types_values()
+{
+    return m_basic_types_values;
+}
+/*!
+ * @brief This function copies the value in member image_value
+ * @param _image_value New value to be copied in member image_value
+ */
+void BigData::image_value(
+        const Image& _image_value)
+{
+    m_image_value = _image_value;
+}
+
+/*!
+ * @brief This function moves the value in member image_value
+ * @param _image_value New value to be moved in member image_value
+ */
+void BigData::image_value(
+        Image&& _image_value)
+{
+    m_image_value = std::move(_image_value);
+}
+
+/*!
+ * @brief This function returns a constant reference to member image_value
+ * @return Constant reference to member image_value
+ */
+const Image& BigData::image_value() const
+{
+    return m_image_value;
+}
+
+/*!
+ * @brief This function returns a reference to member image_value
+ * @return Reference to member image_value
+ */
+Image& BigData::image_value()
+{
+    return m_image_value;
+}
+/*!
+ * @brief This function copies the value in member point_cloud_value
+ * @param _point_cloud_value New value to be copied in member point_cloud_value
+ */
+void BigData::point_cloud_value(
+        const PointCloud2& _point_cloud_value)
+{
+    m_point_cloud_value = _point_cloud_value;
+}
+
+/*!
+ * @brief This function moves the value in member point_cloud_value
+ * @param _point_cloud_value New value to be moved in member point_cloud_value
+ */
+void BigData::point_cloud_value(
+        PointCloud2&& _point_cloud_value)
+{
+    m_point_cloud_value = std::move(_point_cloud_value);
+}
+
+/*!
+ * @brief This function returns a constant reference to member point_cloud_value
+ * @return Constant reference to member point_cloud_value
+ */
+const PointCloud2& BigData::point_cloud_value() const
+{
+    return m_point_cloud_value;
+}
+
+/*!
+ * @brief This function returns a reference to member point_cloud_value
+ * @return Reference to member point_cloud_value
+ */
+PointCloud2& BigData::point_cloud_value()
+{
+    return m_point_cloud_value;
+}
+
+size_t BigData::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return current_align;
+}
+
+bool BigData::isKeyDefined()
+{
+    return false;
+}
+
+void BigData::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+                
 }
