@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 
-from mininet.util import pmonitor 
+from mininet.util import pmonitor
 from mn_wifi.cli import CLI
 
 from signal import SIGINT
@@ -105,23 +105,23 @@ def fastdds_bandwidth_test(net):
     print('\tCompleted; accumulated data:')
     for l in data_lines:
         print(l.strip())
-        
+
 
 def main():
-	# We only have one case to evaluate, Scenario 4	
+	# We only have one case to evaluate, Scenario 4
 	net = scenarios_mnw.scenario4()
-	
+
 	print('Connections:')
 	print('{}'.format(get_nodes(net)))
-	
+
 	# wait for a bit to let stations associate with AP
 	# especially needed for situations with high count of devices
 	time.sleep(15)
-	
+
 	# Uncomment for CLI access
 	#print('Starting CLI')
 	#CLI(net)
-	
+
 	ping_test(net)
 	raw_bandwidth_test(net)
 	zenoh_bandwidth_test(net)
@@ -129,7 +129,7 @@ def main():
 
 	print('Stopping mininet')
 	net.stop()
-		
+
 	return 0
 
 
