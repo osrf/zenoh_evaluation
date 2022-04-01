@@ -10,7 +10,7 @@ async fn main() {
     env_logger::init();
 
     let mut config = Config::default();
-    config.listeners.push("tcp/0.0.0.0:7502".parse().unwrap());
+    config.listen.endpoints.push("tcp/0.0.0.0:7502".parse().unwrap());
     let session = zenoh::open(config).await.unwrap();
 
     let mut subscriber = session.subscribe("/amazon").await.unwrap();
@@ -32,7 +32,7 @@ async fn main() {
                         );
                         let transmission_size = buf.len();
                         start_instant = Instant::now();
-                        let big_d = deserialize_big_data(buf.as_slice()).unwrap();
+                        let big_d = deserialize_big_data(&buf).unwrap();
                         println!(
                             "Deserialisation took {}",
                             start_instant.elapsed().as_secs_f64()
