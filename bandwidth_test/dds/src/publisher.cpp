@@ -23,12 +23,18 @@
 #include "types/datatypes.h"
 #include "types/datatypesPubSubTypes.h"
 
+#include <fastdds/dds/log/StdoutConsumer.hpp>
+
 
 using namespace eprosima::fastdds::dds;
 
 int main()
 {
   std::string name = "Publisher";
+
+  std::unique_ptr<StdoutConsumer> stdout_consumer(new StdoutConsumer());
+  Log::RegisterConsumer(std::move(stdout_consumer));
+  Log::SetVerbosity(Log::Kind::Info);
 
   dds_node::Node node = dds_node::Node(name.c_str());
   node.init();
@@ -42,7 +48,7 @@ int main()
   // RANDOMIZE ===================================================================================
   std::cout << name << ": Data generation started\n";
 
-  msg = dds_types::random_bigdata(true);
+  msg = dds_types::random_bigdata(false);
 
   std::cout << name << ": Data generation done\n";
 
