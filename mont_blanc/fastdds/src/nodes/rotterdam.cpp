@@ -68,10 +68,9 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received TwistWithCovarianceStamped<%zu> from /mekong, "
-            "putting Vector3Stamped to /murray | <%ld μs>\n",
+            "putting Vector3Stamped to /murray\n",
             name.c_str(),
-            msg.twist().covariance().size(),
-            duration_cast<microseconds>(mekong_now - mekong_prev).count());
+            msg.twist().covariance().size());
           murray_writer->write(&murray_msg);
         }
       }

@@ -104,9 +104,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Pose from /tagus | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(tagus_now - tagus_prev).count());
+            "%s: Received Pose from /tagus\n",
+            name.c_str());
         }
       }
     }
@@ -126,10 +125,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received String<%zu> from /danube | <%ld μs>\n",
+            "%s: Received String<%zu> from /danube\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(danube_now - danube_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -149,10 +147,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Image<%zu> from /missouri | <%ld μs>\n",
+            "%s: Received Image<%zu> from /missouri\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(missouri_now - missouri_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -173,11 +170,10 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received PointCloud2<%zu> from /brazos, putting Twist to /congo, "
-            "putting TwistWithCovarianceStamped<%zu> to /mekong | <%ld μs>\n",
+            "putting TwistWithCovarianceStamped<%zu> to /mekong\n",
             name.c_str(),
             msg.data().size(),
-            mekong_msg.twist().covariance().size(),
-            duration_cast<microseconds>(brazos_now - brazos_prev).count());
+            mekong_msg.twist().covariance().size());
           congo_writer->write(&congo_msg);  // ===================================================
           mekong_writer->write(&mekong_msg);  // =================================================
         }
@@ -199,9 +195,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Vector3 from /yamuna | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
+            "%s: Received Vector3 from /yamuna\n",
+            name.c_str());
         }
       }
     }
@@ -221,11 +216,10 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received LaserScan<%zu, %zu> from /godavari | <%ld μs>\n",
+            "%s: Received LaserScan<%zu, %zu> from /godavari\n",
             name.c_str(),
             msg.ranges().size(),
-            msg.intensities().size(),
-            duration_cast<microseconds>(godavari_now - godavari_prev).count());
+            msg.intensities().size());
         }
       }
     }
@@ -245,10 +239,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received PointCloud2<%zu> from /loire | <%ld μs>\n",
+            "%s: Received PointCloud2<%zu> from /loire\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(loire_now - loire_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -268,9 +261,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Float32 from /ohio | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(ohio_now - ohio_prev).count());
+            "%s: Received Float32 from /ohio\n",
+            name.c_str());
         }
       }
     }
@@ -290,9 +282,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Float64 from /volga | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(volga_now - volga_prev).count());
+            "%s: Received Float64 from /volga\n",
+            name.c_str());
         }
       }
     }

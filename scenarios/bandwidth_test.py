@@ -22,18 +22,18 @@ def raw_bandwidth_test(net, scenario_module):
     source, sink = utils.get_source_and_sink(net, scenario_module)
 
     print('Raw bandwidth test (TCP)')
-    sink_process = sink.popen('iperf -s -p 5001')
+    sink_process = sink.popen('iperf -s -p 5001 -e')
     waitListening(source, sink, 5001, timeout=5)
     sink_process.stdout.readline()
-    result = source.cmd('iperf -t 10 -p 5001 -c {}'.format(sink.IP()))
+    result = source.cmd('iperf -t 10 -p 5001 -c {} -e'.format(sink.IP()))
     print(result)
     sink_process.send_signal(SIGINT)
 
     print('Raw bandwidth test (UDP)')
-    sink_process = sink.popen('iperf -s -p 5001 -u')
+    sink_process = sink.popen('iperf -s -p 5001 -u -e')
     time.sleep(2)
     sink_process.stdout.readline()
-    result = source.cmd('iperf -t 10 -b 10G -p 5001 -u -c {}'.format(sink.IP()))
+    result = source.cmd('iperf -t 10 -b 10G -p 5001 -u -c {} -e'.format(sink.IP()))
     print(result)
     sink_process.send_signal(SIGINT)
 
@@ -44,21 +44,17 @@ def zenoh_bandwidth_test(net, scenario_module):
 
     popens = {}
     data_lines = []
-    root_dir = '/home/{}/zenoh_evaluation'.format(os.getenv('USER'))
-    sink_process = sink.popen(os.path.join(
-        root_dir,
-        'bandwidth_test/zenoh/target/debug/subscriber'))
-    time.sleep(5)
-    source_process = sink.popen(os.path.join(
-        root_dir,
-        'bandwidth_test/zenoh/target/debug/publisher'))
+    root_dir = '/home/mininet/zenoh_evaluation/bandwidth_test/zenoh/target/debug'
+    sink_process = sink.popen(os.path.join(root_dir, 'subscriber'))
+    time.sleep(2)
+    source_process = source.popen(os.path.join(root_dir, 'publisher'))
     for host, line in pmonitor({source: source_process, sink: sink_process}, timeoutms=2000):
         if host:
             #print('\t{}:'.format(len(data_lines)), line.strip())
             if host == sink and (line.startswith('16') or line.startswith('Received')):
                 data_lines.append(line)
                 print(len(data_lines) - 1, end=' ', flush=True)
-        if len(data_lines) >= 11:
+        if len(data_lines) >= 21:
             print()
             break
     source_process.send_signal(SIGINT)
@@ -70,29 +66,31 @@ def zenoh_bandwidth_test(net, scenario_module):
 
 def fastdds_bandwidth_test(net,scenario_module):
     print('FastDDS bandwidth test')
-    source, sink = get_source_and_sink(net, scenario_module)
+    source, sink = utils.get_source_and_sink(net, scenario_module)
 
     popens = {}
     data_lines = []
-    root_dir = '/home/{}/zenoh_evaluation'.format(os.getenv('USER'))
-    binary = os.path.join(
-        root_dir,
-        '/dds/build/FastDDSBandwidthTest')
-    sink_process = sink.popen([binary, 'subscriber'])
-    time.sleep(2)
-    source_process = sink.popen([binary, 'publisher'])
+    root_dir = '/home/mininet/zenoh_evaluation/bandwidth_test/dds'
+    sink_process = sink.popen(
+        os.path.join(root_dir, 'build/bin/subscriber'),
+        env={'FASTRTPS_DEFAULT_PROFILES_FILE': '{}'.format(os.path.join(root_dir, 'socket_size.xml'))},
+        )
+    source_process = source.popen(
+        os.path.join(root_dir, 'build/bin/publisher'),
+        env={'FASTRTPS_DEFAULT_PROFILES_FILE': '{}'.format(os.path.join(root_dir, 'socket_size.xml'))},
+        )
     for host, line in pmonitor({source: source_process, sink: sink_process}, timeoutms=2000):
         if host:
-            #print('\t{}-->{}:'.format(host,len(data_lines)), line)
+            #print('\t{}-->{}:'.format(host, len(data_lines)), line)
             if host == sink and (line.startswith('16') or line.startswith('Received')):
                 data_lines.append(line)
                 print(len(data_lines) - 1, end=' ', flush=True)
-        if len(data_lines) >= 11:
+        if len(data_lines) >= 21:
             print('')
             break
     source_process.send_signal(SIGINT)
     sink_process.send_signal(SIGINT)
-    print('\tCompleted; accumulated data:')
+    print('Completed; accumulated data:')
     for l in data_lines:
         print(l.strip())
 

@@ -2,7 +2,7 @@ target
 Cargo.lock
 .cache
 rust-toolchain
-bandwidth_test_pcaps
+pcaps
 __pycache__
 build
 

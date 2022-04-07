@@ -7,6 +7,7 @@ from mininet.util import dumpNodeConnections, waitListening, decode, pmonitor
 from signal import SIGINT
 import importlib
 import os
+import os.path
 import selectors
 import subprocess
 import sys
@@ -14,14 +15,57 @@ import time
 import utils
 
 
-def start_processes(host, executables):
+def node_names(process_set):
+    node_names_robot = [
+        'arequipa',
+        'barcelona',
+        'cordoba',
+        'delhi',
+        'freeport',
+        'geneva',
+        'georgetown',
+        'hamburg',
+        'hebron',
+        'kingston',
+        ]
+    node_names_workstation = [
+        'lyon',
+        'mandalay',
+        'medellin',
+        'monaco',
+        'osaka',
+        'ponce',
+        'portsmouth',
+        'rotterdam',
+        'taipei',
+        'tripoli',
+        ]
+    if process_set == 'robot':
+        return node_names_robot
+    elif process_set == 'workstation':
+        return node_names_workstation
+    else:
+        return node_names_robot + node_names_workstation
+
+
+def start_processes(host, executables, path):
+    root_dir = '/home/mininet/zenoh_evaluation/'
     processes = {}
     for executable in executables:
-        process = host.popen(
-            ['../mont_blanc/zenoh/target/debug/' + executable,
-             '1'])
+        #process = host.popen([os.path.join(root_dir, path, executable), '1'])
+        process = host.popen([os.path.join(root_dir, path, executable), '1'],
+            env={'FASTRTPS_DEFAULT_PROFILES_FILE':
+                '{}'.format(os.path.join(root_dir, 'noshm.xml'))})
         processes[executable] = process
     return processes
+
+
+def start_processes_dds(host, executables):
+    return start_processes(host, executables, 'mont_blanc/fastdds/build/bin/')
+
+
+def start_processes_zenoh(host, executables):
+    return start_processes(host, executables, 'mont_blanc/zenoh/target/debug/')
 
 
 def terminate_processes(processes):
@@ -50,13 +94,13 @@ def process_line(node_names, line):
                 line_is_expected = True
             else:
                 line_is_expected = False
-    else:
-        print(line)
+    #else:
+        #print(line)
 
     return ignore_line, line_is_expected, started
 
 
-def application_test(net, scenario_module):
+def application_test(net, scenario_module, middleware_type):
     robot, workstation = utils.get_source_and_sink(net, scenario_module)
 
     robot_executables = ['cordoba',
@@ -80,10 +124,17 @@ def application_test(net, scenario_module):
         'arequipa',
         'georgetown']
 
-    robot_processes = start_processes(robot, robot_executables)
+    if middleware_type == 'zenoh':
+        start_processes = start_processes_zenoh
+    elif middleware_type == 'dds':
+        start_processes = start_processes_dds
+    else:
+        raise('Unknown middleware type: {}'.format(middleware_type))
+
+    robot_processes = start_processes(robot, node_names('robot'))
     workstation_processes = start_processes(
         workstation,
-        workstation_executables)
+        node_names('workstation'))
     all_processes = {**robot_processes, **workstation_processes}
 
     not_started_processes = robot_executables + workstation_executables
@@ -131,7 +182,7 @@ def application_test(net, scenario_module):
                 print('All nodes started')
                 started = True
                 start_time = time.time()
-        if started and (time.time() - start_time) > 10:
+        if started and (time.time() - start_time) > 60:
             break
     print('Run time exceeded; terminating')
     terminate_processes(all_processes)
@@ -144,6 +195,28 @@ def application_test(net, scenario_module):
     print("Received {} lines from unknown processes:".format(len(unexpected_lines)))
     for l in unexpected_lines:
         print("{}\t{}".format(unexpected_lines[l], l))
+
+
+def run_test(scenario_module, net, middleware_type='zenoh'):
+    print('\n\n============================================')
+    print('  Application test for middleware {}'.format(middleware_type))
+    print('============================================')
+
+    tshark_robot = utils.start_tshark_on_source(net, scenario_module, '/tmp/robot_capture.pcap')
+    tshark_ws = utils.start_tshark_on_sink(net, scenario_module, '/tmp/ws_capture.pcap')
+    time.sleep(2)
+    application_test(net, scenario_module, middleware_type)
+    time.sleep(2)
+    utils.stop_tshark(tshark_robot)
+    utils.stop_tshark(tshark_ws)
+
+    if middleware_type == 'dds':
+        # The RTPS dissector on the mininet vm is old; run
+        # application_test_counter.py locally
+        return
+
+    utils.process_packet_capture('/tmp/robot_capture.pcap', 1, middleware_type)
+    utils.process_packet_capture('/tmp/ws_capture.pcap', 1, middleware_type)
 
 
 def main():
@@ -160,19 +233,11 @@ def main():
     print('Connections:')
     dumpNodeConnections(net.hosts)
 
-    tshark_robot = utils.start_tshark_on_source(net, scenario_module, '/tmp/robot_capture.pcap')
-    tshark_ws = utils.start_tshark_on_sink(net, scenario_module, '/tmp/ws_capture.pcap')
-    time.sleep(2)
-    application_test(net, scenario_module)
-    time.sleep(2)
-    utils.stop_tshark(tshark_robot)
-    utils.stop_tshark(tshark_ws)
+    run_test(scenario_module, net, 'zenoh')
+    #run_test(scenario_module, net, 'dds')
 
     scenario_module.stop_network_load(load)
     net.stop()
-
-    utils.process_zenoh_packet_capture('/tmp/robot_capture.pcap', 1)
-    utils.process_zenoh_packet_capture('/tmp/ws_capture.pcap', 1)
 
     return 0
 

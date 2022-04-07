@@ -65,9 +65,8 @@ int main()
     next = now + milliseconds(50);
 
     printf(
-      "%s: Putting generated Int64 to /ganges | <%ld μs>\n",
-      name.c_str(),
-      duration_cast<microseconds>(now - prev).count());
+      "%s: Putting generated Int64 to /ganges\n",
+      name.c_str());
     ganges_writer->write(&ganges_msg);
 
     std::this_thread::sleep_until(next);

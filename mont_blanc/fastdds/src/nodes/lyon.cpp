@@ -67,9 +67,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Float32 from /amazon, putting Float32 to /tigris | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(now - prev).count());
+            "%s: Received Float32 from /amazon, putting Float32 to /tigris\n",
+            name.c_str());
           tigris_writer->write(&tigris_msg);
         }
       }

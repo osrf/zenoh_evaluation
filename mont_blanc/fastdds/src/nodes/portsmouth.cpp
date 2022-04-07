@@ -65,10 +65,9 @@ int main()
     next = now + milliseconds(200);
 
     printf(
-      "%s: Putting generated String<%zu> to /danube | <%ld μs>\n",
+      "%s: Putting generated String<%zu> to /danube\n",
       name.c_str(),
-      danube_msg.data().size(),
-      duration_cast<microseconds>(now - prev).count());
+      danube_msg.data().size());
     danube_writer->write(&danube_msg);
 
     std::this_thread::sleep_until(next);

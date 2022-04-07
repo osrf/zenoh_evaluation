@@ -219,6 +219,186 @@ def process_zenoh_packet_capture(capture_file_path, robot_count):
     os.remove('/tmp/filtered.pcap')
 
 
+def count_dds_messages(title, message_type, pcap_file):
+    filters = ['-2', '-R', message_type]
+    proc = subprocess.run(
+        ['tshark'] +
+         filters +
+        ['-r', pcap_file,
+         '-w', '/tmp/dds_filtered.pcap',
+         '-q',
+         '-z', 'io,stat,0'],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True
+        )
+    print('Count of {} messages:'.format(title))
+    print(proc.stdout)
+    os.remove('/tmp/dds_filtered.pcap')
+
+
+def process_dds_packet_capture(capture_file_path, robot_count):
+    # SPDP (Participant discovery)
+    # SEDP (Entites discovery)
+
+    proc = subprocess.run(
+        ['tshark',
+         '-2',
+         '-R', 'rtps',
+         '-r', capture_file_path,
+         '-w', '/tmp/filtered.pcap',
+         '-q',
+         '-z', 'io,stat,0'],
+        stdout=subprocess.PIPE,
+        text=True
+        )
+    print()
+    print('Results of initial filter')
+    print(proc.stdout)
+    print()
+
+    # Count Pad messages
+    count_dds_messages(
+        'Pad',
+        'rtps.sm.id == PAD',
+        '/tmp/filtered.pcap')
+    # Count AckNack messages
+    count_dds_messages(
+        'AckNack',
+        'rtps.sm.id == ACKNACK || rtps.sm.id == NACK_FRAG',
+        '/tmp/filtered.pcap')
+    # Count Heartbeat messages
+    count_dds_messages(
+        'Heatbeat',
+        'rtps.sm.id == HEARTBEAT || rtps.sm.id == HEARTBEAT_FRAG',
+        '/tmp/filtered.pcap')
+    # Count Gap messages
+    count_dds_messages(
+        'Gap',
+        'rtps.sm.id == GAP',
+        '/tmp/filtered.pcap')
+    # Count InfoTimestamp messages
+    count_dds_messages(
+        'InfoTimestamp',
+        'rtps.sm.id == INFO_TS',
+        '/tmp/filtered.pcap')
+    # Count InfoSource messages
+    count_dds_messages(
+        'InfoSource',
+        'rtps.sm.id == INFO_SRC',
+        '/tmp/filtered.pcap')
+    # Count InfoReplyIp4 messages
+    count_dds_messages(
+        'InfoReplyIp4',
+        'rtps.sm.id == INFO_REPLY_IP4',
+        '/tmp/filtered.pcap')
+    # Count InfoDestination messages
+    count_dds_messages(
+        'InfoDestination',
+        'rtps.sm.id == INFO_DST',
+        '/tmp/filtered.pcap')
+    # Count InfoReply messages
+    count_dds_messages(
+        'InfoReply',
+        'rtps.sm.id == INFO_REPLY',
+        '/tmp/filtered.pcap')
+    # Count DATA messages
+    count_dds_messages(
+        'Data',
+        'rtps.sm.id == DATA || rtps.sm.id == DATA_FRAG',
+        '/tmp/filtered.pcap')
+
+    is_data_filter = '(rtps.sm.id == DATA or rtps.sm.id == DATA_FRAG)'
+    is_not_data_filter = '(rtps.sm.id != DATA and rtps.sm.id != DATA_FRAG)'
+    is_heartbeat_filter = '(rtps.sm.id == HEARTBEAT or rtps.sm.id == HEARTBEAT_FRAG)'
+    is_acknack_filter = '(rtps.sm.id == ACKNACK or rtps.sm.id == NACK_FRAG)'
+    entity_id_participant_filter = '(rtps.sm.rdEntityId == ENTITYID_BUILTIN_PARTICIPANT_READER or rtps.sm.wrEntityId == ENTITYID_BUILTIN_PARTICIPANT_WRITER)'
+    not_entity_id_participant_filter = '(rtps.sm.rdEntityId != ENTITYID_BUILTIN_PARTICIPANT_READER and rtps.sm.wrEntityId != ENTITYID_BUILTIN_PARTICIPANT_WRITER)'
+    entity_id_participant_msg_filter = '(rtps.sm.rdEntityId == ENTITYID_P2P_BUILTIN_PARTICIPANT_MESSAGE_READER or rtps.sm.wrEntityId == ENTITYID_P2P_BUILTIN_PARTICIPANT_MESSAGE_WRITER)'
+    not_entity_id_participant_msg_filter = '(rtps.sm.rdEntityId != ENTITYID_P2P_BUILTIN_PARTICIPANT_MESSAGE_READER and rtps.sm.wrEntityId != ENTITYID_P2P_BUILTIN_PARTICIPANT_MESSAGE_WRITER)'
+    entity_id_publication_filter = '(rtps.sm.rdEntityId == ENTITYID_BUILTIN_PUBLICATIONS_READER or rtps.sm.wrEntityId == ENTITYID_BUILTIN_PUBLICATIONS_WRITER)'
+    not_entity_id_publication_filter = '(rtps.sm.rdEntityId != ENTITYID_BUILTIN_PUBLICATIONS_READER and rtps.sm.wrEntityId != ENTITYID_BUILTIN_PUBLICATIONS_WRITER)'
+    entity_id_subscription_filter = '(rtps.sm.rdEntityId == ENTITYID_BUILTIN_SUBSCRIPTIONS_READER or rtps.sm.wrEntityId == ENTITYID_BUILTIN_SUBSCRIPTIONS_WRITER)'
+    not_entity_id_subscription_filter = '(rtps.sm.rdEntityId != ENTITYID_BUILTIN_SUBSCRIPTIONS_READER and rtps.sm.wrEntityId != ENTITYID_BUILTIN_SUBSCRIPTIONS_WRITER)'
+    # Count participant announcement messages
+    count_dds_messages(
+        'Participant announcements',
+        is_data_filter + ' and ' + entity_id_participant_filter,
+        '/tmp/filtered.pcap')
+    count_dds_messages(
+        'Participant announcements overhead',
+        is_not_data_filter + ' and ' + entity_id_participant_filter,
+        '/tmp/filtered.pcap')
+    # Count participant message announcement messages
+    count_dds_messages(
+        'Participant message announcements',
+        is_data_filter + ' and ' + entity_id_participant_msg_filter,
+        '/tmp/filtered.pcap')
+    count_dds_messages(
+        'Participant message announcements overhead',
+        is_not_data_filter + ' and ' + entity_id_participant_msg_filter,
+        '/tmp/filtered.pcap')
+    # Count publication announcement messages
+    count_dds_messages(
+        'Publication announcements',
+        is_data_filter + ' and ' + entity_id_publication_filter,
+        '/tmp/filtered.pcap')
+    count_dds_messages(
+        'Publication announcements overhead',
+        is_not_data_filter + ' and ' + entity_id_publication_filter,
+        '/tmp/filtered.pcap')
+    # Count subscription announcement messages
+    count_dds_messages(
+        'Subscription announcements',
+        is_data_filter + ' and ' + entity_id_subscription_filter,
+        '/tmp/filtered.pcap')
+    count_dds_messages(
+        'Subscription announcements overhead',
+        is_not_data_filter + ' and ' + entity_id_subscription_filter,
+        '/tmp/filtered.pcap')
+    # Count application data messages
+    count_dds_messages(
+        'Application data',
+        is_data_filter + ' and ' +
+            not_entity_id_participant_filter + ' and ' +
+            not_entity_id_participant_msg_filter + ' and ' +
+            not_entity_id_publication_filter + ' and ' +
+            not_entity_id_subscription_filter,
+        '/tmp/filtered.pcap')
+    # Count application non-data messages
+    count_dds_messages(
+        'Application overhead',
+        is_not_data_filter + ' and ' +
+            not_entity_id_participant_filter + ' and ' +
+            not_entity_id_participant_msg_filter + ' and ' +
+            not_entity_id_publication_filter + ' and ' +
+            not_entity_id_subscription_filter,
+        '/tmp/filtered.pcap')
+
+    # Count multicast messages
+    count_dds_messages(
+        'Multicast',
+        'ip.dst >= 224.0.0.0',
+        '/tmp/filtered.pcap')
+    # Count unicast messages
+    count_dds_messages(
+        'Unicast',
+        'ip.dst < 224.0.0.0',
+        '/tmp/filtered.pcap')
+
+    #os.remove(capture_file_path)
+    os.remove('/tmp/filtered.pcap')
+
+
+def process_packet_capture(capture_file_path, robot_count, middleware_type):
+    if middleware_type == 'zenoh':
+        process_zenoh_packet_capture(capture_file_path, robot_count)
+    elif middleware_type == 'dds':
+        process_dds_packet_capture(capture_file_path, robot_count)
+    else:
+        raise('Unknown middleware type: {}'.format(middleware_type))
+
+
 def print_interfaces(net, scenario_module):
     source, sink = get_source_and_sink(net, scenario_module)
 

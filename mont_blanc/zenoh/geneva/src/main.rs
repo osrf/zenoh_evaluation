@@ -42,7 +42,7 @@ async fn main() {
                 match change.kind {
                     SampleKind::Put | SampleKind::Patch => {
                         let _string_data = change.value;
-                        println!("Geneva: Received String value from {}; putting Float32 to {}", parana_resource, arkansas_resource);
+                        println!("Geneva: Received String value from {}; putting String to {}", parana_resource, arkansas_resource);
                         session
                             .put(arkansas_expression_id, float_data as f64)
                             .await

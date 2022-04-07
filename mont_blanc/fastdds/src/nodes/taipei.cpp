@@ -68,11 +68,10 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received Image<%zu> from /columbia, putting Image<%zu> to /colorado "
-            "| <%ld μs>\n",
+            "\n",
             name.c_str(),
             msg.data().size(),
-            colorado_msg.data().size(),
-            duration_cast<microseconds>(columbia_now - columbia_prev).count());
+            colorado_msg.data().size());
           colorado_writer->write(&colorado_msg);
         }
       }

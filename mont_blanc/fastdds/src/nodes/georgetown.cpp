@@ -75,9 +75,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Vector3Stamped from /murray | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(murray_now - murray_prev).count());
+            "%s: Received Vector3Stamped from /murray\n",
+            name.c_str());
         }
       }
     }
@@ -97,9 +96,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received WrenchStamped from /lena | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(lena_now - lena_prev).count());
+            "%s: Received WrenchStamped from /lena\n",
+            name.c_str());
         }
       }
     }
@@ -126,9 +124,8 @@ int main()
     pub_next = pub_now + milliseconds(50);
 
     printf(
-      "%s: Putting generated Float64 to /volga | <%ld μs>\n",
-      name.c_str(),
-      duration_cast<microseconds>(pub_now - pub_prev).count());
+      "%s: Putting generated Float64 to /volga\n",
+      name.c_str());
 
     volga_writer->write(&volga_msg);
 

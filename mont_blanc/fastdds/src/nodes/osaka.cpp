@@ -81,10 +81,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received String<%zu> from /parana | <%ld μs>\n",
+            "%s: Received String<%zu> from /parana\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(parana_now - parana_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -104,10 +103,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Image<%zu> from /columbia | <%ld μs>\n",
+            "%s: Received Image<%zu> from /columbia\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(columbia_now - columbia_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -128,13 +126,12 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received Image<%zu> from /colorado, putting PointCloud2<%zu> to /salween, "
-            "putting LaserScan<%zu, %zu> to /godavari | <%ld μs>\n",
+            "putting LaserScan<%zu, %zu> to /godavari\n",
             name.c_str(),
             msg.data().size(),
             salween_msg.data().size(),
             godavari_msg.ranges().size(),
-            godavari_msg.intensities().size(),
-            duration_cast<microseconds>(colorado_now - colorado_prev).count());
+            godavari_msg.intensities().size());
           salween_writer->write(&salween_msg);
           godavari_writer->write(&godavari_msg);
         }

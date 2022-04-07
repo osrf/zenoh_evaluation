@@ -79,9 +79,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Float32 from /tigris | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(tigris_now - tigris_prev).count());
+            "%s: Received Float32 from /tigris\n",
+            name.c_str());
         }
       }
     }
@@ -101,9 +100,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Int64 from /ganges | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(ganges_now - ganges_prev).count());
+            "%s: Received Int64 from /ganges\n",
+            name.c_str());
         }
       }
     }
@@ -123,9 +121,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Int32 from /nile | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(nile_now - nile_prev).count());
+            "%s: Received Int32 from /nile\n",
+            name.c_str());
         }
       }
     }
@@ -146,11 +143,10 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received String<%zu> from /danube, putting String<%zu> to /parana "
-            "| <%ld μs>\n",
+            "\n",
             name.c_str(),
             msg.data().size(),
-            parana_msg.data().size(),
-            duration_cast<microseconds>(danube_now - danube_prev).count());
+            parana_msg.data().size());
           parana_writer->write(&parana_msg);
         }
       }

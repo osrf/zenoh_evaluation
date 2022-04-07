@@ -15,11 +15,12 @@
 #ifndef UTILS_HPP_
 #define UTILS_HPP_
 
-#include <random>
-#include <vector>
 #include <algorithm>
+#include <iostream>
 #include <limits>
+#include <random>
 #include <string>
+#include <vector>
 
 #include "types/datatypes.h"
 
@@ -297,6 +298,7 @@ BigData random_bigdata(bool include_image_and_pointcloud = true)
 {
   BigData data;
 
+  std::cout << "Generating small values" << std::endl;
   data.timestamp();
   data.bool_value(random_bool());
   data.int32_value(random_number<int32_t>());
@@ -307,6 +309,7 @@ BigData random_bigdata(bool include_image_and_pointcloud = true)
   data.double_value(random_number<double>());
   data.string_value(random_string(256));
 
+  std::cout << "Generating array" << std::endl;
   std::vector<BasicTypes> basic_types_values(3);
   for (int ii = 0; ii < 3; ++ii) {
     basic_types_values.push_back(random_basictypes());
@@ -314,8 +317,14 @@ BigData random_bigdata(bool include_image_and_pointcloud = true)
   data.basic_types_values(basic_types_values);
 
   if (include_image_and_pointcloud) {
-    data.image_value(random_image(1920 * 1080 * 3));
-    data.point_cloud_value(random_pointcloud(4 * 4 * 4 * 1280 * 960));
+    //std::cout << "Generating image" << std::endl;
+    //data.image_value(random_image(1920 * 1080 * 3));
+    //std::cout << "Generating point cloud" << std::endl;
+    //data.point_cloud_value(random_pointcloud(4 * 4 * 4 * 1280 * 960));
+    std::cout << "Generating image" << std::endl;
+    data.image_value(random_image(1024 * 1024 * 0.5));
+    std::cout << "Generating point cloud" << std::endl;
+    data.point_cloud_value(random_pointcloud(1024  * 1024 * 0.5));
   } else {
     data.image_value(random_image(0));
     data.point_cloud_value(random_pointcloud(0));

@@ -67,9 +67,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Twist from /congo, putting Float32 to /ohio | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(congo_now - congo_prev).count());
+            "%s: Received Twist from /congo, putting Float32 to /ohio\n",
+            name.c_str());
           ohio_writer->write(&ohio_msg);
         }
       }

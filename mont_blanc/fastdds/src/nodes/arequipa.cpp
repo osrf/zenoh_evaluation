@@ -60,10 +60,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received String<%zu> from /arkansas | <%ld μs>\n",
+            "%s: Received String<%zu> from /arkansas\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(arkansas_now - arkansas_prev).count());
+            msg.data().size());
         }
       }
     }

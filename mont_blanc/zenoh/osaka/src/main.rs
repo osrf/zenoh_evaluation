@@ -18,8 +18,8 @@ async fn main() {
     let mut parana_subscriber = session.subscribe(parana_resource).await.unwrap();
     let colorado_resource = "/colorado";
     let mut colorado_subscriber = session.subscribe(colorado_resource).await.unwrap();
-    let delhi_resource = "/delhi";
-    let mut delhi_subscriber = session.subscribe(delhi_resource).await.unwrap();
+    let columbia_resource = "/columbia";
+    let mut columbia_subscriber = session.subscribe(columbia_resource).await.unwrap();
 
     // Output resources
     let salween_resource: &str = "/salween";
@@ -55,14 +55,14 @@ async fn main() {
                     },
                 }
             },
-            change = delhi_subscriber.next() => {
+            change = columbia_subscriber.next() => {
                 let change = change.unwrap();
                 match change.kind {
                     SampleKind::Put | SampleKind::Patch => {
                         let buf = change.value.payload;
                         let image_size = buf.len();
                         let _image = deserialize_image(buf.contiguous().as_slice()).unwrap();
-                        println!("Osaka: Received image of {} bytes from {}", image_size, delhi_resource);
+                        println!("Osaka: Received image of {} bytes from {}", image_size, columbia_resource);
                     },
                     SampleKind::Delete => {
                         ()

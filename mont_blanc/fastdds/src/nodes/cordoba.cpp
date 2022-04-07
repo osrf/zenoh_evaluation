@@ -65,9 +65,8 @@ int main()
     next = now + milliseconds(100);
 
     printf(
-      "%s: Putting generated Float32 to /amazon | <%ld μs>\n",
-      name.c_str(),
-      duration_cast<microseconds>(now - prev).count());
+      "%s: Putting generated Float32 to /amazon\n",
+      name.c_str());
     amazon_writer->write(&amazon_msg);
 
     std::this_thread::sleep_until(next);

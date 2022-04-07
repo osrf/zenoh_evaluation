@@ -73,17 +73,17 @@ int main()
             ',' << std::fixed << rate <<
             ',' << std::fixed << bandwidth_bps <<
             ',' << std::fixed << bandwidth_mbps <<
-            '\n';
+            std::endl;
         } else {
-          std::cout << name << ": Sample data is invalid\n";
+          std::cout << name << ": Sample data is invalid" << std::endl;
         }
       } else {
-        std::cout << name << ": Failed to take sample\n";
+        std::cout << name << ": Failed to take sample" << std::endl;
       }
     }
   );
 
-  std::cout << "Received at,Transmission time (s),Transmitted (Bytes),Rate (B/s),Bandwidth (bps),Bandwidth (Mbps)\n";
+  std::cout << "Received at,Transmission time (s),Transmitted (Bytes),Rate (B/s),Bandwidth (bps),Bandwidth (Mbps)" << std::endl;
   while (true) {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }

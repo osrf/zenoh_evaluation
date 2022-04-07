@@ -80,11 +80,10 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received String<%zu> from /parana, putting String<%zu> to /arkansas "
-            "| <%ld μs>\n",
+            "\n",
             name.c_str(),
             msg.data().size(),
-            arkansas_msg.data().size(),
-            duration_cast<microseconds>(parana_now - parana_prev).count());
+            arkansas_msg.data().size());
           arkansas_writer->write(&arkansas_msg);
         }
       }
@@ -105,10 +104,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received String<%zu> from /danube | <%ld μs>\n",
+            "%s: Received String<%zu> from /danube\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(danube_now - danube_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -128,9 +126,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Pose from /tagus | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(tagus_now - tagus_prev).count());
+            "%s: Received Pose from /tagus\n",
+            name.c_str());
         }
       }
     }
@@ -150,9 +147,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Twist from /congo | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(congo_now - congo_prev).count());
+            "%s: Received Twist from /congo\n",
+            name.c_str());
         }
       }
     }

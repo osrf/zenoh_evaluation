@@ -65,9 +65,8 @@ int main()
     chenab_next = chenab_now + milliseconds(100);
 
     printf(
-      "%s: Putting generated Quaternion to /chenab | <%ld μs>\n",
-      name.c_str(),
-      duration_cast<microseconds>(chenab_now - chenab_prev).count());
+      "%s: Putting generated Quaternion to /chenab\n",
+      name.c_str());
     chenab_writer->write(&chenab_msg);
 
     std::this_thread::sleep_until(chenab_next);

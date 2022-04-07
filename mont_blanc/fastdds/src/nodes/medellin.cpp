@@ -65,9 +65,8 @@ int main()
     next = now + milliseconds(10);
 
     printf(
-      "%s: Putting generated Int32 to /nile | <%ld μs>\n",
-      name.c_str(),
-      duration_cast<microseconds>(now - prev).count());
+      "%s: Putting generated Int32 to /nile\n",
+      name.c_str());
     nile_writer->write(&nile_msg);
 
     std::this_thread::sleep_until(next);

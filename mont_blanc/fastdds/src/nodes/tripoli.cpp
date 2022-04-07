@@ -72,12 +72,11 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received LaserScan<%zu, %zu> from /godavari, "
-            "putting PointCloud2<%zu> to /loire, | <%ld μs>\n",
+            "putting PointCloud2<%zu> to /loire\n",
             name.c_str(),
             msg.ranges().size(),
             msg.intensities().size(),
-            loire_msg.data().size(),
-            duration_cast<microseconds>(godavari_now - godavari_prev).count());
+            loire_msg.data().size());
           loire_writer->write(&loire_msg);
         }
       }
@@ -98,10 +97,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Image<%zu> from /columbia | <%ld μs>\n",
+            "%s: Received Image<%zu> from /columbia\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(columbia_now - columbia_prev).count());
+            msg.data().size());
         }
       }
     }

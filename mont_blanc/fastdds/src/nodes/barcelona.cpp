@@ -68,10 +68,9 @@ int main()
         if (info.valid_data) {
           printf(
             "%s: Received TwistWithCovarianceStamped<%zu> from /mekong, "
-            "putting WrenchStamped to /lena | <%ld μs>\n",
+            "putting WrenchStamped to /lena\n",
             name.c_str(),
-            msg.twist().covariance().size(),
-            duration_cast<microseconds>(mekong_now - mekong_prev).count());
+            msg.twist().covariance().size());
           lena_writer->write(&lena_msg);
         }
       }

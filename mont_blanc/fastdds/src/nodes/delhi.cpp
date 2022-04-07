@@ -65,10 +65,9 @@ int main()
     next = now + milliseconds(100);
 
     printf(
-      "%s: Putting generated Image<%ld> to /columbia | <%ld μs>\n",
+      "%s: Putting generated Image<%ld> to /columbia\n",
       name.c_str(),
-      columbia_msg.data().size(),
-      duration_cast<microseconds>(now - prev).count());
+      columbia_msg.data().size());
     columbia_writer->write(&columbia_msg);
 
     std::this_thread::sleep_until(next);

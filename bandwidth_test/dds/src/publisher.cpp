@@ -32,6 +32,16 @@ int main()
 {
   std::string name = "Publisher";
 
+  // RANDOMIZE ===================================================================================
+  std::cout << name << ": Data generation started" << std::endl;
+
+  BigData msg;
+  msg = dds_types::random_bigdata();
+
+  std::cout << name << ": Data generation done" << std::endl;
+
+  // Start DDS ===================================================================================
+  std::cout << name << ": Starting DDS" << std::endl;
   std::unique_ptr<StdoutConsumer> stdout_consumer(new StdoutConsumer());
   Log::RegisterConsumer(std::move(stdout_consumer));
   Log::SetVerbosity(Log::Kind::Info);
@@ -43,19 +53,11 @@ int main()
   DataWriter * writer = node.create_datawriter(
     "/amazon",
     static_cast<TypeSupport>(new BigDataPubSubType()));
-  BigData msg;
-
-  // RANDOMIZE ===================================================================================
-  std::cout << name << ": Data generation started\n";
-
-  msg = dds_types::random_bigdata(false);
-
-  std::cout << name << ": Data generation done\n";
 
   // LOOP ========================================================================================
-  std::cout << name << ": Starting loop\n";
+  std::cout << name << ": Starting loop" << std::endl;
   while (true) {
-    std::cout << name << ": Putting generated data to /amazon\n";
+    std::cout << name << ": Putting generated data to /amazon" << std::endl;
 
     dds_types::set_bigdata_timestamp_to_now(msg);
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -63,9 +65,9 @@ int main()
     auto end_time = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double, std::milli> time_taken = end_time - start_time;
-    std::cout << name << ": Data write took " << time_taken.count() << " ms\n";
+    std::cout << name << ": Data write took " << time_taken.count() << " ms" << std::endl;
 
-    auto sleep_until_time = start_time + std::chrono::milliseconds(100);
+    auto sleep_until_time = start_time + std::chrono::seconds(1);
     std::this_thread::sleep_until(sleep_until_time);
   }
 

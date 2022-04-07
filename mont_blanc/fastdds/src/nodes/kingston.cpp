@@ -65,9 +65,8 @@ int main()
     yamuna_next = yamuna_now + milliseconds(100);
 
     printf(
-      "%s: Putting generated Vector3 to /yamuna | <%ld μs>\n",
-      name.c_str(),
-      duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
+      "%s: Putting generated Vector3 to /yamuna\n",
+      name.c_str());
     yamuna_writer->write(&yamuna_msg);
 
     std::this_thread::sleep_until(yamuna_next);

@@ -103,10 +103,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received String<%zu> from /danube | <%ld μs>\n",
+            "%s: Received String<%zu> from /danube\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(danube_now - danube_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -126,9 +125,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Quaternion from /chenab | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(chenab_now - chenab_prev).count());
+            "%s: Received Quaternion from /chenab\n",
+            name.c_str());
         }
       }
     }
@@ -148,10 +146,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received PointCloud2<%zu> from /salween | <%ld μs>\n",
+            "%s: Received PointCloud2<%zu> from /salween\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(salween_now - salween_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -171,11 +168,10 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received LaserScan<%zu, %zu> from /godavari | <%ld μs>\n",
+            "%s: Received LaserScan<%zu, %zu> from /godavari\n",
             name.c_str(),
             msg.ranges().size(),
-            msg.intensities().size(),
-            duration_cast<microseconds>(godavari_now - godavari_prev).count());
+            msg.intensities().size());
         }
       }
     }
@@ -195,9 +191,8 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received Vector3 from /yamuna | <%ld μs>\n",
-            name.c_str(),
-            duration_cast<microseconds>(yamuna_now - yamuna_prev).count());
+            "%s: Received Vector3 from /yamuna\n",
+            name.c_str());
         }
       }
     }
@@ -217,10 +212,9 @@ int main()
       if (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK) {
         if (info.valid_data) {
           printf(
-            "%s: Received PointCloud2<%zu> from /loire | <%ld μs>\n",
+            "%s: Received PointCloud2<%zu> from /loire\n",
             name.c_str(),
-            msg.data().size(),
-            duration_cast<microseconds>(loire_now - loire_prev).count());
+            msg.data().size());
         }
       }
     }
@@ -264,11 +258,10 @@ int main()
 
     printf(
       "%s: Putting generated Pose to /tagus, Image<%zu> to /missouri, "
-      "PointCloud2<%zu> to /brazos | <%ld μs>\n",
+      "PointCloud2<%zu> to /brazos\n",
       name.c_str(),
       missouri_msg.data().size(),
-      brazos_msg.data().size(),
-      duration_cast<microseconds>(pub_now - pub_prev).count());
+      brazos_msg.data().size());
 
     tagus_writer->write(&tagus_msg);
     missouri_writer->write(&missouri_msg);

@@ -19,6 +19,7 @@
 #include <fastdds/dds/publisher/qos/DataWriterQos.hpp>
 #include <fastdds/dds/subscriber/qos/DataReaderQos.hpp>
 #include <fastdds/dds/subscriber/SampleInfo.hpp>
+#include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
 
 #include <string>
 #include <utility>
@@ -41,6 +42,8 @@ using eprosima::fastdds::dds::DATAWRITER_QOS_DEFAULT;
 
 using eprosima::fastdds::dds::SubscriptionMatchedStatus;
 using eprosima::fastdds::dds::Topic;
+
+using eprosima::fastdds::rtps::UDPv4TransportDescriptor;
 
 namespace montblanc
 {
@@ -99,7 +102,7 @@ Node::~Node()
 bool Node::init()
 {
   DomainParticipantQos pqos;
-  pqos.name(name_.c_str());
+  pqos.name(name_.c_str()); 
 
   participant_ = DomainParticipantFactory::get_instance()->create_participant(0, pqos);
   if (participant_ == nullptr) {return false;}
